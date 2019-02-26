@@ -1,3 +1,4 @@
 # pacman
 Projet L2 PacMan  
-Taliesin AMBROISE
+Taliesin AMBROISE  
+Hugo BIGAN
