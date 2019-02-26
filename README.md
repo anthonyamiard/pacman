@@ -2,5 +2,6 @@
 Projet L2 PacMan
 
 * Anthony Amiard (anthonyamiard)
-* Taliesin AMBROISE
-* Hugo BIGAN
+* Taliesin AMBROISE (FlutterTal)
+* Hugo BIGAN (Dkpoum)
+
