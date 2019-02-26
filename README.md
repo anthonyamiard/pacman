@@ -1,3 +1,3 @@
 # pacman
-Projet L2 PacMan
+Projet L2 PacMan  
 Taliesin AMBROISE
