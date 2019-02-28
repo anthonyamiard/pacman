@@ -1,4 +1,4 @@
-# pacman
+# Pacman
 Projet L2 Informatique PacMan 2019, Université Le Mans.
 
 * Anthony Amiard (anthonyamiard)
