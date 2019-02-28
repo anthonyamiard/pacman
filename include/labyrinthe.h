@@ -27,17 +27,20 @@
  * FONCTIONS
  */
  
-/* Genere un labyrinthe aleatoire dans le tableau labyrinthe
+/* Genere un labyrinthe aleatoire dans la matrice labyrinthe
  * 'm' = mur
  * 'c' = chemin vide
  * 'p' = chemin avec pacgum
  * 's' = chemin avec super pacgum
  * 'b' = boite des fantomes
  * 'e' = entree de la boite
- * Ecrit le nombre de pacgum presents dans le labyrinthe dans nb_pacgums
+ * Ecrit le nombre de pacgums presents dans le labyrinthe dans nb_pacgums
  * Renvoie 0 si tout se passe bien
  */
 int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums);
+
+/* Affiche le labyrinthe sur la sortie standard */
+void aff_lab(const char labyrinthe[N_LAB][M_LAB]);
 
 
 
