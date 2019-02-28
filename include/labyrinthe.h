@@ -34,7 +34,7 @@
  * 's' = chemin avec super pacgum
  * 'b' = boite des fantomes
  * 'e' = entree de la boite
- * Ecrit le nombre de pacgum presents dans le labyrinthe dans nb_pacgums
+ * Ecrit le nombre de pacgums presents dans le labyrinthe dans nb_pacgums
  * Renvoie 0 si tout se passe bien
  */
 int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums);
