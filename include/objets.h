@@ -38,6 +38,7 @@ typedef struct joueur_s {
 typedef struct fantome_s {
 	char * nom;
 	char couleur; /* b = bleu, r = rouge, s = rose, o = orange */
+	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
 	etat_t etat;
 	coord_t * coord;
 } fantome_t;
