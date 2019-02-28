@@ -19,7 +19,9 @@ void chemin_fuir(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * c
 
 
 /* Fonction déplacer le fantome */
-void fantome(char labyrinthe[N_LAB][M_LAB],fantome_t * fantome,joueur_t * joueur );
+void fantome(char labyrinthe[N_LAB][M_LAB],fantome_t * fantome,joueur_t * joueur, int vitesse, void (*chemin)(char[N_LAB][M_LAB], coord_t *, coord_t *) );
 
 /* Fonction qui renvoie 0 si tout ce passe bien*/
 int ramasse_pacgum(char labyrinthe[N_LAB][M_LAB], joueur_t * joueur);
+
+#endif
