@@ -5,6 +5,7 @@
 #ifndef _IA_H_
 #define _IA_H_
 #include "taille_lab.h"
+#include "objets.h"
 
 /* Fonction trouver chemin le plus court pour atteindre le joueur */
 coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
