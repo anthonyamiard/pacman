@@ -20,7 +20,7 @@ typedef struct coord_s {
 } coord_t;
 
 /* Etat des fantomes */
-typedef enum etat_e {POURSUITE, FUITE} etat_t;
+typedef enum etat_e {POURSUITE, FUITE, RETOUR} etat_t;
 
 /* Fruit bonus */
 typedef struct fruit_s {
