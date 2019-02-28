@@ -6,6 +6,8 @@
 #ifndef _OBJETS_H_
 #define _OBJETS_H_
 
+#include "taille_lab.h"
+
 
 
 /*
