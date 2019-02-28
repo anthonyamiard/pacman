@@ -13,13 +13,7 @@
  */
 
 
-#ifndef N_LAB
-#define N_LAB 28
-#endif
-
-#ifndef M_LAB
-#define M_LAB 31
-#endif
+#include "taille_lab.h"
 
 
 
