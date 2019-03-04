@@ -34,6 +34,8 @@ $(BINDIR)/$(TARGET): $(OBJECTS)
 	@echo "Edition de liens terminee !"
 	
 # Dependances de chaque fichier
+# fichier_h: $(INCDIR)/fichier.h dependance_h
+# $(OBJDIR)/fichier.o: dependance_h
 taille_lab_h: $(INCDIR)/taille_lab.h
 
 objets_h: $(INCDIR)/objets.h taille_lab_h

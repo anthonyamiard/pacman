@@ -24,11 +24,13 @@ $(BINDIR):
 	mkdir -p $(BINDIR)
 	
 # Edition de liens
-$(BINDIR)/%: $(TESTDIR)/%.o $(OBJECTS)
+$(BINDIR)/%: $(OBJDIR)/%.o $(OBJECTS)
 	@$(LINKER) $^ -o $@ $(LFLAGS)
 	@echo "Edition de liens de "$@" terminée !"
 
 # Dependances de chaque fichier
+# fichier_h: $(INCDIR)/fichier.h dependance_h
+# $(OBJDIR)/fichier.o: dependance_h
 taille_lab_h: $(INCDIR)/taille_lab.h
 
 objets_h: $(INCDIR)/objets.h taille_lab_h
@@ -39,7 +41,7 @@ IA_h: $(INCDIR)/IA.h taille_lab_h objets_h
 
 $(OBJDIR)/labyrinthe.o: labyrinthe_h
 
-$(TESTDIR)/test_lab.o: labyrinthe_h
+$(OBJDIR)/test_lab.o: labyrinthe_h
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
