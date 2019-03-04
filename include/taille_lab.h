@@ -5,7 +5,7 @@
 #ifndef _TAILLE_LAB_H_
 #define _TAILLE_LAB_H_
 
-#define M_MAX 28
-#define N_MAX 31
+#define M_LAB 28
+#define N_LAB 31
 
 #endif
