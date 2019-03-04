@@ -32,6 +32,15 @@ $(BINDIR):
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(LINKER) $^ -o $@ $(LFLAGS)
 	@echo "Edition de liens terminee !"
+	
+# Dependances de chaque fichier
+taille_lab_h: $(INCDIR)/taille_lab.h
+
+objets_h: $(INCDIR)/objets.h taille_lab_h
+
+labyrinthe_h: $(INCDIR)/labyrinthe.h taille_lab_h
+
+IA_h: $(INCDIR)/IA.h taille_lab_h objets_h
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
