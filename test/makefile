@@ -1,5 +1,5 @@
 # Variables generales
-TARGET = 
+TARGET = test_lab
 
 # Repertoires
 OBJDIR	= ../obj

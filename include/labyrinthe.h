@@ -33,6 +33,9 @@
  */
 int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums);
 
+/* Ecrit un labyrinthe genere manuellement dans la matrice labyrinthe */
+int lab_manuel(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums);
+
 /* Affiche le labyrinthe sur la sortie standard */
 void aff_lab(const char labyrinthe[N_LAB][M_LAB]);
 
