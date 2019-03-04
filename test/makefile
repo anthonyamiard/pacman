@@ -47,6 +47,10 @@ $(OBJDIR)/test_lab.o: labyrinthe_h
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
+
+$(OBJDIR)/%.o : $(TESTDIR)/%.c
+	@$(CC) -c $< -o $@ $(CFLAGS)
+	@echo "Compilation de "$<" terminee !"
 	
 # Nettoyage et suppression des executables
 .PHONY: clean
