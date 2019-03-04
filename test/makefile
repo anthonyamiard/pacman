@@ -1,23 +1,18 @@
 # Variables generales
-TARGET	=
-export CC	= gcc
-export CFLAGS	= -Wall -g
-export LINKER	= gcc
-export LFLAGS	=
+TARGET = 
 
 # Repertoires
-OBJDIR	= obj
-BINDIR	= bin
-SRCDIR	= src
-INCDIR	= include
-TESTDIR	= test
+OBJDIR	= ../obj
+BINDIR	= ../bin
+SRCDIR	= ../src
+INCDIR	= ../include
+TESTDIR	= .
 DIRS	= $(OBJDIR) $(BINDIR)
 
 # Fichiers
 SOURCES	:= $(wildcard $(SRCDIR)/*.c)
 INCLUDES:= $(wildcard $(INCDIR)/*.h)
 OBJECTS	:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
-export rm	= rm -f
 
 .PHONY: DIRS
 all: $(DIRS) $(BINDIR)/$(TARGET)
@@ -27,20 +22,16 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 $(BINDIR):
 	mkdir -p $(BINDIR)
-
+	
 # Edition de liens
-$(BINDIR)/$(TARGET): $(OBJECTS)
+$(BINDIR)/%: $(TESTDIR)/%.o $(OBJECTS)
 	@$(LINKER) $^ -o $@ $(LFLAGS)
-	@echo "Edition de liens terminee !"
+	@echo "Edition de liens de "$@"terminée !"
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
-
-# Test
-test:
-	@(cd $(TESTDIR) && $(MAKE))
 	
 # Nettoyage et suppression des executables
 .PHONY: clean
@@ -51,5 +42,4 @@ clean:
 .PHONY: remove
 remove: clean
 	@$(rm) $(BINDIR)/$(TARGET)
-	@(cd $(TESTDIR) && $(MAKE) $@)
 	@echo "Executables supprimes !"
