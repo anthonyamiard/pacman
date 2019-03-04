@@ -60,6 +60,6 @@ clean:
 
 .PHONY: remove
 remove: clean
-	@$(rm) $(BINDIR)/$(TARGET)
 	@(cd $(TESTDIR) && $(MAKE) $@)
+	@$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executables supprimes !"
