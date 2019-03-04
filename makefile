@@ -48,6 +48,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@echo "Compilation de "$<" terminee !"
 
 # Test
+.PHONY: test
 test:
 	@(cd $(TESTDIR) && $(MAKE))
 	

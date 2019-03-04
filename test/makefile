@@ -26,7 +26,7 @@ $(BINDIR):
 # Edition de liens
 $(BINDIR)/%: $(TESTDIR)/%.o $(OBJECTS)
 	@$(LINKER) $^ -o $@ $(LFLAGS)
-	@echo "Edition de liens de "$@"terminée !"
+	@echo "Edition de liens de "$@" terminée !"
 
 # Dependances de chaque fichier
 taille_lab_h: $(INCDIR)/taille_lab.h

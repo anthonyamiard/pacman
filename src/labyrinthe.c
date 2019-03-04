@@ -65,7 +65,7 @@ int lab_manuel(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 		for(j = 0; j < M_LAB; j++) {
 			labyrinthe[i][j] = lab_def[i][j];
 			if(lab_def[i][j] == 'p') {
-				*nb_pacgums++;
+				(*nb_pacgums)++;
 			}
 		}
 	}
