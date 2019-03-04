@@ -42,6 +42,8 @@ labyrinthe_h: $(INCDIR)/labyrinthe.h taille_lab_h
 
 IA_h: $(INCDIR)/IA.h taille_lab_h objets_h
 
+$(OBJDIR)/labyrinthe.o: labyrinthe_h
+
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
