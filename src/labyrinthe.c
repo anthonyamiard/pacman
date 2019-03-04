@@ -20,56 +20,126 @@ void aff_lab(const char labyrinthe[N_LAB][M_LAB]) {
 				case 's': printf("● "); break;
 				case 'b': printf("▓▓"); break;
 				case 'e': printf("▔▔"); break;
-				default: printf("  ");
+				default: printf("XX");
 			}
 		}
 		printf("\n");
 	}
 }
 
-int nb_voisin(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
+int est_chemin(char case_lab) {
+	return case_lab == 'c' || case_lab == 'p' || case_lab == 's';
+}
+
+int nb_voisins(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 	int nb = 0;
-	if(x > 0 && (labyrinthe[y][x-1] == 'c' || labyrinthe[y][x-1] == 'p' ||
-				 labyrinthe[y][x-1] == 's')) {
+	if(x > 0 && est_chemin(labyrinthe[y][x-1])) {
 		nb++;
 	}
-	if(x < M_LAB / 2 - 1 && (labyrinthe[y][x+1] == 'c' ||
-	   labyrinthe[y][x+1] == 'p' || labyrinthe[y][x+1] == 's')) {
+	if(x < M_LAB / 2 - 1 && est_chemin(labyrinthe[y][x+1])) {
 		nb++;
 	}
-	if(y > 0 && (labyrinthe[y-1][x] == 'c' || labyrinthe[y-1][x] == 'p' ||
-				 labyrinthe[y-1][x] == 's')) {
+	if(y > 0 && est_chemin(labyrinthe[y-1][x] == 'c')) {
 		nb++;
 	}
-	if(y < M_LAB / 2 - 1 && (labyrinthe[y+1][x] == 'c' ||
-	   labyrinthe[y+1][x] == 'p' || labyrinthe[y+1][x] == 's')) {
+	if(y < M_LAB / 2 - 1 && est_chemin(labyrinthe[y+1][x])) {
 		nb++;
 	}
 	return nb;
+}
+
+int nb_voisins_coins(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
+	int nb = 0;
+	if(x > 0 && est_chemin(labyrinthe[y-1][x-1])) {
+		nb++;
+	}
+	if(x < M_LAB / 2 - 1 && est_chemin(labyrinthe[y+1][x-1])) {
+		nb++;
+	}
+	if(y > 0 && est_chemin(labyrinthe[y-1][x+1] == 'c')) {
+		nb++;
+	}
+	if(y < M_LAB / 2 - 1 && est_chemin(labyrinthe[y+1][x+1])) {
+		nb++;
+	}
+	return nb;
+}
+
+int place_permise(char l[N_LAB][M_LAB / 2], int x, int y) {
+	if(est_chemin(l[y-1][x-1]) && est_chemin(l[y-1][x]) && est_chemin(l[y][x-1])) {
+		return 0;
+	}
+	if(est_chemin(l[y-1][x]) && est_chemin(l[y-1][x+1]) && est_chemin(l[y][x+1])) {
+		return 0;
+	}
+	if(est_chemin(l[y][x-1]) && est_chemin(l[y+1][x-1]) && est_chemin(l[y+1][x])) {
+		return 0;
+	}
+	if(est_chemin(l[y][x+1]) && est_chemin(l[y+1][x+1]) && est_chemin(l[y+1][x])) {
+		return 0;
+	}
+	return 1;
 }
 
 void chemin_alea(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 	int mid = M_LAB / 2;
 	if(labyrinthe[y][x] == 'm') {
 		labyrinthe[y][x] = 'p';
-		if(x < mid - 1 && (labyrinthe[y][x-1] == 'm' || labyrinthe[y][x+1] == 'm' ||
-		labyrinthe[y-1][x] == 'm' || labyrinthe[y+1][x] == 'm')) {
-			if(x - 1 > 0) {
+		if(x < mid - 1 && nb_voisins(labyrinthe, x, y) < 4) {
+			
+			if(nb_voisins(labyrinthe, x, y) <= 1) {
+				if(x - 1 > 0 && place_permise(labyrinthe, x - 1, y) &&
+				   !(rand() % 4))
+					chemin_alea(labyrinthe, x - 1, y);
+				else if(y - 1 > 0 && place_permise(labyrinthe, x, y - 1) &&
+						!(rand() % 3))
+					chemin_alea(labyrinthe, x, y - 1);
+				else if(y + 1 < N_LAB - 1 && place_permise(labyrinthe, x, y + 1) &&
+						rand() % 2)
+					chemin_alea(labyrinthe, x, y + 1);
+				else
+					chemin_alea(labyrinthe, x + 1, y);
+			}
+			
+			if(x - 1 > 0 && place_permise(labyrinthe, x - 1, y)) {
 				if(rand() % N_RAND)
 					chemin_alea(labyrinthe, x - 1, y);
 			}
-			if(y - 1 > 0) {
+			if(y - 1 > 0 && place_permise(labyrinthe, x, y - 1)) {
 				if(rand() % N_RAND)
 					chemin_alea(labyrinthe, x, y - 1);
 			}
-			if(y + 1 < N_LAB - 1) {
+			if(y + 1 < N_LAB - 1 && place_permise(labyrinthe, x, y + 1)) {
 				if(rand() % N_RAND)
 					chemin_alea(labyrinthe, x, y + 1);
 			}
-			if(rand() % N_RAND)
+			if(rand() % N_RAND && place_permise(labyrinthe, x + 1, y))
 				chemin_alea(labyrinthe, x + 1, y);
 		}
 	}
+}
+
+void remplace_p_par_m(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
+	if(x >= 0 && x < M_LAB / 2 && y >= 0 && y < N_LAB &&
+	   labyrinthe[y][x] == 'p') {
+		labyrinthe[y][x] = 'm';
+	}
+	if(x + 1 >= 0 && x + 1 < M_LAB / 2 && y >= 0 && y < N_LAB &&
+	   labyrinthe[y][x+1] == 'p') {
+		labyrinthe[y][x+1] = 'm';
+	}
+	if(x >= 0 && x < M_LAB / 2 && y + 1 >= 0 && y + 1 < N_LAB &&
+	   labyrinthe[y+1][x] == 'p') {
+		labyrinthe[y+1][x] = 'm';
+	}
+	if(x + 1 >= 0 && x + 1 < M_LAB / 2 && y + 1 >= 0 && y + 1 < N_LAB &&
+	   labyrinthe[y+1][x+1] == 'p') {
+		labyrinthe[y+1][x+1] = 'm';
+	}
+}
+
+void mur_alea(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
+	remplace_p_par_m(labyrinthe, x, y);
 }
 
 int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
@@ -110,7 +180,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	
 	*nb_pacgums = 0;
 	
-	chemin_alea(base, 1, 1);
+	chemin_alea(base, 12, 23);
 	
 	int i, j;
 	for(i = 0; i < N_LAB; i++) {
