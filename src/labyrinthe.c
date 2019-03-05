@@ -11,7 +11,7 @@
 
 void aff_lab(const char labyrinthe[N_LAB][M_LAB]) {
 	int i, j;
-	printf("   ");
+	printf("y\\x");
 	for(j = 0; j < M_LAB; j++) {
 		printf("%2d", j);
 	}

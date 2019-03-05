@@ -17,8 +17,12 @@ int main() {
 	coord_t coord_arr;
 	
 	/* Tests fonction chemin_court */
-	coord_dep.x = 13;
-	coord_arr.x = 14;
+	
+	/* depart = (3,5), arrivee = (24,5) */
+	coord_dep.x = 3;
+	coord_arr.x = 5;
+	
+	
 	
 	
 	return 0;
