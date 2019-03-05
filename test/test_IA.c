@@ -70,25 +70,25 @@ int main() {
 	f_bleu->coord = malloc(sizeof(coord_t));
 	
 	fantome_t * f_rouge = malloc(sizeof(fantome_t));
-	f_bleu->nom = NULL;
-	f_bleu->couleur = 'r';
-	f_bleu->chemin = chemin_aleatoire;
-	f_bleu->etat = POURSUITE;
-	f_bleu->coord = malloc(sizeof(coord_t));
+	f_rouge->nom = NULL;
+	f_rouge->couleur = 'r';
+	f_rouge->chemin = chemin_aleatoire;
+	f_rouge->etat = POURSUITE;
+	f_rouge->coord = malloc(sizeof(coord_t));
 	
 	fantome_t * f_rose = malloc(sizeof(fantome_t));
-	f_bleu->nom = NULL;
-	f_bleu->couleur = 'r';
-	f_bleu->chemin = chemin_anticipe;
-	f_bleu->etat = POURSUITE;
-	f_bleu->coord = malloc(sizeof(coord_t));
+	f_rose->nom = NULL;
+	f_rose->couleur = 'r';
+	f_rose->chemin = chemin_anticipe;
+	f_rose->etat = POURSUITE;
+	f_rose->coord = malloc(sizeof(coord_t));
 	
 	fantome_t * f_orange = malloc(sizeof(fantome_t));
-	f_bleu->nom = NULL;
-	f_bleu->couleur = 'o';
-	f_bleu->chemin = chemin_fuir;
-	f_bleu->etat = POURSUITE;
-	f_bleu->coord = malloc(sizeof(coord_t));
+	f_orange->nom = NULL;
+	f_orange->couleur = 'o';
+	f_orange->chemin = chemin_fuir;
+	f_orange->etat = POURSUITE;
+	f_orange->coord = malloc(sizeof(coord_t));
 	
 	joueur_t * j = malloc(sizeof(joueur_t));
 	j->nom = NULL;
