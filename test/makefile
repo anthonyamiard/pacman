@@ -1,6 +1,3 @@
-# Variables generales
-TARGET = test_lab test_IA
-
 # Repertoires
 OBJDIR	= ../obj
 BINDIR	= ../bin
@@ -9,13 +6,15 @@ INCDIR	= ../include
 TESTDIR	= .
 DIRS	= $(OBJDIR) $(BINDIR)
 
+TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA
+
 # Fichiers
 SOURCES	:= $(wildcard $(SRCDIR)/*.c)
 INCLUDES:= $(wildcard $(INCDIR)/*.h)
 OBJECTS	:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 .PHONY: DIRS
-all: $(DIRS) $(BINDIR)/$(TARGET)
+all: $(DIRS) $(TARGETS)
 
 # Creation des repertoires de compilation
 $(OBJDIR):
@@ -59,7 +58,7 @@ $(OBJDIR)/%.o : $(TESTDIR)/%.c
 # Nettoyage et suppression des executables
 .PHONY: clean
 clean:
-	@$(rm) $(OBJECTS)
+	@$(rm) $(OBJDIR)/*.o
 	@echo "Nettoyage termine !"
 
 .PHONY: remove

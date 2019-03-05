@@ -61,7 +61,8 @@ test:
 # Nettoyage et suppression des executables
 .PHONY: clean
 clean:
-	@$(rm) $(OBJECTS)
+	@(cd $(TESTDIR) && $(MAKE) $@)
+	@$(rm) $(OBJDIR)/*.o
 	@echo "Nettoyage termine !"
 
 .PHONY: remove
