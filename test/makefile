@@ -41,6 +41,8 @@ IA_h: $(INCDIR)/IA.h taille_lab_h objets_h
 
 $(OBJDIR)/labyrinthe.o: labyrinthe_h
 
+$(OBJDIR)/IA.o: IA_h labyrinthe_h objets_h
+
 $(OBJDIR)/test_lab.o: labyrinthe_h
 
 $(OBJDIR)/test_IA.o: IA_h labyrinthe_h objets_h
