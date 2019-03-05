@@ -11,7 +11,13 @@
 
 void aff_lab(const char labyrinthe[N_LAB][M_LAB]) {
 	int i, j;
+	printf("   ");
+	for(j = 0; j < M_LAB; j++) {
+		printf("%2d", j);
+	}
+	printf("\n");
 	for(i = 0; i < N_LAB; i++) {
+		printf("%2d ", i);
 		for(j = 0; j < M_LAB; j++) {
 			switch(labyrinthe[i][j]) {
 				case 'm': printf("██"); break;
