@@ -16,7 +16,7 @@ void aff_res_chemin(coord_t dep, coord_t arr, coord_t res, char * fonction) {
 
 /* Affichage du resultat de la fonction fantome */
 void aff_res_fantome(fantome_t * f, int retour) {
-	print("Fantome %c : (%d,%d), retour = %d\n", f->couleur, f->coord->x, f->coord->y, retour);
+	printf("Fantome %c : (%d,%d), retour = %d\n", f->couleur, f->coord->x, f->coord->y, retour);
 }
 
 int main() {
@@ -47,13 +47,13 @@ int main() {
 		arr.x = l_arr_x[i];
 		arr.y = l_arr_y[i];
 		
-		res = chemin_court(lab, &coord_dep, &coord_arr);
+		res = chemin_court(lab, &dep, &arr);
 		aff_res_chemin(dep, arr, res, "chemin_court");
-		res = chemin_aleatoire(lab, &coord_dep, &coord_arr);
+		res = chemin_aleatoire(lab, &dep, &arr);
 		aff_res_chemin(dep, arr, res, "chemin_aleatoire");
-		res = chemin_anticipe(lab, &coord_dep, &coord_arr);
+		res = chemin_anticipe(lab, &dep, &arr);
 		aff_res_chemin(dep, arr, res, "chemin_anticipe");
-		res = chemin_fuir(lab, &coord_dep, &coord_arr);
+		res = chemin_fuir(lab, &dep, &arr);
 		aff_res_chemin(dep, arr, res, "chemin_fuir");
 		printf("\n");
 	}
