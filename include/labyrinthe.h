@@ -39,6 +39,9 @@ int lab_manuel(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums);
 /* Affiche le labyrinthe sur la sortie standard */
 void aff_lab(const char labyrinthe[N_LAB][M_LAB]);
 
+/* Renvoie vrai si si le caractere case_lab correspond a un chemin (avec ou sans 
+   item) */
+int est_chemin(char case_lab);
 
 
 #endif
