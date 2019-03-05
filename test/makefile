@@ -43,6 +43,8 @@ $(OBJDIR)/labyrinthe.o: labyrinthe_h
 
 $(OBJDIR)/test_lab.o: labyrinthe_h
 
+$(OBJDIR)/test_IA.o: IA_h
+
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
