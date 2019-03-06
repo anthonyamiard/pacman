@@ -102,7 +102,7 @@ int nb_voisins_coins(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 int place_permise(char l[N_LAB][M_LAB / 2], int x, int y) {
 	if((x < 1) || (x > (M_LAB / 2 - 1)) || (y < 1) || (y > N_LAB - 2)) {
 		return 0;
-	}
+	}/*
 	if(est_chemin(l[y-1][x-1]) && est_chemin(l[y-1][x]) && est_chemin(l[y][x-1])) {
 		return 0;
 	}
@@ -114,7 +114,8 @@ int place_permise(char l[N_LAB][M_LAB / 2], int x, int y) {
 	}
 	if(est_chemin(l[y+1][x+1]) && est_chemin(l[y][x+1]) && est_chemin(l[y+1][x])) {
 		return 0;
-	}
+	}*/
+	/*
 	if(est_chemin(l[y-1][x-1]) && !est_chemin(l[y-1][x]) && !est_chemin(l[y][x-1])) {
 		return 0;
 	}
@@ -127,6 +128,7 @@ int place_permise(char l[N_LAB][M_LAB / 2], int x, int y) {
 	if(est_chemin(l[y+1][x+1]) && !est_chemin(l[y][x+1]) && !est_chemin(l[y+1][x])) {
 		return 0;
 	}
+	*/
 	return 1;
 }
 
@@ -165,34 +167,39 @@ void coord_alea(int x, int y, int * x2, int * y2) {
 }
 
 void chemin_alea(char lab[N_LAB][M_LAB / 2], int x, int y) {
-	if(lab[y][x] == 'm') {
-		if(place_permise(lab, x, y)) {
-			lab[y][x] = 'p';
+	if(lab[y][x] == 'm' && place_permise(lab, x, y)) {
+		lab[y][x] = 'p';
+		
+		int i = 50, x2, y2;
+		
+		do {
+			coord_alea(x, y, &x2, &y2);
+		} while(i-- && (!est_chemin(lab[y2][x2]) || !place_permise(lab, x2, y2)));
+		
+		if(i) {
 			
-			aff_lab_permis(lab);
+			if(x2 == M_LAB / 2 - 1) {
+				lab[y2][x2] = 'p';
+				x2--;
+			}
+		
+			i = rand() % 8;
 			
-			aff_lab_coord(lab, x, y);
-			
-			int i = 5, x2, y2;
+			int dx = x2 - x;
+			int dy = y2 - y;
 			
 			do {
-				coord_alea(x, y, &x2, &y2);
-			} while(i-- && (est_chemin(lab[y2][x2]) || !place_permise(lab, x2, y2)));
-			
-			if(i) {
-			
-				i = rand() % 5;
-				
-				int dx = x2 - x;
-				int dy = y2 - y;
-				
-				do {
-					chemin_alea(lab, x2, y2);
-					x2 += dx;
-					y2 += dy;
-				} while(i-- && (est_chemin(lab[y2][x2]) || !place_permise(lab, x2, y2)));
-			}
+				chemin_alea(lab, x2, y2);
+				x2 += dx;
+				y2 += dy;
+			} while(i-- && (est_chemin(lab[y2][x2]) || place_permise(lab, x2, y2)));
+		} else {
+			aff_lab_coord(lab, x, y);
+			printf("%d, %d pas de chemin trouvé\n", x, y);
 		}
+	} else {
+		aff_lab_coord(lab, x, y);
+		printf("%d, %d place interdite\n", x, y);
 	}
 }
 
@@ -200,8 +207,8 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	int mid = M_LAB / 2;
 	char base[N_LAB][M_LAB / 2] = {
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
-		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
-		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
+		{'m', 'p', 'p', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
+		{'m', 'p', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
@@ -222,20 +229,23 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
-		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'c'},
+		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'p', 'c'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
-		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
-		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
+		{'m', 'p', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
+		{'m', 'p', 'p', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'}
 	};
 	
 	*nb_pacgums = 0;
 	
-	chemin_alea(base, 12, 23);
-	chemin_alea(base, 1, 1);
+	chemin_alea(base, 11, 23);
+	chemin_alea(base, 1, 3);
+	chemin_alea(base, 3, 1);
+	chemin_alea(base, 1, 27);
+	chemin_alea(base, 3, 29);
 	
 	int i, j;
 	for(i = 0; i < N_LAB; i++) {
