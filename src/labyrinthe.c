@@ -125,29 +125,6 @@ void chemin_alea(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 	}
 }
 
-void remplace_p_par_m(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
-	if(x >= 0 && x < M_LAB / 2 && y >= 0 && y < N_LAB &&
-	   labyrinthe[y][x] == 'p') {
-		labyrinthe[y][x] = 'm';
-	}
-	if(x + 1 >= 0 && x + 1 < M_LAB / 2 && y >= 0 && y < N_LAB &&
-	   labyrinthe[y][x+1] == 'p') {
-		labyrinthe[y][x+1] = 'm';
-	}
-	if(x >= 0 && x < M_LAB / 2 && y + 1 >= 0 && y + 1 < N_LAB &&
-	   labyrinthe[y+1][x] == 'p') {
-		labyrinthe[y+1][x] = 'm';
-	}
-	if(x + 1 >= 0 && x + 1 < M_LAB / 2 && y + 1 >= 0 && y + 1 < N_LAB &&
-	   labyrinthe[y+1][x+1] == 'p') {
-		labyrinthe[y+1][x+1] = 'm';
-	}
-}
-
-void mur_alea(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
-	remplace_p_par_m(labyrinthe, x, y);
-}
-
 int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	int mid = M_LAB / 2;
 	char base[N_LAB][M_LAB / 2] = {
