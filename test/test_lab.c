@@ -11,11 +11,12 @@ int main() {
 	int nb_pacgums;
 	lab_manuel(labyrinthe, &nb_pacgums);
 	aff_lab(labyrinthe);
+	printf("nb pacgums = %d\n", nb_pacgums);
 	
 	printf("\n");
-	
-	genere_lab(labyrinthe, &nb_pacgums);
-	aff_lab(labyrinthe);
+		genere_lab(labyrinthe, &nb_pacgums);
+		aff_lab(labyrinthe);
+		printf("nb pacgums = %d\n", nb_pacgums);
 	
 	return 0;
 }

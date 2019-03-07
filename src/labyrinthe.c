@@ -233,7 +233,7 @@ void chemin_alea(char lab[N_LAB][M_LAB / 2], int x, int y) {
 				x2--;
 			}
 			
-			i = rand() % 12;
+			i = rand() % 9 + 3;
 			
 			/* Calcule la direction generee par les coordonnees aleatoires */
 			int dx = x2 - x;
@@ -242,18 +242,16 @@ void chemin_alea(char lab[N_LAB][M_LAB / 2], int x, int y) {
 			if(!((!(y % 2) && dx) || (!(x % 2) && dy))) {
 			
 				do {
-					chemin_alea(lab, x2, y2);
+					if((rand() % 3))
+						chemin_alea(lab, x2, y2);
+					else if(lab[y2][x2] == 'm' && place_permise(lab, x2, y2)) {
+						lab[y2][x2] = 'p';
+					}
 					x2 += dx;
 					y2 += dy;
 				} while(i-- && (est_chemin(lab[y2][x2]) || place_permise(lab, x2, y2)));
 			}
-		} else {
-			aff_lab_coord(lab, x, y);
-			printf("%d, %d pas de chemin trouvé\n", x, y);
 		}
-	} else {
-		aff_lab_coord(lab, x, y);
-		printf("%d, %d place interdite\n", x, y);
 	}
 }
 
@@ -311,11 +309,21 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	chemin_alea(base, 3, 1);
 	chemin_alea(base, 1, 27);
 	chemin_alea(base, 3, 29);
-	
-	aff_lab_voisins(base);
-	aff_lab_coord(base, 0, 0);
+		
 	
 	int i, j;
+	int xe, ye;
+	
+	for(i = 1; i < N_LAB; i++) {
+		for(j = 1; j < mid; j++) {
+			if(epaisseur_mur(base, j, i, &xe, &ye) == 0) {
+				if(xe == 1)
+					epaissir_mur_x(base, j, i);
+				if(ye == 1)
+					epaissir_mur_y(base, j, i);
+			}
+		}
+	}
 	
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
@@ -329,6 +337,9 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 				*nb_pacgums += 2;
 		}
 	}
+	
+	if(*nb_pacgums < 270 || *nb_pacgums > 350)
+		genere_lab(labyrinthe, nb_pacgums);
 	
 	return 0;
 }
@@ -379,4 +390,72 @@ int lab_manuel(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	}
 	
 	return 0;
+}
+
+/* Ecrit l'epaisseur xe et ye d'un mur en x, y
+   Renvoie 0 s'il n'y a pas d'erreur, 1 si la case selectionnee de correspond
+   pas a un mur */
+int epaisseur_mur(const char l[N_LAB][M_LAB / 2], int x, int y, int * xe, int * ye) {
+	*xe = 0;
+	*ye = 0;
+	if(l[y][x] == 'm') {
+		int i, j;
+		for(i = y; i > 0 && l[i][x] == 'm'; i--);
+		if(l[i][x] != 'm')
+			i++;
+		for(; i < N_LAB && l[i][x] == 'm'; i++)
+			(*ye)++;
+		for(j = x; j > 0 && l[y][j] == 'm'; j--);
+		if(l[y][j] != 'm')
+			j++;
+		for(; j < M_LAB / 2 && l[y][j] == 'm'; j++)
+			(*xe)++;
+		return 0;
+	} else {
+		return 1;
+	}
+}
+
+/* Epaissit le mur en x, y d'une case de largeur
+   Renvoie 0 s'il n'y a pas d'erreur, 1 si la case selectionnee ne correspond
+   pas a un mur */
+int epaissir_mur_x(char l[N_LAB][M_LAB / 2], int x, int y) {
+	if(l[y][x] == 'm') {
+		int i, j, hauteur = 0;
+		for(i = y; i > 0 && l[i][x] == 'm'; i--);
+		if(l[i][x] != 'm')
+			i++;
+		for(; i < N_LAB && l[i][x] == 'm'; i++)
+			hauteur++;
+		for(j = x; j < M_LAB / 2 && l[y][j] == 'm'; j++);
+		int dep = i - hauteur;
+		for(i = dep; i < dep + hauteur; i++)
+			if(l[i][j] == 'p')
+				l[i][j] = 'm';
+		return 0;
+	} else {
+		return 1;
+	}
+}
+
+/* Epaissit le mur en x, y d'une case de hauteur
+   Renvoie 0 s'il n'y a pas d'erreur, 1 si la case selectionnee ne correspond
+   pas a un mur */
+int epaissir_mur_y(char l[N_LAB][M_LAB / 2], int x, int y) {
+	if(l[y][x] == 'm') {
+		int i, j, largeur = 0;
+		for(j = x; j > 0 && l[y][j] == 'm'; j--);
+		if(l[y][j] != 'm')
+			j++;
+		for(; j < M_LAB / 2 && l[y][j] == 'm'; j++)
+			largeur++;
+		for(i = y; i < N_LAB && l[i][x] == 'm'; i++);
+		int dep = j - largeur;
+		for(j = dep; j < dep + largeur; j++)
+			if(l[i][j] == 'p')
+				l[i][j] = 'm';
+		return 0;
+	} else {
+		return 1;
+	}
 }

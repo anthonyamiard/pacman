@@ -56,5 +56,18 @@ int place_permise(const char l[N_LAB][M_LAB / 2], int x, int y);
 /* Renvoie des coordonnees voisines aleatoires pour x, y dans x2 et y2 */
 void coord_alea(int x, int y, int * x2, int * y2);
 
+/* Ecrit l'epaisseur xe et ye d'un mur en x, y
+   Renvoie 0 s'il n'y a pas d'erreur, 1 si la case selectionnee ne correspond
+   pas a un mur */
+int epaisseur_mur(const char l[N_LAB][M_LAB / 2], int x, int y, int * xe, int * ye);
 
+/* Epaissit le mur en x, y d'une case de largeur
+   Renvoie 0 s'il n'y a pas d'erreur, 1 si la case selectionnee ne correspond
+   pas a un mur */
+int epaissir_mur_x(char l[N_LAB][M_LAB / 2], int x, int y);
+
+/* Epaissit le mur en x, y d'une case de hauteur
+   Renvoie 0 s'il n'y a pas d'erreur, 1 si la case selectionnee ne correspond
+   pas a un mur */
+int epaissir_mur_y(char l[N_LAB][M_LAB / 2], int x, int y);
 #endif
