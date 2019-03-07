@@ -11,28 +11,50 @@
 #include "../include/labyrinthe.h"
 
 coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
-  int x,y,i,j;
+  	int i,j;
 	int lab_numero[N_LAB][M_LAB];
-	fantome_t* fant;
+	temp = coord_arr;
 
-  if(labyrinthe[i][j] == 'm') {
-		lab_numero[i][j] = -1;
+	for(i=0;i<30;i++){
+		for(j=0;j<27;j++){
+ 			if(labyrinthe[i][j] == 'm')
+				lab_numero[i][j] = -1;
+			else
+				lab_numero[i][j] == 0;
+		}
 	}
-
-	lab_numero[coord_arr->x][coord_arr->y] = 0;
+	lab_numero[coord_arr->y][coord_arr->x] = 0;
+	lab_numero[coord_dep->y][coord_dep->x] = -2;
 
 	do {
+		if(!lab_numero[i][j] == -1){
+			lab_numero[temp->y][temp->x+1]
+			if(!lab_numero[i][j] == -1)
+				lab_numero[temp->y][temp->x+1] +=1;
+		}
+		if(!lab_numero[i][j] == -1){
+			lab_numero[temp->y][temp->x-1]
+			if(!lab_numero[i][j] == -1)
+				lab_numero[temp->y][temp->x+1] +=1;
+		}
+		if(!lab_numero[i][j] == -1){
+			lab_numero[temp->y+1][temp->x]
+			if(!lab_numero[i][j] == -1)
+				lab_numero[temp->y-1][temp->x] +=1;
+		}
+		if(!lab_numero[i][j] == -1){
+			lab_numero[temp->y-1][temp->x]
+			if(!lab_numero[i][j] == -1)
+				lab_numero[temp->y+1][temp->x] +=1;
+		}
 
-	} while(fant->coord->x != coord_dep->x && fant->coord->y != coord_dep->y);
 
-	/*do{
-        if(N)
-            chemin_aleatoire(labyrinthe(res.x)(rex.y),coord_dep,coord_arr);
-        else
-            coup_opti(total);
+	} while(lab_numero[coord_dep->y][coord_dep->x] == -2);
+	do{
+		if(!lab_numero[coord_dep->y][coord_dep->x] == -2)
+		
+	} while(
 
-
-	}while(!est_chemin(labyrinthe[res.y][res.x]));*/
 }
 
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
@@ -52,14 +74,7 @@ coord_t chemin_aleatoire(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coor
 	y = coord_dep->y;
 
 	do{
-		if(rand() %2)
-			res.x=x+1;
-		else
-			res.x=x-1;
-		if(rand() %2)
-			res.y=y+1;
-		else
-			res.y=y-1;
+		coord_alea(x ,y ,&(res.x) ,&(res.y));
 	}while(!est_chemin(labyrinthe[res.y][res.x]));
 
 	return res;
