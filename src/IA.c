@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <limits.h>
 
 #include "../include/IA.h"
 #include "../include/objets.h"
@@ -56,21 +57,21 @@ int coup_opti(int total) {
 }
 
 coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
-    int x,y;
+    int x,y,i,j;
     coord_t res;
     x = coord_dep->x;
 	y = coord_dep->y;
 	i = coord_arr->x;
 	j = coord_arr->y;
 
-	do{
-       /* if(N)
-            chemin_aleatoire(labyrinthe(res.x)(rex.y),coord_dep,coord_arr);*/
+	/*do{
+        if(N)
+            chemin_aleatoire(labyrinthe(res.x)(rex.y),coord_dep,coord_arr);
         else
             coup_opti(total);
 
 
-	}while(!est_chemin(labyrinthe[res.y][res.x]));
+	}while(!est_chemin(labyrinthe[res.y][res.x]));*/
 }
 
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
