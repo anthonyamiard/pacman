@@ -46,5 +46,15 @@ int est_chemin(char case_lab);
 /* Renvoie le nombre de chemins voisins d'une case */
 int nb_chemins_voisins(char labyrinthe[N_LAB][M_LAB], int x, int y);
 
+/* Pareil pour un demin-labyrinthe */
+int nb_chemins_voisins_demi(char labyrinthe[N_LAB][M_LAB / 2], int x, int y);
+
+/* Renvoie vrai si on peut generer une case chemin aux coordonnees (x,y), faux
+   sinon */
+int place_permise(const char l[N_LAB][M_LAB / 2], int x, int y);
+
+/* Renvoie des coordonnees voisines aleatoires pour x, y dans x2 et y2 */
+void coord_alea(int x, int y, int * x2, int * y2);
+
 
 #endif

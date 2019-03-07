@@ -65,6 +65,7 @@ int est_chemin(char case_lab) {
 	return case_lab == 'c' || case_lab == 'p' || case_lab == 's';
 }
 
+/* Renvoie le nombre de chemins voisins d'une case */
 int nb_chemins_voisins(char labyrinthe[N_LAB][M_LAB], int x, int y) {
 	int nb = 0;
 	if(x > 0 && est_chemin(labyrinthe[y][x-1])) {
@@ -82,7 +83,8 @@ int nb_chemins_voisins(char labyrinthe[N_LAB][M_LAB], int x, int y) {
 	return nb;
 }
 
-int nb_voisins(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
+/* Pareil pour un demin-labyrinthe */
+int nb_chemins_voisins_demi(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 	int nb = 0;
 	if(x > 0 && est_chemin(labyrinthe[y][x-1])) {
 		nb++;
@@ -101,6 +103,8 @@ int nb_voisins(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 	return nb;
 }
 
+/* Renvoie vrai si on peut generer une case chemin aux coordonnees (x,y), faux
+   sinon */
 int place_permise(const char l[N_LAB][M_LAB / 2], int x, int y) {
 	if((x < 1) || (x > (M_LAB / 2 - 1)) || (y < 1) || (y > N_LAB - 2)) {
 		return 0;
@@ -168,7 +172,7 @@ void aff_lab_voisins(const char labyrinthe[N_LAB][M_LAB / 2]) {
 		printf("%2d ", i);
 		for(j = 0; j < M_LAB / 2; j++) {
 			if(est_chemin(labyrinthe[i][j])) {
-				printf("%2d", nb_voisins(labyrinthe, j, i));
+				printf("%2d", nb_chemins_voisins_demi(labyrinthe, j, i));
 			} else {
 				
 				switch(labyrinthe[i][j]) {
@@ -183,6 +187,7 @@ void aff_lab_voisins(const char labyrinthe[N_LAB][M_LAB / 2]) {
 	}
 }
 
+/* Renvoie des coordonnees voisines aleatoires pour x, y dans x2 et y2 */
 void coord_alea(int x, int y, int * x2, int * y2) {
 	*x2 = x;
 	*y2 = y;
@@ -197,36 +202,44 @@ void coord_alea(int x, int y, int * x2, int * y2) {
 		*y2 = y + 1;
 }
 
+/* Se deplace sur le demi-labyrinthe de cases en cases de maniere aleatoire et
+   recursive et transforme les murs en chemins avec pacgum */
 void chemin_alea(char lab[N_LAB][M_LAB / 2], int x, int y) {
 	if(lab[y][x] == 'm' && place_permise(lab, x, y)) {
 		lab[y][x] = 'p';
+		
+		/* Cas ou l'on se trouve sur la ligne du milieu. Comme elle sera
+		   repliquee juste a cote, on ne peut pas se deplacer verticalement
+		   dessus sous peine de creer un chemin verticalde deux cases
+		   d'epaisseur */
 		if(x == M_LAB / 2 - 1) {
 			x--;
 		}
 		
-		aff_lab_coord(lab, x, y);
+		/* x2 et y2 coordonnees de la case voisine a explorer */ 
+		int i = 5, x2, y2;
 		
-		int i = 50, x2, y2;
-		
+		/* Genere des coordonnees aleatoires qui ne tombent pas sur un chemin et
+		   ou la place est permise */
 		do {
 			coord_alea(x, y, &x2, &y2);
 		} while(i-- && (!est_chemin(lab[y2][x2]) || !place_permise(lab, x2, y2)));
 		
-		if(i) {
+		if(i) { // Si on a trouve des coordonnees valides
 			
+			/* Cas ou x2 se trouve sur la ligne du milieu */
 			if(x2 == M_LAB / 2 - 1) {
 				lab[y2][x2] = 'p';
 				x2--;
 			}
-		
+			
 			i = rand() % 12;
 			
+			/* Calcule la direction generee par les coordonnees aleatoires */
 			int dx = x2 - x;
 			int dy = y2 - y;
 			
-			if((!(y % 2) && dx) || (!(x % 2) && dy)) {
-			
-			} else {
+			if(!((!(y % 2) && dx) || (!(x % 2) && dy))) {
 			
 				do {
 					chemin_alea(lab, x2, y2);
@@ -248,7 +261,7 @@ void suppr_cds(char lab[N_LAB][M_LAB / 2]) {
 	int i, j;
 	for(i = 0; i < N_LAB; i++) {
 		for(j = 0; j < M_LAB / 2 - 1; j++) {
-			if(est_chemin(lab[i][j]) && nb_voisins(lab, j, i) <= 1) {
+			if(est_chemin(lab[i][j]) && nb_chemins_voisins_demi(lab, j, i) <= 1) {
 				lab[i][j] = 'm';
 			}
 		}
