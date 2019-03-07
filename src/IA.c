@@ -64,13 +64,13 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 	j = coord_arr->y;
 
 	do{
-        if(les cases sont + N)
-            chemin_aleatoire(labyrinthe(res.x)(rex.y),coord_dep,coord_arr);
+       /* if(N)
+            chemin_aleatoire(labyrinthe(res.x)(rex.y),coord_dep,coord_arr);*/
         else
             coup_opti(total);
 
 
-	}while(!est_chemin(labyrinthe[res.y][res.x]) && x != i && y != j);
+	}while(!est_chemin(labyrinthe[res.y][res.x]));
 }
 
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
