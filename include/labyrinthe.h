@@ -43,5 +43,8 @@ void aff_lab(const char labyrinthe[N_LAB][M_LAB]);
    item), faux sinon */
 int est_chemin(char case_lab);
 
+/* Renvoie le nombre de chemins voisins d'une case */
+int nb_chemins_voisins(char labyrinthe[N_LAB][M_LAB], int x, int y);
+
 
 #endif
