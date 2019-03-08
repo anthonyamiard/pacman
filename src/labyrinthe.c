@@ -255,14 +255,20 @@ void chemin_alea(char lab[N_LAB][M_LAB / 2], int x, int y) {
 	}
 }
 
-void suppr_cds(char lab[N_LAB][M_LAB / 2]) {
-	int i, j;
-	for(i = 0; i < N_LAB; i++) {
-		for(j = 0; j < M_LAB / 2 - 1; j++) {
-			if(est_chemin(lab[i][j]) && nb_chemins_voisins_demi(lab, j, i) <= 1) {
-				lab[i][j] = 'm';
-			}
-		}
+void suppr_cds(char lab[N_LAB][M_LAB / 2], int x, int y) {
+	if(est_chemin(lab[y][x]) && nb_chemins_voisins_demi(lab, x, y) <= 1) {
+		lab[y][x] = 'm';
+		int x2 = x, y2 = y;
+		if(est_chemin(lab[y][x - 1]))
+			x2 = x - 1;
+		else if(est_chemin(lab[y][x + 1]))
+			x2 = x + 2;
+		else if(est_chemin(lab[y - 1][x]))
+			y2 = y - 1;
+		else if(est_chemin(lab[y + 1][x]))
+			y2 = y + 1;
+		if(x2 != x || y2 != y)
+			suppr_cds(lab, x2, y2);
 	}
 }
 
@@ -327,7 +333,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
-			suppr_cds(base);
+			suppr_cds(base, j, i);
 	
 	for(i = 0; i < N_LAB; i++) {
 		for(j = 0; j < mid; j++) {
