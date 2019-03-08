@@ -13,7 +13,7 @@
 coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
   	int i,j;
 	int lab_numero[N_LAB][M_LAB];
-	temp = coord_arr;
+	coord_t * temp = coord_arr;
 
 	for(i=0;i<30;i++){
 		for(j=0;j<27;j++){
@@ -28,22 +28,22 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 
 	do {
 		if(!lab_numero[i][j] == -1){
-			lab_numero[temp->y][temp->x+1]
+			lab_numero[temp->y][temp->x+1];
 			if(!lab_numero[i][j] == -1)
 				lab_numero[temp->y][temp->x+1] +=1;
 		}
 		if(!lab_numero[i][j] == -1){
-			lab_numero[temp->y][temp->x-1]
+			lab_numero[temp->y][temp->x-1];
 			if(!lab_numero[i][j] == -1)
 				lab_numero[temp->y][temp->x+1] +=1;
 		}
 		if(!lab_numero[i][j] == -1){
-			lab_numero[temp->y+1][temp->x]
+			lab_numero[temp->y+1][temp->x];
 			if(!lab_numero[i][j] == -1)
 				lab_numero[temp->y-1][temp->x] +=1;
 		}
 		if(!lab_numero[i][j] == -1){
-			lab_numero[temp->y-1][temp->x]
+			lab_numero[temp->y-1][temp->x];
 			if(!lab_numero[i][j] == -1)
 				lab_numero[temp->y+1][temp->x] +=1;
 		}
@@ -51,9 +51,9 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 
 	} while(lab_numero[coord_dep->y][coord_dep->x] == -2);
 	do{
-		if(!lab_numero[coord_dep->y][coord_dep->x] == -2)
+		if(!lab_numero[coord_dep->y][coord_dep->x] == -2);
 		
-	} while(
+	} while(1 /*Pour rendre le fichier compilable*/);
 
 }
 
