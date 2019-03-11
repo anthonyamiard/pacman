@@ -7,7 +7,8 @@
 
 #include "../include/labyrinthe.h"
 
-#define N_RAND 2
+#define X_DEP 11
+#define Y_DEP 23
 
 void aff_lab(const char labyrinthe[N_LAB][M_LAB]) {
 	int i, j;
@@ -98,7 +99,7 @@ int nb_chemins_voisins_demi(char labyrinthe[N_LAB][M_LAB / 2], int x, int y) {
 	if(y < (N_LAB - 1) && est_chemin(labyrinthe[y+1][x])) {
 		nb++;
 	}
-	if(x == M_LAB / 2 - 1)
+	if(x == M_LAB / 2 - 1 && est_chemin(labyrinthe[y][x])
 		nb++;
 	return nb;
 }
@@ -256,7 +257,7 @@ void chemin_alea(char lab[N_LAB][M_LAB / 2], int x, int y) {
 }
 
 void suppr_cds(char lab[N_LAB][M_LAB / 2], int x, int y) {
-	if(est_chemin(lab[y][x]) && nb_chemins_voisins_demi(lab, x, y) <= 1) {
+	if(x != X_DEP && y != Y_DEP && est_chemin(lab[y][x]) && nb_chemins_voisins_demi(lab, x, y) <= 1) {
 		lab[y][x] = 'm';
 		int x2 = x, y2 = y;
 		if(est_chemin(lab[y][x - 1]))
@@ -310,7 +311,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	
 	*nb_pacgums = 0;
 	
-	chemin_alea(base, 11, 23);
+	chemin_alea(base, X_DEP, Y_DEP);
 	chemin_alea(base, 1, 3);
 	chemin_alea(base, 3, 1);
 	chemin_alea(base, 1, 27);
