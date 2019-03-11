@@ -63,7 +63,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	*nb_pacgums = 0;
 	
 	/* Génération de chemin aléatoire à partir du point de départ et des deux
-	 * coins (deux points de départs par coin */
+	 * coins (deux points de départs par coin) */
 	chemin_alea(base, X_DEP, Y_DEP);
 	chemin_alea(base, 1, 3);
 	chemin_alea(base, 3, 1);
@@ -90,6 +90,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
 			suppr_cds(base, j, i);
+		
 	
 	/* Recopie du demi-labyrinthe dans labyrinthe avec application de la
 	 * symétrie et comptage des pacgums */
@@ -310,17 +311,17 @@ int place_permise(const char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 }
 
 void suppr_cds(char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
-	if(x != X_DEP && y != Y_DEP && est_chemin(demi_lab[y][x]) &&
+	if((x != X_DEP || y != Y_DEP) && est_chemin(demi_lab[y][x]) &&
 		nb_chemins_voisins_demi(demi_lab, x, y) <= 1) {
 		demi_lab[y][x] = 'm';
 		int x2 = x, y2 = y;
-		if(est_chemin(demi_lab[y][x - 1]))
+		if(x > 0 && est_chemin(demi_lab[y][x - 1]))
 			x2 = x - 1;
-		else if(est_chemin(demi_lab[y][x + 1]))
-			x2 = x + 2;
-		else if(est_chemin(demi_lab[y - 1][x]))
+		else if(x < M_LAB / 2 - 1 && est_chemin(demi_lab[y][x + 1]))
+			x2 = x + 1;
+		else if(y > 0 && est_chemin(demi_lab[y - 1][x]))
 			y2 = y - 1;
-		else if(est_chemin(demi_lab[y + 1][x]))
+		else if(y < N_LAB - 1 && est_chemin(demi_lab[y + 1][x]))
 			y2 = y + 1;
 		if(x2 != x || y2 != y)
 			suppr_cds(demi_lab, x2, y2);
