@@ -78,7 +78,7 @@ int main() {
 
 	fantome_t * f_rose = malloc(sizeof(fantome_t));
 	f_rose->nom = NULL;
-	f_rose->couleur = 'r';
+	f_rose->couleur = 'p';
 	f_rose->chemin = chemin_anticipe;
 	f_rose->etat = POURSUITE;
 	f_rose->coord = malloc(sizeof(coord_t));
