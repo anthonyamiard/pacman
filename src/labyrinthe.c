@@ -89,12 +89,12 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
 			debouche_cds(base, j, i);
-	/* Suppression des culs-de-sac */
+	/* Suppression des culs-de-sac *//*
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
 			suppr_cds(base, j, i);
 
-
+*/
 	/* Recopie du demi-labyrinthe dans labyrinthe avec application de la
 	 * symétrie et comptage des pacgums */
 	for(i = 0; i < N_LAB; i++) {
@@ -204,7 +204,7 @@ int est_chemin(char case_lab) {
 }
 
 void chemin_alea(char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
-	if(demi_lab[y][x] == 'm' && place_permise(demi_lab, x, y)) {
+	if(demi_lab[y][x] == 'm' && place_permise(demi_lab, x, y) == 1) {
 		demi_lab[y][x] = 'p';
 
 		/* Cas ou l'on se trouve sur la ligne du milieu. Comme elle sera
@@ -225,7 +225,7 @@ void chemin_alea(char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 		do {
 			coord_alea(x, y, &x2, &y2);
 		} while(i-- && (!est_chemin(demi_lab[y2][x2]) ||
-			!place_permise(demi_lab, x2,y2)));
+			place_permise(demi_lab, x2,y2) != 1));
 
 		if(i) { // Si on a trouve des coordonnees valides
 
@@ -268,7 +268,7 @@ void chemin_alea(char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 					x2 += dx;
 					y2 += dy;
 				} while((i-- || nb_chemins_voisins_demi(demi_lab, x2, y2) <= 1) && (est_chemin(demi_lab[y2][x2]) ||
-					place_permise(demi_lab, x2, y2)));
+					place_permise(demi_lab, x2, y2) == 1));
 			}
 		}
 	}
@@ -338,24 +338,24 @@ int place_permise(const char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 		est_chemin(demi_lab[y+1][x]))
 		return 0;
 
-	int ret_rand = 0;
+	int ret_rand = 2;
 	/* Éviter les murs d'une case d'épaisseur */
-	if(est_chemin(demi_lab[y+1][x]) && est_chemin(demi_lab[y][x+2]) && est_chemin(demi_lab[y+1][x+2]))
+	if(est_chemin(demi_lab[y+1][x]) && !est_chemin(demi_lab[y][x+1]) && !est_chemin(demi_lab[y+1][x+1]) && est_chemin(demi_lab[y][x+2]) && est_chemin(demi_lab[y+1][x+2]))
 		return ret_rand;
-	if(est_chemin(demi_lab[y-1][x]) && est_chemin(demi_lab[y][x+2]) && est_chemin(demi_lab[y-1][x+2]))
+	if(est_chemin(demi_lab[y-1][x]) && !est_chemin(demi_lab[y][x+1]) && !est_chemin(demi_lab[y-1][x+1]) && est_chemin(demi_lab[y][x+2]) && est_chemin(demi_lab[y-1][x+2]))
 		return ret_rand;
-	if(est_chemin(demi_lab[y+1][x]) && est_chemin(demi_lab[y][x-2]) && est_chemin(demi_lab[y+1][x-2]))
+	if(est_chemin(demi_lab[y+1][x]) && !est_chemin(demi_lab[y][x-1]) && !est_chemin(demi_lab[y+1][x-1]) && est_chemin(demi_lab[y][x-2]) && est_chemin(demi_lab[y+1][x-2]))
 		return ret_rand;
-	if(est_chemin(demi_lab[y-1][x]) && est_chemin(demi_lab[y][x-2]) && est_chemin(demi_lab[y-1][x-2]))
+	if(est_chemin(demi_lab[y-1][x]) && !est_chemin(demi_lab[y][x-1]) && !est_chemin(demi_lab[y-1][x-1]) && est_chemin(demi_lab[y][x-2]) && est_chemin(demi_lab[y-1][x-2]))
 		return ret_rand;
 
-	if(est_chemin(demi_lab[y][x+1]) && est_chemin(demi_lab[y+2][x]) && est_chemin(demi_lab[y+2][x+1]))
+	if(est_chemin(demi_lab[y][x+1]) && !est_chemin(demi_lab[y+1][x]) && !est_chemin(demi_lab[y+1][x+1]) && est_chemin(demi_lab[y+2][x]) && est_chemin(demi_lab[y+2][x+1]))
 		return ret_rand;
-	if(est_chemin(demi_lab[y][x-1]) && est_chemin(demi_lab[y+2][x]) && est_chemin(demi_lab[y+2][x-1]))
+	if(est_chemin(demi_lab[y][x-1]) && !est_chemin(demi_lab[y+1][x]) && !est_chemin(demi_lab[y+1][x-1]) && est_chemin(demi_lab[y+2][x]) && est_chemin(demi_lab[y+2][x-1]))
 		return ret_rand;
-	if(est_chemin(demi_lab[y][x+1]) && est_chemin(demi_lab[y-2][x]) && est_chemin(demi_lab[y-2][x+1]))
+	if(est_chemin(demi_lab[y][x+1]) && !est_chemin(demi_lab[y-1][x]) && !est_chemin(demi_lab[y-1][x+1]) && est_chemin(demi_lab[y-2][x]) && est_chemin(demi_lab[y-2][x+1]))
 		return ret_rand;
-	if(est_chemin(demi_lab[y][x-1]) && est_chemin(demi_lab[y-2][x]) && est_chemin(demi_lab[y-2][x-1]))
+	if(est_chemin(demi_lab[y][x-1]) && !est_chemin(demi_lab[y-1][x]) && !est_chemin(demi_lab[y-1][x-1]) && est_chemin(demi_lab[y-2][x]) && est_chemin(demi_lab[y-2][x-1]))
 		return ret_rand;
 
 	return 1;
@@ -363,6 +363,8 @@ int place_permise(const char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 
 void debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y) {
 	if(est_chemin(demi_lab[y][x]) && nb_chemins_voisins_demi(demi_lab, x, y) <= 1) {
+
+		/* Déboucher en ligne droite */
 		if(x > 2 && est_chemin(demi_lab[y][x-2]) && place_permise(demi_lab, x-1, y))
 			demi_lab[y][x-1] = 'p';
 		if(x < M_LAB/2 - 3 && est_chemin(demi_lab[y][x+2]) && place_permise(demi_lab, x+1, y))
@@ -371,6 +373,32 @@ void debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y) {
 			demi_lab[y-1][x] = 'p';
 		if(y < N_LAB - 3 && est_chemin(demi_lab[y+2][x]) && place_permise(demi_lab, x, y+1))
 			demi_lab[y+1][x] = 'p';
+
+		/* Déboucher en angle */
+		if(x > 0 && y > 0 && est_chemin(demi_lab[y-1][x-1])) {
+			if(place_permise(demi_lab, x-1, y)) demi_lab[y][x-1] = 'p';
+			if(place_permise(demi_lab, x, y-1)) demi_lab[y-1][x] = 'p';
+		}
+		if(x > 0 && y < N_LAB - 1 && est_chemin(demi_lab[y+1][x-1])) {
+			if(place_permise(demi_lab, x-1, y)) demi_lab[y][x-1] = 'p';
+			if(place_permise(demi_lab, x, y+1)) demi_lab[y+1][x] = 'p';
+		}
+		if(x < M_LAB/2 - 1 && y > 0 && est_chemin(demi_lab[y-1][x+1])) {
+			if(place_permise(demi_lab, x+1, y)) demi_lab[y][x+1] = 'p';
+			if(place_permise(demi_lab, x, y-1)) demi_lab[y-1][x] = 'p';
+		}
+		if(x < M_LAB/2 - 1 && y < N_LAB - 1 && est_chemin(demi_lab[y+1][x+1])) {
+			if(place_permise(demi_lab, x+1, y)) demi_lab[y][x+1] = 'p';
+			if(place_permise(demi_lab, x, y+1)) demi_lab[y+1][x] = 'p';
+		}
+
+		/* Déboucher en longue ligne droite */
+		int i, j, xmax, ymax;
+		for(j = x + 1; j < M_LAB/2 && !est_chemin(demi_lab[y][j]) && place_permise(demi_lab, j, y); j++);
+		if(j == M_LAB/2 - 1 || (j < M_LAB/2 - 1 && est_chemin(demi_lab[y][j])))
+			xmax = j;
+		for(j = x; j < xmax; j++)
+			demi_lab[y][j] = 'p';
 	}
 }
 
