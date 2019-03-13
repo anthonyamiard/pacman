@@ -163,9 +163,23 @@ int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x,
  * \param[in]	y			Coordonnée verticale de la case
  * \retval		0			Interdit de générer un chemin à cet emplacement
  * \retval		1			Génération d'un chemin autorisée
+ * \retval		2			Génération d'un chemin autorisée lors des
+ * 							corrections
  */
 int place_permise(const char demi_lab[N_LAB][M_LAB / 2], int x, int y);
 
+/*!
+ * \fn		int debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y)
+ * \brief	Débouche les culs-de-sac
+ * 
+ * Débouche les culs-de-sac du demi-labyrinthe \c demi_lab aux coordonnées (x,y)
+ * en les reliant à un autre chemin.
+ * 
+ * \param[in,out]	demi_lab	Demi-labyrinthe de \c N_LAB lignes et
+ * 								<tt>M_LAB/2</tt> colonnes
+ * \param[in]		x			Coordonnée horizontale du cul-du-sac
+ * \param[in]		y			Coordonnée verticale du cul-du-sac
+ */
 void debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y);
 
 /*!
@@ -177,65 +191,11 @@ void debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y);
  * totalement bouché.
  *
  * \param[in,out]	demi_lab	Demi-labyrinthe de \c N_LAB lignes et
- * 								<tt>M_LAB / 2</tt> colonnes
+ * 								<tt>M_LAB/2</tt> colonnes
  * \param[in]		x			Coordonnée horizontale du cul-de-sac
  * \param[in]		y			Coordonnée verticale du cul-de-sac
  */
 void suppr_cds(char demi_lab[N_LAB][M_LAB / 2], int x, int y);
-
-/*!
- * @}
- * \name	Fonctions sur les murs
- * @{
- */
-
-/*!
- * \fn		int epaisseur_mur(const char demi_lab[N_LAB][M_LAB / 2], int x, int y, int * xe, int * ye)
- * \brief	Renvoie l'épaisseur du mur
- *
- * Écrit l’épaisseur du mur en (x,y) dans \c xe et \c ye.
- *
- * \param[in]	demi_lab	Demi-labyrinthe de \c N_LAB lignes et
- *							<tt>M_LAB / 2</tt> colonnes
- * \param[in]	x			Coordonnée horizontale de la case
- * \param[in]	y			Coordonnée verticale de la case
- * \param[out]	xe			Largeur du mur
- * \param[out]	ye			Hauteur du mur
- * \retval		0			Aucune erreur
- * \retval		1			<tt>demi_lab[y][x]</tt> n'est pas un mur
- */
-int epaisseur_mur(const char demi_lab[N_LAB][M_LAB / 2], int x, int y, int * xe,
-				  int * ye);
-
-/*!
- * \fn		int epaissir_mur_x(char demi_lab[N_LAB][M_LAB / 2], int x, int y)
- * \brief	Élargit le mur
- *
- * Épaissit le mur en (x, y) d'une case de largeur.
- *
- * \param[in,out]	demi_lab	Demi-labyrinthe de \c N_LAB lignes et
- * 								<tt>M_LAB / 2</tt> colonnes
- * \param[in]		x			Coordonnée horizontale du mur
- * \param[in]		y			Coordonnée verticale du mur
- * \retval			0			Aucune erreur
- * \retval			1			<tt>demi_lab[y][x]</tt> n'est pas un mur
- */
-int epaissir_mur_x(char demi_lab[N_LAB][M_LAB / 2], int x, int y);
-
-/*!
- * \fn		int epaissir_mur_y(char demi_lab[N_LAB][M_LAB / 2], int x, int y)
- * \brief	Épaissit le mur en y
- *
- * Épaissit le mur en (x, y) d'une case de hauteur.
- *
- * \param[in,out]	demi_lab	Demi-labyrinthe de \c N_LAB lignes et
- * 								<tt>M_LAB / 2</tt> colonnes
- * \param[in]		x			Coordonnée horizontale du mur
- * \param[in]		y			Coordonnée verticale du mur
- * \retval			0			Aucune erreur
- * \retval			1			<tt>demi_lab[y][x]</tt> n'est pas un mur
- */
-int epaissir_mur_y(char demi_lab[N_LAB][M_LAB / 2], int x, int y);
 
 /*!
  * @}
