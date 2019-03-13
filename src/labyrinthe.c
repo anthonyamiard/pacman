@@ -89,11 +89,11 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
 			debouche_cds(base, j, i);
-	/* Suppression des culs-de-sac *//*
+	/* Suppression des culs-de-sac */
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
 			suppr_cds(base, j, i);
-*/
+
 
 	/* Recopie du demi-labyrinthe dans labyrinthe avec application de la
 	 * symétrie et comptage des pacgums */
@@ -365,12 +365,12 @@ void debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y) {
 	if(est_chemin(demi_lab[y][x]) && nb_chemins_voisins_demi(demi_lab, x, y) <= 1) {
 		if(x > 2 && est_chemin(demi_lab[y][x-2]) && place_permise(demi_lab, x-1, y))
 			demi_lab[y][x-1] = 'p';
-		else if(x < M_LAB/2 - 3 && est_chemin(demi_lab[y][x+2]) && place_permise(demi_lab, x+1, y))
+		if(x < M_LAB/2 - 3 && est_chemin(demi_lab[y][x+2]) && place_permise(demi_lab, x+1, y))
 			demi_lab[y][x+1] = 'p';
-		else if(y > 2 && est_chemin(demi_lab[y-2][x]) && place_permise(demi_lab, x, y-1))
+		if(y > 2 && est_chemin(demi_lab[y-2][x]) && place_permise(demi_lab, x, y-1))
 			demi_lab[y-1][x] = 'p';
-		else if(y < N_LAB - 3 && est_chemin(demi_lab[y-2][x]) && place_permise(demi_lab, x, y+1))
-			demi_lab[y+11][x] = 'p';
+		if(y < N_LAB - 3 && est_chemin(demi_lab[y+2][x]) && place_permise(demi_lab, x, y+1))
+			demi_lab[y+1][x] = 'p';
 	}
 }
 
