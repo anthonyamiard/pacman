@@ -27,7 +27,7 @@
  * \param[in] labyrinthe Labyrinthe de \c N_LAB lignes et \c M_LAB colonnes
  * \param[in] coord_dep Coordonnées de départ où se trouve l'ennemi
  * \param[in] coord_arr Coordonnées d'arrivée où se trouve pacman
- * \retval La coordonnée suivante à l'instant t+1
+ * \retval coord_t La coordonnée suivante à l'instant t+1
  */
 coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
 
@@ -41,7 +41,7 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t
  * \param[in] labyrinthe Labyrinthe de \c N_LAB lignes et \c M_LAB colonnes
  * \param[in] coord_dep Coordonnées de départ où se trouve l'ennemi
  * \param[in] coord_arr Coordonnées d'arrivée où se trouve pacman
- * \retval La coordonnée suivante à l'instant t+1
+ * \retval coord_t La coordonnée suivante à l'instant t+1
  */
 coord_t chemin_aleatoire(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
 
@@ -55,7 +55,7 @@ coord_t chemin_aleatoire(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coo
  * \param[in] labyrinthe Labyrinthe de \c N_LAB lignes et \c M_LAB colonnes
  * \param[in] coord_dep Coordonnées de départ où se trouve l'ennemi
  * \param[in] coord_arr Coordonnées d'arrivée où se trouve pacman
- * \retval La coordonnée suivante à l'instant t+1
+ * \retval coord_t La coordonnée suivante à l'instant t+1
  */
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
 
@@ -68,7 +68,7 @@ coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coor
  * \param[in] labyrinthe Labyrinthe de \c N_LAB lignes et \c M_LAB colonnes
  * \param[in] coord_dep Coordonnées de départ où se trouve l'ennemi
  * \param[in] coord_arr Coordonnées d'arrivée où se trouve pacman
- * \retval La coordonnée suivante à l'instant t+1
+ * \retval coord_t La coordonnée suivante à l'instant t+1
  */
 coord_t chemin_fuir(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
 
