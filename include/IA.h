@@ -46,7 +46,7 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t
 coord_t chemin_aleatoire(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
 
 /*!
- * \fn coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr)
+ * \fn coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr)
  * \brief Code le comportement chemin anticipe
  *
  * L'ennemi avec ce comportement anticipera les déplacements de pacman et le
@@ -60,7 +60,7 @@ coord_t chemin_aleatoire(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coo
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
 
 /*!
- * \fn coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr)
+ * \fn coord_t chemin_fuir(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr)
  * \brief Code le comportement chemin court
  *
  * L'ennemi avec ce comportement cherchera à fuir pacman dès que c'est possible
