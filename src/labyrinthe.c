@@ -72,7 +72,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 
 
 	int i, j;
-	
+
 	/* Débouchage des culs-de-sac */
 	for(i = 0; i < N_LAB; i++)
 		for(j = 0; j < mid; j++)
@@ -83,7 +83,7 @@ int genere_lab(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 			suppr_cds(base, j, i);
 
 	int nb_spg = 0; /* Nombre de super-pacgums */
-		
+
 	/* Recopie du demi-labyrinthe dans labyrinthe avec application de la
 	 * symétrie, placement des super-pacgums et comptage des pacgums */
 	for(i = 0; i < N_LAB; i++) {
@@ -142,7 +142,7 @@ int lab_manuel(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums) {
 		{'m', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'm'},
 		{'m', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm', 'm'}
 	};
-	
+
 	/* Recopie avec comptage des pacgums */
 	int i, j;
 	*nb_pacgums = 0;
@@ -169,6 +169,30 @@ void aff_lab(const char labyrinthe[N_LAB][M_LAB]) {
 		printf("%2d ", i);
 		for(j = 0; j < M_LAB; j++) {
 			switch(labyrinthe[i][j]) {
+				case 'm': printf("██"); break;
+				case 'c': printf("  "); break;
+				case 'p': printf("• "); break;
+				case 's': printf("● "); break;
+				case 'b': printf("▓▓"); break;
+				case 'e': printf("▔▔"); break;
+				default: printf("XX");
+			}
+		}
+		printf("\n");
+	}
+}
+
+void aff_lab_demi(const char demi_lab[N_LAB][M_LAB/2]) {
+	int i, j;
+	printf("y\\x");
+	for(j = 0; j < M_LAB/2; j++) {
+		printf("%2d", j);
+	}
+	printf("\n");
+	for(i = 0; i < N_LAB; i++) {
+		printf("%2d ", i);
+		for(j = 0; j < M_LAB/2; j++) {
+			switch(demi_lab[i][j]) {
 				case 'm': printf("██"); break;
 				case 'c': printf("  "); break;
 				case 'p': printf("• "); break;
@@ -239,7 +263,7 @@ void chemin_alea(char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 			/* Calcule la direction générée par les coordonnées aléatoires */
 			int dx = x2 - x;
 			int dy = y2 - y;
-			
+
 			if(!((!(y % 2) && dx) || (!(x % 2) && dy))) {
 
 				/* Génération d'une ligne droite avec ramifications */
@@ -281,7 +305,7 @@ int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x, int y)
 	if(x > 0 && est_chemin(demi_lab[y][x-1])) {
 		nb++;
 	}
-	if(x < (M_LAB / 2 - 1) && est_chemin(demi_lab[y][x+1])) {
+	if(x < (M_LAB/2 - 1) && est_chemin(demi_lab[y][x+1])) {
 		nb++;
 	}
 	if(y > 0 && est_chemin(demi_lab[y-1][x])) {
@@ -290,7 +314,7 @@ int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x, int y)
 	if(y < (N_LAB - 1) && est_chemin(demi_lab[y+1][x])) {
 		nb++;
 	}
-	if(x == M_LAB / 2 - 1 && est_chemin(demi_lab[y][x]))
+	if(x == (M_LAB/2 - 1) && est_chemin(demi_lab[y][x]))
 		nb++;
 	return nb;
 }
@@ -366,35 +390,35 @@ void debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y) {
 		nb_chemins_voisins_demi(demi_lab, x, y) <= 1) {
 
 		int i = y, j = x;
-		
+
 		for(j = x + 1; j < M_LAB/2 && !est_chemin(demi_lab[y][j]) &&
 			place_permise(demi_lab, j, y); j++);
 		if(j == M_LAB/2 || (j < M_LAB/2 && est_chemin(demi_lab[y][j])))
 			for(j = x + 1; j < M_LAB/2 && !est_chemin(demi_lab[y][j]) &&
 				place_permise(demi_lab, j, y); j++)
 				demi_lab[y][j] = 'p';
-		
+
 		for(j = x - 1; j > 0 && !est_chemin(demi_lab[y][j]) &&
 			place_permise(demi_lab, j, y); j--);
 		if(j > 0 && est_chemin(demi_lab[y][j]))
 			for(j = x - 1; j > 0 && !est_chemin(demi_lab[y][j]) &&
 				place_permise(demi_lab, j, y); j--)
 				demi_lab[y][j] = 'p';
-		
+
 		for(i = y + 1; i < N_LAB && !est_chemin(demi_lab[i][x]) &&
 			place_permise(demi_lab, x, i); i++);
 		if(i < N_LAB && est_chemin(demi_lab[i][x]))
 			for(i = y + 1; i < N_LAB && !est_chemin(demi_lab[i][x]) &&
 				place_permise(demi_lab, x, i); i++)
 				demi_lab[i][x] = 'p';
-		
+
 		for(i = y - 1; i > 0 && !est_chemin(demi_lab[i][x]) &&
 			place_permise(demi_lab, x, i); i--);
 		if(i > 0 && est_chemin(demi_lab[i][x]))
 			for(i = y - 1; i > 0 && !est_chemin(demi_lab[i][x]) &&
 				place_permise(demi_lab, x, i); i--)
 				demi_lab[i][x] = 'p';
-		
+
 	}
 }
 

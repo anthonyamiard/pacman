@@ -75,6 +75,17 @@ int lab_manuel(char labyrinthe[N_LAB][M_LAB], int * nb_pacgums);
 void aff_lab(const char labyrinthe[N_LAB][M_LAB]);
 
 /*!
+ * \fn		void aff_lab_demi(const char demi_lab[N_LAB][M_LAB/2])
+ * \brief	Affiche le demi-labyrinthe
+ *
+ * Affiche le demi-labyrinthe \c demi_lab sur la sortie standard
+ *
+ * \param[in]	demi_lab	Labyrinthe de \c N_LAB lignes et
+ *							<tt>M_LAB/2</tt> colonnes à afficher
+ */
+void aff_lab_demi(const char demi_lab[N_LAB][M_LAB/2]);
+
+/*!
  * \fn		void coord_alea(int x, int y, int * x2, int * y2)
  * \brief	Renvoie des coordonnées aléatoires
  *
@@ -171,10 +182,10 @@ int place_permise(const char demi_lab[N_LAB][M_LAB / 2], int x, int y);
 /*!
  * \fn		int debouche_cds(char demi_lab[N_LAB][M_LAB/2], int x, int y)
  * \brief	Débouche les culs-de-sac
- * 
+ *
  * Débouche les culs-de-sac du demi-labyrinthe \c demi_lab aux coordonnées (x,y)
  * en les reliant à un autre chemin.
- * 
+ *
  * \param[in,out]	demi_lab	Demi-labyrinthe de \c N_LAB lignes et
  * 								<tt>M_LAB/2</tt> colonnes
  * \param[in]		x			Coordonnée horizontale du cul-du-sac
