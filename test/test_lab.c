@@ -83,8 +83,8 @@ int main() {
 
 	/* place_permise */
 	int coord_x3[N_COORD_3] = { 7, 5, 2, 3, 13};
-	int coord_y3[N_COORD_3] = {17, 5, 2, 6,  6};
-	int attendu_pp[N_COORD_3] = {1, 0, 0, 2, 1};
+	int coord_y3[N_COORD_3] = {17, 5, 2, 3,  6};
+	int attendu_pp[N_COORD_3] = {1, 0, 0, 2, 2};
 
 	printf("*\n* place_permise\n*\n");
 	for(i = 0; i < N_COORD_3; i++) {
