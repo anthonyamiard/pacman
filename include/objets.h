@@ -1,6 +1,11 @@
-/*
+/*!
+ * \file	objets.h
+ * \author	Hugo Bigan, Taliesin Ambroise
+ * \date	2019
+ *
  * Definition des types et des fonctions permettant de manipuler les differents
  * objets
+ *
  */
 
 #ifndef _OBJETS_H_
@@ -14,35 +19,67 @@
  * TYPES
  */
 
-/* Coordonnees */
+/*!
+ * \struct	coord_s
+ * \brief	Coordonnées
+ */
 typedef struct coord_s {
-	int x, y;
+	int x;	/*!< Coordonnée horizontale */
+	int y;	/*!< Coordonnée verticale */
 } coord_t;
 
-/* Etat des fantomes */
-typedef enum etat_e {POURSUITE, FUITE, RETOUR} etat_t;
+/*!
+ * \enum	etat_e
+ * \brief	État des fantomes
+ */
+typedef enum etat_e {
+	POURSUITE,	/*!< Le fantôme suit son comportement */
+	FUITE,		/*!< Le fantôme fuit Pacman (prise de super-pacgum) */
+	RETOUR		/*!< Le fantôme, mangé, retourne au point de départ */
+} etat_t;
 
-/* Fruit bonus */
+/*!
+ * \struct	fruit_s
+ * \brief	Fruit bonus
+ */
 typedef struct fruit_s {
-	char * nom;
-	int points;
-	coord_t * coord;
+	char * nom;			/*!< Nom du fruit */
+	int points;			/*!< Nombre de points qu'il procure */
+	coord_t * coord;	/*!< Coordonnées du fruit */
 } fruit_t;
 
-/* Joueur */
+/*!
+ * \struct	joueur_s
+ * \brief	Joueur
+ */
 typedef struct joueur_s {
-	char * nom;
-	int vies, score;
-	coord_t * coord;
+	char * nom;			/*!< Nom du joueur */
+	int vies;			/*!< Nombre de vies */
+	int score;			/*!< Score du joueur */
+	coord_t * coord;	/*!< Coordonnée du joueur à l'instant t */
 } joueur_t;
 
-/* Fantome */
+/*!
+ * \struct	fantome_s
+ * \brief	Fantôme
+ */
 typedef struct fantome_s {
-	char * nom;
-	char couleur; /* b = bleu, r = rouge, p = rose, o = orange */
-	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
-	etat_t etat;
-	coord_t * coord;
+	char * nom;			/*!< Nom du fantôme */
+	char couleur; 		/*!< Couleur du fantôme
+						 * \li \c 'b' : bleu
+						 * \li \c 'r' : rouge
+						 * \li \c 'p' : rose
+						 * \li \c 'o' : orange
+						 */
+	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *); /*!<
+		* \brief	Recherche de chemin du fantôme
+		*
+		* Fonction de recherche de chemin du fantôme en fonction de son
+		* comportement.
+		*
+		*/
+	etat_t etat;		/*!< État du fantôme */
+	coord_t * coord;	/*!< Coordonnées du fantôme à l'instant t */
 } fantome_t;
 
 
