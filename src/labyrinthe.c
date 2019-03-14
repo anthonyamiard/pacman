@@ -284,6 +284,8 @@ void chemin_alea(char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 }
 
 int nb_chemins_voisins(const char labyrinthe[N_LAB][M_LAB], int x, int y) {
+	if(x < 0 || x >= M_LAB || y < 0 || y >= N_LAB)
+		return 0;
 	int nb = 0;
 	if(x > 0 && est_chemin(labyrinthe[y][x-1])) {
 		nb++;
@@ -300,7 +302,10 @@ int nb_chemins_voisins(const char labyrinthe[N_LAB][M_LAB], int x, int y) {
 	return nb;
 }
 
-int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
+int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x, int y)
+{
+	if(x < 0 || x >= M_LAB/2 || y < 0 || y >= N_LAB)
+		return 0;
 	int nb = 0;
 	if(x > 0 && est_chemin(demi_lab[y][x-1])) {
 		nb++;
