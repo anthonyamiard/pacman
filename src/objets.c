@@ -90,7 +90,7 @@ int detruit_coord(coord_t ** adr) {
 
 int detruit_fruit(fruit_t ** adr) {
 	if(*adr != NULL)
-		detruit_coord((*adr)->coord);
+		detruit_coord(&((*adr)->coord));
 	free(*adr);
 	*adr = NULL;
 	return 0;
@@ -98,7 +98,7 @@ int detruit_fruit(fruit_t ** adr) {
 
 int detruit_joueur(joueur_t ** adr) {
 	if(*adr != NULL)
-		detruit_coord((*adr)->coord);
+		detruit_coord(&((*adr)->coord));
 	free(*adr);
 	*adr = NULL;
 	return 0;
@@ -106,7 +106,7 @@ int detruit_joueur(joueur_t ** adr) {
 
 int detruit_fantome(fantome_t ** adr) {
 	if(*adr != NULL)
-		detruit_coord((*adr)->coord);
+		detruit_coord(&((*adr)->coord));
 	free(*adr);
 	*adr = NULL;
 	return 0;

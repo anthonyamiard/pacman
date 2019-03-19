@@ -124,7 +124,7 @@ fantome_t * cree_fantome(const char * nom,
 										   coord_t *,
 										   coord_t *),
 						 int x,
-						 int y)
+						 int y);
 
 /*!
  * @}
