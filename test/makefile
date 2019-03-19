@@ -6,7 +6,7 @@ INCDIR	= ../include
 TESTDIR	= .
 DIRS	= $(OBJDIR) $(BINDIR)
 
-TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA
+TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA $(BINDIR)/test_objets
 
 # Fichiers
 SOURCES	:= $(wildcard $(SRCDIR)/*.c)

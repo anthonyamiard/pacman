@@ -69,7 +69,7 @@ void aff_fantome(const fantome_t * fantome) {
 		printf("NULL\n");
 	} else {
 		printf("{\n");
-		printf("\tnom     : %s,\n", fantome->joueur);
+		printf("\tnom     : %s,\n", fantome->nom);
 		printf("\tcouleur : %c,\n", fantome->couleur);
 		printf("\tchemin  : %p,\n", fantome->chemin);
 		printf("\tetat    : %d,\n", fantome->etat);
@@ -80,5 +80,58 @@ void aff_fantome(const fantome_t * fantome) {
 }
 
 int main() {
+	
+	printf("\n** Création de coordonnées **\n\n");
+	coord_t * coord = cree_coord(18, 36);
+	aff_coord(coord);
+	printf("\n");
+	
+	printf("\n** Création d'un fruit **\n\n");
+	fruit_t * fruit = cree_fruit("Cerise", 50, 12, 15);
+	aff_fruit(fruit);
+	
+	printf("\n** Création du joueur **\n\n");
+	joueur_t * joueur = cree_joueur("Pacman", 3, 0, 25, 35);
+	aff_joueur(joueur);
+	
+	printf("\n** Création des fantômes **\n\n");
+	fantome_t * f1 = cree_fantome("Fantome 1", 'b', chemin_court, 21, 8);
+	printf("f1 : ");
+	aff_fantome(f1);
+	fantome_t * f2 = cree_fantome("Fantome 2", 'r', chemin_aleatoire, 5, 9);
+	printf("f2 : ");
+	aff_fantome(f2);
+	fantome_t * f3 = cree_fantome("Fantome 3", 'o', chemin_anticipe, 7, 15);
+	printf("f3 : ");
+	aff_fantome(f3);
+	fantome_t * f4 = cree_fantome("Fantome 4", 'p', chemin_fuir, 6, 4);
+	printf("f4 : ");
+	aff_fantome(f4);
+	
+	printf("\n** Suppression des objets **\n\n");
+	detruit_coord(&coord);
+	printf("Coordonnées : ");
+	aff_coord(coord);
+	printf("\n");
+	detruit_fruit(&fruit);
+	printf("Fruit : ");
+	aff_fruit(fruit);
+	detruit_joueur(&joueur);
+	printf("Joueur : ");
+	aff_joueur(joueur);
+	detruit_fantome(&f1);
+	printf("f1 : ");
+	aff_fantome(f1);
+	detruit_fantome(&f2);
+	printf("f2 : ");
+	aff_fantome(f2);
+	detruit_fantome(&f3);
+	printf("f3 : ");
+	aff_fantome(f3);
+	detruit_fantome(&f4);
+	printf("f4 : ");
+	aff_fantome(f4);
+	printf("\n");
+	
 	return 0;
 }
