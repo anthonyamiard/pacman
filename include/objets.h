@@ -1,6 +1,8 @@
 /*!
  * \file	objets.h
- * \author	Hugo Bigan, Taliesin Ambroise
+ * \author	Hugo Bigan
+ * \author	Taliesin Ambroise
+ * \author	Anthony Amiard
  * \date	2019
  *
  * Definition des types et des fonctions permettant de manipuler les differents
@@ -102,17 +104,27 @@ fruit_t * cree_fruit(const char * nom, int points, int x, int y);
 /*!
  * \brief		Création du joueur
  * \param[in]	nom		Nom du joueur, ne doit pas dépasser \c TAILLE_NOM
+ * \param[in]	vies	Nombre de vies de départ
+ * \param[in]	score	Score de départ
  * \param[in]	x, y	Coordonnées de départ du joueur
  */
-joueur_t * cree_joueur(const char * nom, int x, int y);
+joueur_t * cree_joueur(const char * nom, int vies, int score, int x, int y);
 
 /*!
  * \brief		Création de fantôme
  * \param[in]	nom		Nom du fantôme
- * \param[in]	couleur	Couleur du fantôme. Voir \ref fantome::couleur
+ * \param[in]	couleur	Couleur du fantôme. Voir \ref fantome_s::couleur
+ * \param[in]	chemin	Fonction de recherche de chemin adaptée au comportement
+ * 						du fantôme
  * \param[in]	x, y	Coordonnées d’apparition du fantôme
  */
-fantome_t * cree_fantome(const char * nom, char couleur, int x, int y);
+fantome_t * cree_fantome(const char * nom,
+						 char couleur,
+						 coord_t (*chemin)(char [N_LAB][M_LAB],
+										   coord_t *,
+										   coord_t *),
+						 int x,
+						 int y)
 
 /*!
  * @}
