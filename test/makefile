@@ -9,8 +9,8 @@ DIRS	= $(OBJDIR) $(BINDIR)
 TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA $(BINDIR)/test_objets
 
 # Fichiers
-SOURCES	:= $(wildcard $(SRCDIR)/*.c)
-INCLUDES:= $(wildcard $(INCDIR)/*.h)
+SOURCES	:= $(wildcard $(SRCDIR)/*[^main].c)
+# INCLUDES:= $(wildcard $(INCDIR)/*.h)
 OBJECTS	:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 .PHONY: DIRS
@@ -21,10 +21,10 @@ $(OBJDIR):
 	mkdir -p $(OBJDIR)
 $(BINDIR):
 	mkdir -p $(BINDIR)
-	
+
 # Edition de liens
 $(BINDIR)/%: $(OBJDIR)/%.o $(OBJECTS)
-	@$(LINKER) $^ -o $@ $(LFLAGS)
+	@$(LINKER) $^ -o $@ $(LIBS) $(LFLAGS)
 	@echo "Edition de liens de "$@" terminée !"
 
 # Dependances de chaque fichier
@@ -52,13 +52,13 @@ $(OBJDIR)/test_objets.o: objets_h IA_h
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@$(CC) -c $< -o $@ $(CFLAGS)
+	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
 
 $(OBJDIR)/%.o : $(TESTDIR)/%.c
 	@$(CC) -c $< -o $@ $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
-	
+
 # Nettoyage et suppression des executables
 .PHONY: clean
 clean:
