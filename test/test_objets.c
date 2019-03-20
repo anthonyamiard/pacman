@@ -95,16 +95,16 @@ int main() {
 	aff_joueur(joueur);
 	
 	printf("\n** Création des fantômes **\n\n");
-	fantome_t * f1 = cree_fantome("Fantome 1", 'b', chemin_court, 21, 8);
+	fantome_t * f1 = cree_fantome("Fantome 1", 'r', chemin_court, 21, 8);
 	printf("f1 : ");
 	aff_fantome(f1);
-	fantome_t * f2 = cree_fantome("Fantome 2", 'r', chemin_aleatoire, 5, 9);
+	fantome_t * f2 = cree_fantome("Fantome 2", 'o', chemin_aleatoire, 5, 9);
 	printf("f2 : ");
 	aff_fantome(f2);
-	fantome_t * f3 = cree_fantome("Fantome 3", 'o', chemin_anticipe, 7, 15);
+	fantome_t * f3 = cree_fantome("Fantome 3", 'p', chemin_anticipe, 7, 15);
 	printf("f3 : ");
 	aff_fantome(f3);
-	fantome_t * f4 = cree_fantome("Fantome 4", 'p', chemin_fuir, 6, 4);
+	fantome_t * f4 = cree_fantome("Fantome 4", 'b', chemin_fuir, 6, 4);
 	printf("f4 : ");
 	aff_fantome(f4);
 	
