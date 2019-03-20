@@ -14,7 +14,10 @@
 #include <SDL2/SDL_ttf.h>
 
 int main() {
-	SDL_Init(SDL_INIT_VIDEO);
+	if(SDL_Init(SDL_INIT_VIDEO)) {
+		fprintf(stderr, "Échec d'ouverture de la SDL.\n");
+		return EXIT_FAILURE;
+	}
 	SDL_Quit();
 	return 0;
 }
