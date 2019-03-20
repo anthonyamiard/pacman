@@ -1,17 +1,24 @@
 # Variables generales
-TARGET	=
-export CC	= gcc
+TARGET			=
+export CC		= gcc
 export CFLAGS	= -Wall -g
 export LINKER	= gcc
 export LFLAGS	=
 
 # Repertoires
-OBJDIR	= obj
-BINDIR	= bin
-SRCDIR	= src
-INCDIR	= include
-TESTDIR	= test
-DIRS	= $(OBJDIR) $(BINDIR)
+OBJDIR				= obj
+BINDIR				= bin
+SRCDIR				= src
+INCDIR				= include
+TESTDIR				= test
+export SDL_DIR		= $(HOME)/SDL2
+export SDLLIB_DIR	= $(SDL_DIR)/lib
+export SDLINC_DIR	= $(SDL_DIR)/include
+DIRS				= $(OBJDIR) $(BINDIR)
+
+# Bibliotheques
+export LIBS		= -L$(SDLLIB_DIR) -lSDL2 -lSDL2_ttf -lSDL2_image
+export INCLUDES	= -I$(SDLINC_DIR)
 
 # Fichiers
 SOURCES	:= $(wildcard $(SRCDIR)/*.c)
@@ -32,7 +39,7 @@ $(BINDIR):
 $(BINDIR)/$(TARGET): $(OBJECTS)
 	@$(LINKER) $^ -o $@ $(LFLAGS)
 	@echo "Edition de liens terminee !"
-	
+
 # Dependances de chaque fichier
 # fichier_h: $(INCDIR)/fichier.h dependance_h
 # $(OBJDIR)/fichier.o: dependance_h
@@ -59,7 +66,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 .PHONY: test
 test:
 	@(cd $(TESTDIR) && $(MAKE))
-	
+
 # Nettoyage et suppression des executables
 .PHONY: clean
 clean:
