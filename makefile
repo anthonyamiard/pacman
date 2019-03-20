@@ -1,5 +1,5 @@
 # Variables generales
-TARGET			=
+TARGET			= pacman
 export CC		= gcc
 export CFLAGS	= -Wall -g
 export LINKER	= gcc
@@ -21,9 +21,9 @@ export LIBS		= -L$(SDLLIB_DIR) -lSDL2 -lSDL2_ttf -lSDL2_image
 export INCLUDES	= -I$(SDLINC_DIR)
 
 # Fichiers
-SOURCES	:= $(wildcard $(SRCDIR)/*.c)
-INCLUDES:= $(wildcard $(INCDIR)/*.h)
-OBJECTS	:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+SOURCES		:= $(wildcard $(SRCDIR)/*.c)
+# INCLUDES	:= $(wildcard $(INCDIR)/*.h)
+OBJECTS		:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 export rm	= rm -f
 
 .PHONY: DIRS
@@ -37,7 +37,7 @@ $(BINDIR):
 
 # Edition de liens
 $(BINDIR)/$(TARGET): $(OBJECTS)
-	@$(LINKER) $^ -o $@ $(LFLAGS)
+	@$(LINKER) $^ -o $@ $(LIBS) $(LFLAGS)
 	@echo "Edition de liens terminee !"
 
 # Dependances de chaque fichier
@@ -59,7 +59,7 @@ $(OBJDIR)/objets.o: objets_h
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
-	@$(CC) -c $< -o $@ $(CFLAGS)
+	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
 
 # Test
