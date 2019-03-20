@@ -15,55 +15,56 @@
 #define VRAI 1
 
 coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
-  int i,j;
-  int trouve = FAUX;
-  int nb_courant = 1;
-  int lab_numero[N_LAB][M_LAB];
-  lab_numero[coord_dep->y][coord_dep->x] = 1;
-	   for(i=0;i<30 && !trouve;i++){
-		     for(j=0;j<27 && !trouve;j++){
- 			       if(est_chemin(labyrinthe[i][j])){
-				           lab_numero[i][j] = nb_courant;
-                   if (lab_numero[i][j] == nb_courant){
-                     if(i-1>=0){
-                       if(lab_numero[i-1][j] == 0)
-                          lab_numero[i-1][j] = nb_courant + 1;
-                     }
-                     if(j-1>=0){
-                       if(lab_numero[i][j-1] == 0)
-                          lab_numero[i][j-1] = nb_courant +1;
-                     }
-                     if(i+1>=0){
-                       if(lab_numero[i+1][j] == 0)
-                          lab_numero[i+1][j] = nb_courant +1;
-                     }
-                     if(j+1>=0){
-                       if(lab_numero[i][j+1] == 0)
-                          lab_numero[i][j+1] = nb_courant +1;
-                     }
-                     if(lab_numero[coord_arr->y][coord_arr->x] == nb_courant + 1)
-                        trouve = VRAI;
-                  nb_courant ++;
-                  }
-            }
-	     }
-    }
- nb_courant = lab_numero[coord_arr->y][coord_arr->x];
- while(nb_courant > 1){
-   if(i - 1 >= 0 && lab_numero[i-1][j] == nb_courant - 1)
-      i = i - 1;
-   else if(j - 1 >= 0 && lab_numero[i][j-1] == nb_courant - 1)
-      j = j - 1;
-   else if(i + 1 >= 0 && lab_numero[i+1][j] == nb_courant - 1)
-      i = i - 1;
-   else if(j + 1 >= 0 && lab_numero[i][j+1] == nb_courant - 1)
-      j = j - 1;
-   nb_courant --;
- }
- coord_t retour;
- retour.y=i;
- retour.x=j;
- return retour;
+	int i,j;
+	int trouve = FAUX;
+	int nb_courant = 1;
+	int lab_numero[N_LAB][M_LAB];
+	lab_numero[coord_dep->y][coord_dep->x] = 1;
+	for(i = 0;i<30 && !trouve;i++){
+		for(j = 0;j<27 && !trouve;j++){
+ 			if(est_chemin(labyrinthe[i][j])){
+				lab_numero[i][j] = nb_courant;
+                  		if (lab_numero[i][j] == nb_courant){
+                     			if(i-1>=0){
+                       				if(lab_numero[i-1][j] == 0)
+                          				lab_numero[i-1][j] = nb_courant + 1;
+                     			}
+                     			if(j-1>=0){
+                       				if(lab_numero[i][j-1] == 0)
+                          				lab_numero[i][j-1] = nb_courant +1;
+                     			}
+                     			if(i+1>=0){
+                      				if(lab_numero[i+1][j] == 0)
+                          				lab_numero[i+1][j] = nb_courant +1;
+                    			}
+                     			if(j+1>=0){
+                       				if(lab_numero[i][j+1] == 0)
+                          				lab_numero[i][j+1] = nb_courant +1;
+                     			}
+                     			if(lab_numero[coord_arr->y][coord_arr->x] == nb_courant + 1)
+                        			trouve = VRAI;
+                  		}
+				nb_courant ++;
+        		}
+		}
+	}
+
+	lab_numero[coord_arr->y][coord_arr->x] = nb_courant;
+	while(nb_courant > 1){
+		if(i - 1 >= 0 && lab_numero[i-1][j] == nb_courant - 1)
+			i = i - 1;
+		else if(j - 1 >= 0 && lab_numero[i][j-1] == nb_courant - 1)
+			j = j - 1;
+		else if(i + 1 >= 0 && lab_numero[i+1][j] == nb_courant - 1)
+			i = i + 1;
+		else if(j + 1 >= 0 && lab_numero[i][j+1] == nb_courant - 1)
+			j = j + 1;
+		nb_courant --;
+	}
+	coord_t retour;
+	retour.y=i;
+	retour.x=j;
+	return retour;
 }
 
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
