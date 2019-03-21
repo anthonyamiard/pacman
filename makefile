@@ -54,11 +54,15 @@ labyrinthe_h: $(INCDIR)/labyrinthe.h taille_lab_h
 
 IA_h: $(INCDIR)/IA.h taille_lab_h objets_h
 
+gui_lab_h: $(GUIDIR)/gui_lab.h taille_lab_h
+
 $(OBJDIR)/labyrinthe.o: labyrinthe_h
 
 $(OBJDIR)/IA.o: IA_h labyrinthe_h objets_h
 
 $(OBJDIR)/objets.o: objets_h
+
+$(OBJDIR)/gui_lab.o: gui_lab_h
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
