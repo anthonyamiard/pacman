@@ -10,6 +10,7 @@ OBJDIR				= obj
 BINDIR				= bin
 SRCDIR				= src
 INCDIR				= include
+GUIDIR				= gui
 TESTDIR				= test
 export SDL_DIR		= $(HOME)/SDL2
 export SDLLIB_DIR	= $(SDL_DIR)/lib
@@ -22,8 +23,10 @@ export INCLUDES	= -I$(SDLINC_DIR)
 
 # Fichiers
 SOURCES		:= $(wildcard $(SRCDIR)/*.c)
+SRCGUI		:= $(wildcard $(GUIDIR)/*.c)
 # INCLUDES	:= $(wildcard $(INCDIR)/*.h)
 OBJECTS		:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+OBJGUI		:= $(SRCGUI:$(GUIDIR)/%.c=$(OBJDIR)/%.o)
 export rm	= rm -f
 
 .PHONY: DIRS
@@ -31,12 +34,12 @@ all: $(DIRS) $(BINDIR)/$(TARGET)
 
 # Creation des repertoires de compilation
 $(OBJDIR):
-	mkdir -p $(OBJDIR)
+	@mkdir -p $(OBJDIR)
 $(BINDIR):
-	mkdir -p $(BINDIR)
+	@mkdir -p $(BINDIR)
 
 # Edition de liens
-$(BINDIR)/$(TARGET): $(OBJECTS)
+$(BINDIR)/$(TARGET): $(OBJECTS) $(OBJGUI)
 	@$(LINKER) $^ -o $@ $(LIBS) $(LFLAGS)
 	@echo "Edition de liens terminee !"
 
@@ -58,7 +61,11 @@ $(OBJDIR)/IA.o: IA_h labyrinthe_h objets_h
 $(OBJDIR)/objets.o: objets_h
 
 # Compilation des .c en .o
-$(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+$(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
+	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
+	@echo "Compilation de "$<" terminee !"
+
+$(OBJGUI): $(OBJDIR)/%.o: $(GUIDIR)/%.c
 	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
 
