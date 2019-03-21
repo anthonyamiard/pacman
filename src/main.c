@@ -12,6 +12,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <SDL2/SDL_ttf.h>
+#include <time.h>
 
 #include "../include/taille_lab.h"
 #include "../gui/gui_lab.h"
@@ -32,6 +33,7 @@ void pause() {
 }
 
 int main() {
+	srand(time(NULL));
 	if(SDL_Init(SDL_INIT_VIDEO)) {
 		fprintf(stderr, "Échec d'ouverture de la SDL (%s).\n", SDL_GetError());
 		return EXIT_FAILURE;
@@ -62,12 +64,9 @@ int main() {
 
 	char labyrinthe[N_LAB][M_LAB];
 	int nb_pacgums;
-	lab_manuel(labyrinthe, &nb_pacgums);
-/*
-	if(case_img('m', rend, 0, 0))
-		fprintf(stderr, "%s\n", SDL_GetError());
-	if(case_img('p', rend, 24, 0))
-		fprintf(stderr, "%s\n", SDL_GetError());*/
+	do {
+		genere_lab(labyrinthe, &nb_pacgums);
+	} while(nb_pacgums < 250 || nb_pacgums > 350);
 
 	if(dessine_lab(labyrinthe, rend)) {
 		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n", SDL_GetError());
