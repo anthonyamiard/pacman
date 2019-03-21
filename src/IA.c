@@ -18,47 +18,52 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 	int i,j;
 	int trouve = FAUX;
 	int nb_courant = 1;
-	int lab_numero[N_LAB][M_LAB];
+	int lab_numero[N_LAB][M_LAB] = {0};
 	lab_numero[coord_dep->y][coord_dep->x] = 1;
-	for(i = 0;i<30 && !trouve;i++){
-		for(j = 0;j<27 && !trouve;j++){
- 			if(est_chemin(labyrinthe[i][j])){
-				lab_numero[i][j] = nb_courant;
-                  		if (lab_numero[i][j] == nb_courant){
-                     			if(i-1>=0){
-                       				if(lab_numero[i-1][j] == 0)
-                          				lab_numero[i-1][j] = nb_courant + 1;
-                     			}
-                     			if(j-1>=0){
-                       				if(lab_numero[i][j-1] == 0)
-                          				lab_numero[i][j-1] = nb_courant +1;
-                     			}
-                     			if(i+1>=0){
-                      				if(lab_numero[i+1][j] == 0)
-                          				lab_numero[i+1][j] = nb_courant +1;
-                    			}
-                     			if(j+1>=0){
-                       				if(lab_numero[i][j+1] == 0)
-                          				lab_numero[i][j+1] = nb_courant +1;
-                     			}
-                     			if(lab_numero[coord_arr->y][coord_arr->x] == nb_courant + 1)
-                        			trouve = VRAI;
-                  		}
-				nb_courant ++;
-        		}
+		for(i = 0;i<30 && !trouve;i++){
+			for(j = 0;j<27 && !trouve;j++){
+                  			if (lab_numero[i][j] == nb_courant){
+                     				if(i-1>=0){
+							if(est_chemin(labyrinthe[i-1][j])){
+                       						if(lab_numero[i-1][j] == 0)
+                          						lab_numero[i-1][j] = nb_courant + 1;
+							}
+                     				}
+                     				if(j-1>=0){
+							if(est_chemin(labyrinthe[i][j-1])){
+                       						if(lab_numero[i][j-1] == 0)
+                          						lab_numero[i][j-1] = nb_courant +1;
+							}
+                     				}
+                     				if(i+1>=0){
+							if(est_chemin(labyrinthe[i+1][j])){
+                      						if(lab_numero[i+1][j] == 0)
+                          						lab_numero[i+1][j] = nb_courant +1;
+							}
+                    				}
+                     				if(j+1>=0){
+							if(est_chemin(labyrinthe[i][j+1])){
+                       						if(lab_numero[i][j+1] == 0)
+                          						lab_numero[i][j+1] = nb_courant +1;
+							}
+                     				}
+                     				if(lab_numero[coord_arr->y][coord_arr->x] == nb_courant + 1)
+                        				trouve = VRAI;
+						nb_courant ++;
+                  			}
+			}
 		}
-	}
-
+	i--;
 	lab_numero[coord_arr->y][coord_arr->x] = nb_courant;
-	while(nb_courant > 1){
+	while(nb_courant > 2 && trouve == VRAI){
 		if(i - 1 >= 0 && lab_numero[i-1][j] == nb_courant - 1)
-			i = i - 1;
+			i--;
 		else if(j - 1 >= 0 && lab_numero[i][j-1] == nb_courant - 1)
-			j = j - 1;
+			j--;
 		else if(i + 1 >= 0 && lab_numero[i+1][j] == nb_courant - 1)
-			i = i + 1;
+			i++;
 		else if(j + 1 >= 0 && lab_numero[i][j+1] == nb_courant - 1)
-			j = j + 1;
+			j++;
 		nb_courant --;
 	}
 	coord_t retour;
