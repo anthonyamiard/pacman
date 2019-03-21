@@ -9,21 +9,27 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <SDL/SDL2.h>
 
 #include "gui_lab.h"
-/*
-SDL_Texture * dessine_lab(const char labyrinthe[N_LAB][M_LAB],
-						  SDL_Renderer * renderer) {
-	SDL_Texture * lab = NULL;
+
+SDL_Texture * case_texture(char case_lab, SDL_Renderer * renderer) {
+	SDL_Texture * texture = NULL;
 	SDL_Surface * img = NULL;
-	int i, j;
-	for(i = 0; i < N_LAB; i++) {
-		for(j = 0; j < M_LAB; j++) {
-			switch(labyrinthe[i][j]) {
-				case 'm': SDL_LoadBMP("../img/")
-			}
-		}
+	switch(labyrinthe[i][j]) {
+		case 'm': img = SDL_LoadBMP("../img/mur.bmp");
+		case 'c': img = SDL_LoadBMP("../img/chemin.bmp");
+		case 'p': img = SDL_LoadBMP("../img/pacgum.bmp");
+		case 's': img = SDL_LoadBMP("../img/super_pg.bmp");
+		case 'b': img = SDL_LoadBMP("../img/boite.bmp");
+		case 'e': img = SDL_LoadBMP("../img/entree.bmp");
+		default: img = SDL_LoadBMP("../img/autre.bmp");
 	}
+	if(img != NULL) {
+		texture = SDL_CreateTextureFromSurface(renderer, img);
+		SDL_FreeSurface(img);
+	}
+	return texture;
 }
-*/
+
 #include "gui_lab.h"

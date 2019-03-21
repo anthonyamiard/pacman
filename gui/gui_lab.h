@@ -10,11 +10,11 @@
 #ifndef _GUI_LAB_H_
 #define _GUI_LAB_H_
 
+#include <SDL/SDL2.h>
 #include "../include/taille_lab.h"
 
 #define TAILLE_CASE 24
-/*
-SDL_Texture * dessine_lab(const char labyrinthe[N_LAB][M_LAB],
-						  SDL_Renderer * renderer);
-*/
+
+SDL_Texture * case_texture(char case_lab, SDL_Renderer * renderer);
+
 #endif
