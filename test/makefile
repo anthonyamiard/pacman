@@ -6,7 +6,7 @@ INCDIR	= ../include
 TESTDIR	= .
 DIRS	= $(OBJDIR) $(BINDIR)
 
-TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA $(BINDIR)/test_objets
+TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA $(BINDIR)/test_objets $(BINDIR)/test_evenement
 
 # Fichiers
 SOURCES	:= $(wildcard $(SRCDIR)/*[^main].c)
@@ -56,7 +56,7 @@ $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
 	@echo "Compilation de "$<" terminee !"
 
 $(OBJDIR)/%.o : $(TESTDIR)/%.c
-	@$(CC) -c $< -o $@ $(CFLAGS)
+	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
 
 # Nettoyage et suppression des executables
