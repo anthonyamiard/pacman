@@ -15,6 +15,8 @@
 
 #define TAILLE_CASE 24
 
-SDL_Texture * case_texture(char case_lab, SDL_Renderer * renderer);
+int case_img(char case_lab, SDL_Renderer * renderer, int x, int y);
+
+int dessine_lab(const char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend);
 
 #endif

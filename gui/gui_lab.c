@@ -11,25 +11,36 @@
 #include <stdlib.h>
 #include <SDL2/SDL.h>
 
+#include "dessin.h"
 #include "gui_lab.h"
 
-SDL_Texture * case_texture(char case_lab, SDL_Renderer * renderer) {
-	SDL_Texture * texture = NULL;
-	SDL_Surface * img = NULL;
+int case_img(char case_lab, SDL_Renderer * renderer, int x, int y) {
+	SDL_Texture * img = NULL;
 	switch(case_lab) {
-		case 'm': img = SDL_LoadBMP("../img/mur.bmp");
-		case 'c': img = SDL_LoadBMP("../img/chemin.bmp");
-		case 'p': img = SDL_LoadBMP("../img/pacgum.bmp");
-		case 's': img = SDL_LoadBMP("../img/super_pg.bmp");
-		case 'b': img = SDL_LoadBMP("../img/boite.bmp");
-		case 'e': img = SDL_LoadBMP("../img/entree.bmp");
-		default: img = SDL_LoadBMP("../img/autre.bmp");
+		case 'm': img = charge_img("../img/mur.bmp", renderer); break;
+		case 'c': img = charge_img("../img/chemin.bmp", renderer); break;
+		case 'p': img = charge_img("../img/pacgum.bmp", renderer); break;
+		case 's': img = charge_img("../img/super_pg.bmp", renderer); break;
+		case 'b': img = charge_img("../img/boite.bmp", renderer); break;
+		case 'e': img = charge_img("../img/entree.bmp", renderer); break;
+		default: img = charge_img("../img/autre.bmp", renderer); break;
 	}
-	if(img != NULL) {
-		texture = SDL_CreateTextureFromSurface(renderer, img);
-		SDL_FreeSurface(img);
+	if(img == NULL) {
+		return EXIT_FAILURE;
 	}
-	return texture;
+	rend_texture(img, renderer, x, y);
+	return 0;
 }
 
-#include "gui_lab.h"
+int dessine_lab(const char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend) {
+	int i, j;
+	for(i = 0; i < N_LAB; i++) {
+		for(j = 0; j < M_LAB; j++) {
+			if(case_img(labyrinthe[i][j], rend, j * TAILLE_CASE,
+						i * TAILLE_CASE)) {
+				return EXIT_FAILURE;
+			}
+		}
+	}
+	return EXIT_SUCCESS;
+}

@@ -14,6 +14,8 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "../include/taille_lab.h"
+#include "../gui/gui_lab.h"
+#include "../include/labyrinthe.h"
 
 #define TAILLE_CASE 24
 
@@ -37,8 +39,8 @@ int main() {
 
 	SDL_Window * fenetre = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
 													  SDL_WINDOWPOS_UNDEFINED,
-													  N_LAB * TAILLE_CASE,
 													  M_LAB * TAILLE_CASE,
+													  N_LAB * TAILLE_CASE,
 													  SDL_WINDOW_SHOWN);
 	if(fenetre == NULL) {
 		fprintf(stderr, "Échec de création de la fenêtre (%s).\n",
@@ -55,8 +57,21 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	SDL_SetRenderDrawColor(rend, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
 	SDL_RenderClear(rend);
+
+	char labyrinthe[N_LAB][M_LAB];
+	int nb_pacgums;
+	lab_manuel(labyrinthe, &nb_pacgums);
+/*
+	if(case_img('m', rend, 0, 0))
+		fprintf(stderr, "%s\n", SDL_GetError());
+	if(case_img('p', rend, 24, 0))
+		fprintf(stderr, "%s\n", SDL_GetError());*/
+
+	if(dessine_lab(labyrinthe, rend)) {
+		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n", SDL_GetError());
+	}
 
 	SDL_RenderPresent(rend);
 

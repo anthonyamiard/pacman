@@ -22,3 +22,11 @@ SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend) {
 	}
 	return texture;
 }
+
+void rend_texture(SDL_Texture * tex, SDL_Renderer * rend, int x, int y) {
+	SDL_Rect dest;
+	dest.x = x;
+	dest.y = y;
+	SDL_QueryTexture(tex, NULL, NULL, &(dest.w), &(dest.h));
+	SDL_RenderCopy(rend, tex, NULL, &dest);
+}
