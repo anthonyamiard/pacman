@@ -10,7 +10,7 @@
 #ifndef _GUI_LAB_H_
 #define _GUI_LAB_H_
 
-#include <SDL/SDL2.h>
+#include <SDL2/SDL.h>
 #include "../include/taille_lab.h"
 
 #define TAILLE_CASE 24

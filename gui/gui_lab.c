@@ -9,14 +9,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <SDL/SDL2.h>
+#include <SDL2/SDL.h>
 
 #include "gui_lab.h"
 
 SDL_Texture * case_texture(char case_lab, SDL_Renderer * renderer) {
 	SDL_Texture * texture = NULL;
 	SDL_Surface * img = NULL;
-	switch(labyrinthe[i][j]) {
+	switch(case_lab) {
 		case 'm': img = SDL_LoadBMP("../img/mur.bmp");
 		case 'c': img = SDL_LoadBMP("../img/chemin.bmp");
 		case 'p': img = SDL_LoadBMP("../img/pacgum.bmp");
