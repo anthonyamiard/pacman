@@ -57,16 +57,16 @@ int main(int argc, char** argv) {
 					case SDL_KEYDOWN:
 						switch(e.key.keysym.sym) {
 							case SDLK_UP:
-								position.y--;
+								position.y -= 5;
 								break;
 							case SDLK_DOWN:
-								position.y++;
+								position.y += 5;
 								break;
 							case SDLK_RIGHT:
-								position.x++;
+								position.x += 5;
 								break;
 							case SDLK_LEFT:
-								position.x--;
+								position.x -= 5;
 								break;
 							case SDLK_q: running = 0;	break;
 						}
