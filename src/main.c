@@ -66,11 +66,14 @@ int main() {
 	int nb_pacgums;
 	do {
 		genere_lab(labyrinthe, &nb_pacgums);
-	} while(nb_pacgums < 250 || nb_pacgums > 350);
+	} while(nb_pacgums < 280 || nb_pacgums > 350);
 
 	if(dessine_lab(labyrinthe, rend)) {
-		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n", SDL_GetError());
+		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n",
+				SDL_GetError());
 	}
+	
+	printf("Nombre pacgums : %d\n", nb_pacgums);
 
 	SDL_RenderPresent(rend);
 
