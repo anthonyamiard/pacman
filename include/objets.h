@@ -151,6 +151,16 @@ int detruit_fantome(fantome_t ** adr);
  * @}
  */
 
+/*
+ * VARIABLES GLOBALES
+ */
+
+#ifdef _TEST_IA_C_
+char pacdir;
+#else
+extern char pacdir;
+#endif
+
 
 
 #endif

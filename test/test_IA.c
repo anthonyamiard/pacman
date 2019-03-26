@@ -1,3 +1,5 @@
+#define _TEST_IA_C_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -29,6 +31,8 @@ int main() {
 	coord_t dep;
 	coord_t arr;
 	coord_t res;
+	
+	pacdir = 'h';
 
 	int l_dep_x[N_TESTS] = { 3, 24,  6,  6, 12, 15, 10, 10, 6};
 	int l_dep_y[N_TESTS] = { 5,  5,  2,  8,  4,  4,  5,  8, 5};
