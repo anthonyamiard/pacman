@@ -20,55 +20,103 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 	int nb_courant = 1;
 	int lab_numero[N_LAB][M_LAB] = {0};
 	lab_numero[coord_dep->y][coord_dep->x] = 1;
-		for(i = 0;i<30 && !trouve;i++){
-			for(j = 0;j<27 && !trouve;j++){
-                  			if (lab_numero[i][j] == nb_courant){
+		for(i = 0;i<N_LAB && !trouve;i++){
+			for(j = 0;j<M_LAB && !trouve;j++){
+                  			if (lab_numero[i][j] > 0){
                      				if(i-1>=0){
-							if(est_chemin(labyrinthe[i-1][j])){
+							if(i > 0 && est_chemin(labyrinthe[i-1][j])){
                        						if(lab_numero[i-1][j] == 0)
-                          						lab_numero[i-1][j] = nb_courant + 1;
+                          						lab_numero[i-1][j] = lab_numero[i][j] + 1;
 							}
                      				}
                      				if(j-1>=0){
-							if(est_chemin(labyrinthe[i][j-1])){
+							if(j > 0 && est_chemin(labyrinthe[i][j-1])){
                        						if(lab_numero[i][j-1] == 0)
-                          						lab_numero[i][j-1] = nb_courant +1;
+                          						lab_numero[i][j-1] = lab_numero[i][j] +1;
 							}
                      				}
                      				if(i+1>=0){
-							if(est_chemin(labyrinthe[i+1][j])){
+							if(i < N_LAB - 1 && est_chemin(labyrinthe[i+1][j])){
                       						if(lab_numero[i+1][j] == 0)
-                          						lab_numero[i+1][j] = nb_courant +1;
+                          						lab_numero[i+1][j] = lab_numero[i][j] +1;
 							}
                     				}
                      				if(j+1>=0){
-							if(est_chemin(labyrinthe[i][j+1])){
+							if(i < M_LAB - 1 && est_chemin(labyrinthe[i][j+1])){
                        						if(lab_numero[i][j+1] == 0)
-                          						lab_numero[i][j+1] = nb_courant +1;
+                          						lab_numero[i][j+1] = lab_numero[i][j] +1;
 							}
                      				}
-                     				if(lab_numero[coord_arr->y][coord_arr->x] == nb_courant + 1)
+                     				if(lab_numero[i][j] > 0 && coord_arr->y == i && coord_arr->x == j)
                         				trouve = VRAI;
-						nb_courant ++;
                   			}
 			}
 		}
-	i--;
-	lab_numero[coord_arr->y][coord_arr->x] = nb_courant;
-	while(nb_courant > 2 && trouve == VRAI){
-		if(i - 1 >= 0 && lab_numero[i-1][j] == nb_courant - 1)
-			i--;
-		else if(j - 1 >= 0 && lab_numero[i][j-1] == nb_courant - 1)
-			j--;
-		else if(i + 1 >= 0 && lab_numero[i+1][j] == nb_courant - 1)
-			i++;
-		else if(j + 1 >= 0 && lab_numero[i][j+1] == nb_courant - 1)
-			j++;
-		nb_courant --;
-	}
+		for(i = N_LAB - 1;i >= 0 && !trouve;i--){
+			for(j = M_LAB - 1;j >= 0 && !trouve;j--){
+                  			if (lab_numero[i][j] > 0){
+                     				if(i-1>=0){
+							if(i > 0 && est_chemin(labyrinthe[i-1][j])){
+                       						if(lab_numero[i-1][j] == 0)
+                          						lab_numero[i-1][j] = lab_numero[i][j] + 1;
+							}
+                     				}
+                     				if(j-1>=0){
+							if(j > 0 && est_chemin(labyrinthe[i][j-1])){
+                       						if(lab_numero[i][j-1] == 0)
+                          						lab_numero[i][j-1] = lab_numero[i][j] +1;
+							}
+                     				}
+                     				if(i+1>=0){
+							if(i < N_LAB - 1 && est_chemin(labyrinthe[i+1][j])){
+                      						if(lab_numero[i+1][j] == 0)
+                          						lab_numero[i+1][j] = lab_numero[i][j] +1;
+							}
+                    				}
+                     				if(j+1>=0){
+							if(i < M_LAB - 1 && est_chemin(labyrinthe[i][j+1])){
+                       						if(lab_numero[i][j+1] == 0)
+                          						lab_numero[i][j+1] = lab_numero[i][j] +1;
+							}
+                     				}
+                     				if(lab_numero[i][j] > 0 && coord_arr->y == i && coord_arr->x == j)
+                        				trouve = VRAI;
+                  			}
+			}
+		}
 	coord_t retour;
-	retour.y=i;
-	retour.x=j;
+	i = coord_arr->y;
+	j = coord_arr->x;
+	retour.x = j;
+	retour.y = i;
+
+	nb_courant = lab_numero[coord_arr->y][coord_arr->x];
+	while(!((j == coord_dep->x && (i >= coord_dep->y-1 && i <= coord_dep->y+1)) || (i == coord_dep->y && (j >= coord_dep->x-1 && j <= coord_dep->x+1)))){
+		if(i - 1 >= 0 && lab_numero [i-1][j] > 0){
+			retour.y = i - 1;
+			retour.x = j;
+			nb_courant = lab_numero[i-1][j];
+		}else{
+			nb_courant = INT_MAX;
+		}
+		if(i + 1 <= N_LAB - 1 && lab_numero[i+1][j] < nb_courant && lab_numero [i+1][j] > 0){
+			retour.y = i + 1;
+			retour.x = j;
+			nb_courant = lab_numero[i+1][j];
+		}
+		if(j - 1 >= 0 && lab_numero[i][j-1] < nb_courant && lab_numero [i][j-1] > 0){
+			retour.y = i;
+			retour.x = j - 1;
+			nb_courant = lab_numero[i][j-1];
+		}
+		if(j + 1 <= M_LAB - 1 && lab_numero[i][j+1] < nb_courant && lab_numero [i][j+1] > 0){
+			retour.y = i;
+			retour.x = j + 1;
+			nb_courant = lab_numero[i][j+1];
+		}
+		i = retour.y;
+		j = retour.x;
+	}
 	return retour;
 }
 
