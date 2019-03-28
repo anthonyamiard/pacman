@@ -9,6 +9,7 @@
 #include "../include/IA.h"
 #include "../include/objets.h"
 #include "../include/labyrinthe.h"
+#include "../gui/gui_lab.h"
 
 #define SCORE_PACGUM 10
 #define FAUX 0
@@ -169,11 +170,29 @@ coord_t chemin_aleatoire(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coor
   return res;
 }
 
+void conv_coord_fantome(fantome_t * fantome) {
+	if(fantome != NULL) {
+		fantome->coord->x = fantome->coord_fines->x / TAILLE_CASE;
+		fantome->coord->y = fantome->coord_fines->y / TAILLE_CASE;
+	}
+}
+
+void conv_coord_joueur(joueur_t * joueur) {
+	if(joueur != NULL) {
+		joueur->coord->x = joueur->coord_fines->x / TAILLE_CASE;
+		joueur->coord->y = joueur->coord_fines->y / TAILLE_CASE;
+	}
+}
+
 int fantome(char labyrinthe[N_LAB][M_LAB], fantome_t* fantome, joueur_t* joueur, int vitesse) {
   coord_t temp;
   temp  = fantome->chemin(labyrinthe,fantome->coord,joueur->coord);
-  fantome->coord->x=temp.x;
-  fantome->coord->y=temp.y;
+  int dx = temp.x - fantome->coord->x;
+  int dy = temp.y - fantome->coord->y;
+  fantome->coord_fines->x += dx * vitesse;
+  fantome->coord_fines->y += dy * vitesse;
+  conv_coord_fantome(fantome);
+  
   return 0;
 }
 

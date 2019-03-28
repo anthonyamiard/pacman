@@ -13,6 +13,7 @@
 #include <string.h>
 
 #include "../include/objets.h"
+#include "../gui/gui_lab.h"
 
 /*
  * Fonctions de création des objets
@@ -52,6 +53,12 @@ joueur_t * cree_joueur(const char * nom, int vies, int score, int x, int y) {
 			free(joueur);
 			joueur = NULL;
 		}
+		joueur->coord_fines = cree_coord(x * TAILLE_CASE, y * TAILLE_CASE);
+		if(joueur->coord_fines == NULL) {
+			free(joueur->coord);
+			free(joueur);
+			joueur = NULL;
+		}
 	}
 	return joueur;
 }
@@ -71,6 +78,12 @@ fantome_t * cree_fantome(const char * nom,
 		fantome->etat = POURSUITE;
 		fantome->coord = cree_coord(x, y);
 		if(fantome->coord == NULL) {
+			free(fantome);
+			fantome = NULL;
+		}
+		fantome->coord_fines = cree_coord(x * TAILLE_CASE, y * TAILLE_CASE);
+		if(fantome->coord == NULL) {
+			free(fantome->coord);
 			free(fantome);
 			fantome = NULL;
 		}
@@ -97,16 +110,20 @@ int detruit_fruit(fruit_t ** adr) {
 }
 
 int detruit_joueur(joueur_t ** adr) {
-	if(*adr != NULL)
+	if(*adr != NULL) {
 		detruit_coord(&((*adr)->coord));
+		detruit_coord(&((*adr)->coord_fines));
+	}
 	free(*adr);
 	*adr = NULL;
 	return 0;
 }
 
 int detruit_fantome(fantome_t ** adr) {
-	if(*adr != NULL)
+	if(*adr != NULL) {
 		detruit_coord(&((*adr)->coord));
+		detruit_coord(&((*adr)->coord_fines));
+	}
 	free(*adr);
 	*adr = NULL;
 	return 0;
