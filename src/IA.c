@@ -186,6 +186,7 @@ void conv_coord_joueur(joueur_t * joueur) {
 
 int fantome(char labyrinthe[N_LAB][M_LAB], fantome_t* fantome, joueur_t* joueur, int vitesse) {
   coord_t temp;
+  coord_t boite = {X_BOITE, Y_BOITE};
   switch(fantome->etat) {
 	  case POURSUITE: 
 		  temp = fantome->chemin(labyrinthe,fantome->coord,joueur->coord);
@@ -194,7 +195,6 @@ int fantome(char labyrinthe[N_LAB][M_LAB], fantome_t* fantome, joueur_t* joueur,
       temp = chemin_fuir(labyrinthe, fantome->coord, joueur->coord);
       break;
     case RETOUR:
-      t_coord boite = {X_BOITE, Y_BOITE};
       temp = chemin_court(labyrinthe, fantome->coord, &boite);
       break;
   }
