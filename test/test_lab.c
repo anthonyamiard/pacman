@@ -14,6 +14,7 @@
 #include <time.h>
 
 #include "../include/labyrinthe.h"
+#include "../include/objets.h"
 
 #define N_COORD 6
 #define N_CASES 8

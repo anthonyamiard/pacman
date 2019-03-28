@@ -19,6 +19,7 @@
 #include "../include/taille_lab.h"
 #include "../gui/gui_lab.h"
 #include "../include/labyrinthe.h"
+#include "../include/objets.h"
 
 #define TAILLE_CASE 24
 
