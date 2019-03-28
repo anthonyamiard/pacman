@@ -61,7 +61,7 @@ coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coor
 
 /*!
  * \fn coord_t chemin_fuir(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr)
- * \brief Code le comportement chemin court
+ * \brief Code le comportement chemin fuir
  *
  * L'ennemi avec ce comportement cherchera à fuir pacman dès que c'est possible
  *
