@@ -23,18 +23,6 @@
 
 #define TAILLE_CASE 24
 
-void pause() {
-	int continuer = 1;
-	SDL_Event event;
-
-	while(continuer) {
-		SDL_WaitEvent(&event);
-		switch(event.type) {
-			case SDL_QUIT: continuer = 0; break;
-		}
-	}
-}
-
 int main() {
 	srand(time(NULL));
 	if(SDL_Init(SDL_INIT_VIDEO)) {
@@ -53,6 +41,14 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
+	SDL_Rect position;
+
+	SDL_Surface * image = SDL_LoadBMP("../img/autre.bmp");
+	if(!image) {
+		fprintf(stderr, "Erreur de chargement de l'image : %s", SDL_GetError());
+		exit(EXIT_FAILURE);
+	}
+
 	SDL_Renderer * rend = SDL_CreateRenderer(fenetre, -1,
 											 SDL_RENDERER_ACCELERATED);
 	if(rend == NULL) {
@@ -61,6 +57,9 @@ int main() {
 		SDL_DestroyWindow(fenetre);
 		return EXIT_FAILURE;
 	}
+
+	SDL_Texture * image_tex = SDL_CreateTextureFromSurface(rend, image);
+	SDL_FreeSurface(image);
 
 	SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
 	SDL_RenderClear(rend);
@@ -75,12 +74,58 @@ int main() {
 		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n",
 				SDL_GetError());
 	}
-	
+
 	printf("Nombre pacgums : %d\n", nb_pacgums);
 
 	SDL_RenderPresent(rend);
 
-	pause();
+	if(fenetre) {
+		int continuer = 1;
+		while(continuer) {
+			SDL_Event e;
+			while(SDL_PollEvent(&e)) {
+				switch(e.type) {
+					case SDL_QUIT: continuer = 0; break;
+					case SDL_WINDOWEVENT:
+						switch(e.window.event) {
+							case SDL_WINDOWEVENT_EXPOSED:
+							case SDL_WINDOWEVENT_SIZE_CHANGED:
+							case SDL_WINDOWEVENT_RESIZED:
+							case SDL_WINDOWEVENT_SHOWN:
+								position.x = X_DEP * TAILLE_CASE;
+								position.y = Y_DEP * TAILLE_CASE;
+								SDL_QueryTexture(image_tex, NULL, NULL, &(position.w), &(position.h));
+								SDL_RenderCopy(rend, image_tex, NULL, &position);
+								SDL_RenderPresent(rend);
+								break;
+						}
+
+						break;
+					case SDL_KEYDOWN:
+						switch(e.key.keysym.sym) {
+							case SDLK_UP:
+								position.y -= TAILLE_CASE;
+								break;
+							case SDLK_DOWN:
+								position.y += TAILLE_CASE;
+								break;
+							case SDLK_RIGHT:
+								position.x += TAILLE_CASE;
+								break;
+							case SDLK_LEFT:
+								position.x -= TAILLE_CASE;
+								break;
+						}
+
+						SDL_RenderClear(rend);
+						SDL_RenderCopy(rend, image_tex, NULL, &position);
+						SDL_RenderPresent(rend);
+						break;
+				}
+			}
+		}
+	}
+
 	SDL_DestroyWindow(fenetre);
 	SDL_Quit();
 	return 0;
