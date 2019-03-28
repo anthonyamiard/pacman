@@ -124,10 +124,10 @@ coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord
   coord_t arr = *coord_arr;
   if(pacdir == 'h')
     while(arr.y + 1 < N_LAB && est_chemin(labyrinthe[arr.y+1][arr.x]))
-      (arr.y)++;
+      (arr.y)--;
   else if(pacdir == 'b')
     while(arr.y > 0 && est_chemin(labyrinthe[arr.y-1][arr.x]))
-      (arr.y)--;
+      (arr.y)++;
   else if(pacdir == 'g')
     while(arr.x > 0 && est_chemin(labyrinthe[arr.y][arr.x-1]))
       (arr.x)--;
