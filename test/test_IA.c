@@ -1,12 +1,12 @@
-#define _TEST_IA_C_
+#define _MAIN_C_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 
 #include "../include/IA.h"
-#include "../include/labyrinthe.h"
 #include "../include/objets.h"
+#include "../include/labyrinthe.h"
 
 #define N_TESTS 9
 #define VITESSE 1
