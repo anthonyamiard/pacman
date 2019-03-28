@@ -123,16 +123,16 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
   coord_t arr = *coord_arr;
   if(pacdir == 'h')
-    while(est_chemin(labyrinthe[arr.y+1][arr.x]))
+    while(arr.y + 1 < N_LAB && est_chemin(labyrinthe[arr.y+1][arr.x]))
       (arr.y)++;
   else if(pacdir == 'b')
-    while(est_chemin(labyrinthe[arr.y-1][arr.x]))
+    while(arr.y > 0 && est_chemin(labyrinthe[arr.y-1][arr.x]))
       (arr.y)--;
   else if(pacdir == 'g')
-    while(est_chemin(labyrinthe[arr.y][arr.x-1]))
+    while(arr.x > 0 && est_chemin(labyrinthe[arr.y][arr.x-1]))
       (arr.x)--;
   else if(pacdir == 'd')
-    while(est_chemin(labyrinthe[arr.y][arr.x+1]))
+    while(arr.x + 1 < M_LAB && est_chemin(labyrinthe[arr.y][arr.x+1]))
       (arr.x)++;
   return chemin_court(labyrinthe, coord_dep, &arr);
 }
