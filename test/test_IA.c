@@ -13,7 +13,7 @@
 
 /* Affichage du resultat des fonctions chemin_* */
 void aff_res_chemin(coord_t dep, coord_t arr, coord_t res, char * fonction) {
-	printf("%s : (%d,%d) -> (%d,%d) : (%d,%d)\n", fonction, dep.x, dep.y, arr.x, arr.y, res.x, res.y);
+	printf("%s : (%d,%d) -> (%d,%d) (pacdir = \'%c\') : (%d,%d)\n", fonction, dep.x, dep.y, arr.x, arr.y, pacdir, res.x, res.y);
 }
 
 /* Affichage du resultat de la fonction fantome */
@@ -31,13 +31,12 @@ int main() {
 	coord_t dep;
 	coord_t arr;
 	coord_t res;
-	
-	pacdir = 'h';
 
 	int l_dep_x[N_TESTS] = { 3, 24,  6,  6, 12, 15, 10, 10, 6};
 	int l_dep_y[N_TESTS] = { 5,  5,  2,  8,  4,  4,  5,  8, 5};
 	int l_arr_x[N_TESTS] = {24, 24,  6,  6, 15, 12, 10, 10, 2};
 	int l_arr_y[N_TESTS] = { 5,  5,  8,  2,  4,  4,  8,  5, 1};
+	char l_pacdir[N_TESTS] = {'d', 'g', 'b', 'h', 'b', 'h', 'd', 'g', 'g'};
 	int i;
 
 	/* Tests fonctions chemin_* */
@@ -50,6 +49,7 @@ int main() {
 		dep.y = l_dep_y[i];
 		arr.x = l_arr_x[i];
 		arr.y = l_arr_y[i];
+		pacdir = l_pacdir[i];
 
 		res = chemin_court(lab, &dep, &arr);
 		aff_res_chemin(dep, arr, res, "chemin_court");

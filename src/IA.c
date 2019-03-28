@@ -52,8 +52,8 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
                         }
       }
     }
-    for(i = N_LAB - 1;i >= 0 && !trouve;i--){
-      for(j = M_LAB - 1;j >= 0 && !trouve;j--){
+    for(i = N_LAB - 1;i>=0 && !trouve;i--){
+      for(j = M_LAB - 1;j>=0 && !trouve;j--){
                         if (lab_numero[i][j] > 0){
                             if(i-1>=0){
               if(i > 0 && est_chemin(labyrinthe[i-1][j])){
@@ -123,10 +123,10 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
 coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t* coord_arr) {
   coord_t arr = *coord_arr;
   if(pacdir == 'h')
-    while(arr.y + 1 < N_LAB && est_chemin(labyrinthe[arr.y+1][arr.x]))
+    while(arr.y > 0 && est_chemin(labyrinthe[arr.y+1][arr.x]))
       (arr.y)--;
   else if(pacdir == 'b')
-    while(arr.y > 0 && est_chemin(labyrinthe[arr.y-1][arr.x]))
+    while(arr.y + 1 < N_LAB && est_chemin(labyrinthe[arr.y-1][arr.x]))
       (arr.y)++;
   else if(pacdir == 'g')
     while(arr.x > 0 && est_chemin(labyrinthe[arr.y][arr.x-1]))
