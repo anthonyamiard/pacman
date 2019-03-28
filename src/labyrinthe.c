@@ -12,9 +12,6 @@
 
 #include "../include/labyrinthe.h"
 
-#define X_DEP 11 /*!< Coordonnée X du point de départ sur un demi-labyrinthe */
-#define Y_DEP 23 /*!< Coordonnée Y du point de départ */
-
 
 /*
  * Fonctions sur le labyrinthe
