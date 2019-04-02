@@ -21,6 +21,7 @@
 #include "../gui/gui_lab.h"
 #include "../include/labyrinthe.h"
 #include "../include/objets.h"
+#include "../include/IA.h"
 #include "../gui/mouv.h"
 
 #define TAILLE_CASE 24
@@ -67,6 +68,10 @@ int main() {
 	}
 	
 	joueur_t * pacman = cree_joueur(rend, 3, 0, X_DEP, Y_DEP);
+	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_court, 1, 1);
+	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_anticipe, 1, 1);
+	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_aleatoire, 1, 1);
+	fantome_t * fant_p = cree_fantome(rend, 'p', chemin_fuir, 1, 1);
 
 	SDL_RenderPresent(rend);
 	
@@ -87,7 +92,7 @@ int main() {
 			while(SDL_PollEvent(&e)) {
 				switch(e.type) {
 					case SDL_QUIT: continuer = 0; break;
-					case SDL_WINDOWEVENT:
+					case SDL_WINDOWEVENT:/*
 						switch(e.window.event) {
 							case SDL_WINDOWEVENT_EXPOSED:
 							case SDL_WINDOWEVENT_SIZE_CHANGED:
@@ -96,7 +101,7 @@ int main() {
 								SDL_RenderPresent(rend);
 								break;
 						}
-
+*/
 						break;
 					case SDL_KEYDOWN:
 						switch(e.key.keysym.sym) {
@@ -117,14 +122,16 @@ int main() {
 				}
 			}
 						
-			SDL_RenderClear(rend);
+			//SDL_RenderClear(rend);
 			
-			if(dessine_lab(labyrinthe, rend)) {
-				fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
-						SDL_GetError());
-			}
+			if(dessine_lab(labyrinthe, rend));
 			deplace_joueur(pacman, labyrinthe, rend);
+			deplace_fantome(fant_b, labyrinthe, rend, pacman);
+			deplace_fantome(fant_r, labyrinthe, rend, pacman);
+			deplace_fantome(fant_o, labyrinthe, rend, pacman);
+			deplace_fantome(fant_p, labyrinthe, rend, pacman);
 			SDL_RenderPresent(rend);
+			
 			if(delta < mspf)
 				SDL_Delay(mspf - delta);
 			start_time = end_time;

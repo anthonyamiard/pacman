@@ -79,7 +79,6 @@ typedef struct fantome_s {
 	coord_t coord;		/*!< Coordonnées du fantôme à l'instant présent */
 	SDL_Rect position;
 	char dir;
-	char nextdir;
 } fantome_t;
 
 

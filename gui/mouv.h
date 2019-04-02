@@ -15,11 +15,11 @@
 
 
 
-int deplace_coord(const coord_t * coord, SDL_Rect * coord_fines, const char labyrinthe[N_LAB][M_LAB], char dir);
+int deplace_coord(const coord_t * coord, SDL_Rect * coord_fines, const char labyrinthe[N_LAB][M_LAB], char dir, int vitesse);
 
 void deplace_joueur(joueur_t * joueur, char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend);
 
-void deplace_fantome(fantome_t * fantome, const char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend);
+void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend, joueur_t * joueur);
 
 
 

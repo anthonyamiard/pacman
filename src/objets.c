@@ -66,17 +66,16 @@ fantome_t * cree_fantome(SDL_Renderer * rend,
 	fantome_t * fantome = malloc(sizeof(fantome_t));
 	SDL_Texture * sprite = NULL;
 	switch(couleur) {
-		case 'b' : sprite = sprites.fant_b;
-		case 'r' : sprite = sprites.fant_r;
-		case 'o' : sprite = sprites.fant_o;
-		case 'p' : sprite = sprites.fant_p;
+		case 'b' : sprite = sprites.fant_b; break;
+		case 'r' : sprite = sprites.fant_r; break;
+		case 'o' : sprite = sprites.fant_o; break;
+		case 'p' : sprite = sprites.fant_p; break;
 	}
 	if(fantome != NULL) {
 		fantome->couleur = couleur;
 		fantome->chemin = chemin;
 		fantome->etat = POURSUITE;
-		fantome->dir = 0;
-		fantome->nextdir = 0;
+		fantome->dir = 'd';
 		fantome->coord.x = x;
 		fantome->coord.y = y;
 		fantome->position.x = x * TAILLE_CASE;
