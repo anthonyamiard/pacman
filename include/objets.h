@@ -101,7 +101,7 @@ coord_t * cree_coord(int x, int y);
  * \param[in]	points	Nombre de points procurés par le bonus
  * \param[in]	x, y	Coordonnées d'apparition du bonus
  */
-fruit_t * cree_fruit(const char * nom, int points, int x, int y);
+fruit_t * cree_fruit(int points, int x, int y);
 
 /*!
  * \brief		Création du joueur
@@ -110,7 +110,7 @@ fruit_t * cree_fruit(const char * nom, int points, int x, int y);
  * \param[in]	score	Score de départ
  * \param[in]	x, y	Coordonnées de départ du joueur
  */
-joueur_t * cree_joueur(const char * nom, int vies, int score, int x, int y);
+joueur_t * cree_joueur(int vies, int score, int x, int y);
 
 /*!
  * \brief		Création de fantôme
@@ -120,8 +120,7 @@ joueur_t * cree_joueur(const char * nom, int vies, int score, int x, int y);
  * 						du fantôme
  * \param[in]	x, y	Coordonnées d’apparition du fantôme
  */
-fantome_t * cree_fantome(const char * nom,
-						 char couleur,
+fantome_t * cree_fantome(char couleur,
 						 coord_t (*chemin)(char [N_LAB][M_LAB],
 										   coord_t *,
 										   coord_t *),

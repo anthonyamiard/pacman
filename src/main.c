@@ -41,10 +41,8 @@ int main() {
 				SDL_GetError());
 		return EXIT_FAILURE;
 	}
-
-	SDL_Rect position;
-	coord_t coord_fines = {X_DEP * TAILLE_CASE, Y_DEP * TAILLE_CASE};
-	coord_t coord = {X_DEP, Y_DEP};
+	
+	joueur_t * pacman = cree_joueur(3, 0, X_DEP, Y_DEP);
 
 	SDL_Surface * image = SDL_LoadBMP("../img/autre.bmp");
 	if(!image) {
@@ -87,6 +85,7 @@ int main() {
 	uint32_t delta = 0;
 	short fps = 30;
 	short mspf = 1000/30;
+								SDL_Rect position;
 
 	if(fenetre) {
 		int continuer = 1;
@@ -95,11 +94,6 @@ int main() {
 				start_time = SDL_GetTicks();
 			else
 				delta = end_time - start_time;
-			if(coord_fines.x % TAILLE_CASE == 0 && coord_fines.y % TAILLE_CASE == 0) {
-				coord.x = coord_fines.x / TAILLE_CASE;
-				coord.y = coord_fines.y / TAILLE_CASE;
-				dir = nextdir;
-			}
 			SDL_Event e;
 			while(SDL_PollEvent(&e)) {
 				switch(e.type) {
@@ -122,33 +116,29 @@ int main() {
 					case SDL_KEYDOWN:
 						switch(e.key.keysym.sym) {
 							case SDLK_UP:
-								nextdir = 'h';
+								pacman->nextdir = 'h';
 								break;
 							case SDLK_DOWN:
-								nextdir = 'b';
+								pacman->nextdir = 'b';
 								break;
 							case SDLK_RIGHT:
-								nextdir = 'd';
+								pacman->nextdir = 'd';
 								break;
 							case SDLK_LEFT:
-								nextdir = 'g';
+								pacman->nextdir = 'g';
 								break;
 						}
 						break;
 				}
 			}
-			coord_fines.x = position.x;
-			coord_fines.y = position.y;
-			deplace_coord(&coord, &coord_fines, labyrinthe, dir);
-			position.x = coord_fines.x;
-			position.y = coord_fines.y;
+			deplace_joueur(pacman, labyrinthe, &position);
 						
-			//SDL_RenderClear(rend);
-			/*
+			SDL_RenderClear(rend);
+			
 			if(dessine_lab(labyrinthe, rend)) {
 				fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
 						SDL_GetError());
-			}*/
+			}
 			if(delta < mspf)
 				SDL_Delay(mspf - delta);
 			start_time = end_time;

@@ -26,3 +26,14 @@ int deplace_coord(const coord_t * coord, coord_t * coord_fines, const char labyr
 	}
 	return 0;
 }
+
+int deplace_joueur(joueur_t * joueur, const char labyrinthe[N_LAB][M_LAB], SDL_Rect * position) {
+	if(joueur->coord_fines->x % TAILLE_CASE == 0 && joueur->coord_fines->y % TAILLE_CASE == 0) {
+		joueur->coord->x = joueur->coord_fines->x / TAILLE_CASE;
+		joueur->coord->y = joueur->coord_fines->y / TAILLE_CASE;
+		pacdir = joueur->nextdir;
+	}
+	deplace_coord(joueur->coord, joueur->coord_fines, labyrinthe, pacdir);
+	position->x = joueur->coord_fines->x;
+	position->y = joueur->coord_fines->y;
+}

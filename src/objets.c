@@ -46,6 +46,8 @@ joueur_t * cree_joueur(int vies, int score, int x, int y) {
 	if(joueur != NULL) {
 		joueur->vies = vies;
 		joueur->score = score;
+		pacdir = 0;
+		joueur->nextdir = 0;
 		joueur->coord = cree_coord(x, y);
 		if(joueur->coord == NULL) {
 			free(joueur);
@@ -72,13 +74,15 @@ fantome_t * cree_fantome(char couleur,
 		fantome->couleur = couleur;
 		fantome->chemin = chemin;
 		fantome->etat = POURSUITE;
+		fantome->dir = 0;
+		fantome->nextdir = 0;
 		fantome->coord = cree_coord(x, y);
 		if(fantome->coord == NULL) {
 			free(fantome);
 			fantome = NULL;
 		}
 		fantome->coord_fines = cree_coord(x * TAILLE_CASE, y * TAILLE_CASE);
-		if(fantome->coord == NULL) {
+		if(fantome->coord_fines == NULL) {
 			free(fantome->coord);
 			free(fantome);
 			fantome = NULL;
