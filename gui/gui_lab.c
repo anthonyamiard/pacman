@@ -29,6 +29,7 @@ int case_img(char case_lab, SDL_Renderer * renderer, int x, int y) {
 		return EXIT_FAILURE;
 	}
 	rend_texture(img, renderer, x, y);
+	SDL_DestroyTexture(img);
 	return 0;
 }
 
@@ -43,4 +44,8 @@ int dessine_lab(const char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend) {
 		}
 	}
 	return EXIT_SUCCESS;
+}
+
+void detruit_lab(SDL_Renderer * rend) {
+	SDL_DestroyRenderer(rend);
 }

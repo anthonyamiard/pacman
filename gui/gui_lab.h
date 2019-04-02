@@ -19,4 +19,6 @@ int case_img(char case_lab, SDL_Renderer * renderer, int x, int y);
 
 int dessine_lab(const char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend);
 
+void detruit_lab(SDL_Renderer * rend);
+
 #endif
