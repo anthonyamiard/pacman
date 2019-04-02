@@ -14,6 +14,7 @@
 
 #include "../include/objets.h"
 #include "../gui/gui_lab.h"
+#include "../gui/dessin.h"
 
 /*
  * Fonctions de création des objets
@@ -32,61 +33,57 @@ fruit_t * cree_fruit(int points, int x, int y) {
 	fruit_t * fruit = malloc(sizeof(fruit_t));
 	if(fruit != NULL) {
 		fruit->points = points;
-		fruit->coord = cree_coord(x, y);
-		if(fruit->coord == NULL) {
-			free(fruit);
-			fruit = NULL;
-		}
+		fruit->coord.x = x;
+		fruit->coord.y = y;
 	}
 	return fruit;
 }
 
-joueur_t * cree_joueur(int vies, int score, int x, int y) {
+joueur_t * cree_joueur(SDL_Renderer * rend, int vies, int score, int x, int y) {
 	joueur_t * joueur = malloc(sizeof(joueur_t));
 	if(joueur != NULL) {
 		joueur->vies = vies;
 		joueur->score = score;
 		pacdir = 0;
 		joueur->nextdir = 0;
-		joueur->coord = cree_coord(x, y);
-		if(joueur->coord == NULL) {
-			free(joueur);
-			joueur = NULL;
-		}
-		joueur->coord_fines = cree_coord(x * TAILLE_CASE, y * TAILLE_CASE);
-		if(joueur->coord_fines == NULL) {
-			free(joueur->coord);
-			free(joueur);
-			joueur = NULL;
-		}
+		joueur->coord.x = x;
+		joueur->coord.y = y;
+		joueur->position.x = x * TAILLE_CASE;
+		joueur->position.y = y * TAILLE_CASE;
+		SDL_QueryTexture(sprites.pac, NULL, NULL, &(joueur->position.w), &(joueur->position.h));
+		SDL_RenderCopy(rend, sprites.pac, NULL, &(joueur->position));
 	}
 	return joueur;
 }
 
-fantome_t * cree_fantome(char couleur,
+fantome_t * cree_fantome(SDL_Renderer * rend,
+						 char couleur,
 						 coord_t (*chemin)(char [N_LAB][M_LAB],
 										   coord_t *,
 										   coord_t *),
 						 int x,
 						 int y) {
 	fantome_t * fantome = malloc(sizeof(fantome_t));
+	SDL_Texture * sprite = NULL;
+	switch(couleur) {
+		case 'b' : sprite = sprites.fant_b;
+		case 'r' : sprite = sprites.fant_r;
+		case 'o' : sprite = sprites.fant_o;
+		case 'p' : sprite = sprites.fant_p;
+	}
 	if(fantome != NULL) {
 		fantome->couleur = couleur;
 		fantome->chemin = chemin;
 		fantome->etat = POURSUITE;
 		fantome->dir = 0;
 		fantome->nextdir = 0;
-		fantome->coord = cree_coord(x, y);
-		if(fantome->coord == NULL) {
-			free(fantome);
-			fantome = NULL;
-		}
-		fantome->coord_fines = cree_coord(x * TAILLE_CASE, y * TAILLE_CASE);
-		if(fantome->coord_fines == NULL) {
-			free(fantome->coord);
-			free(fantome);
-			fantome = NULL;
-		}
+		fantome->coord.x = x;
+		fantome->coord.y = y;
+		fantome->position.x = x * TAILLE_CASE;
+		fantome->position.y = y * TAILLE_CASE;
+		fantome->texture = sprite;
+		SDL_QueryTexture(sprite, NULL, NULL, &(fantome->position.w), &(fantome->position.h));
+		SDL_RenderCopy(rend, sprite, NULL, &(fantome->position));
 	}
 	return fantome;
 }
@@ -102,28 +99,18 @@ int detruit_coord(coord_t ** adr) {
 }
 
 int detruit_fruit(fruit_t ** adr) {
-	if(*adr != NULL)
-		detruit_coord(&((*adr)->coord));
 	free(*adr);
 	*adr = NULL;
 	return 0;
 }
 
 int detruit_joueur(joueur_t ** adr) {
-	if(*adr != NULL) {
-		detruit_coord(&((*adr)->coord));
-		detruit_coord(&((*adr)->coord_fines));
-	}
 	free(*adr);
 	*adr = NULL;
 	return 0;
 }
 
 int detruit_fantome(fantome_t ** adr) {
-	if(*adr != NULL) {
-		detruit_coord(&((*adr)->coord));
-		detruit_coord(&((*adr)->coord_fines));
-	}
 	free(*adr);
 	*adr = NULL;
 	return 0;

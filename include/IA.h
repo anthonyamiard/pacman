@@ -13,11 +13,6 @@
 #include "objets.h"
 
 /*!
- * \name Fonctions sur le comportement
- * @{
- */
-
-/*!
  * \fn coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr)
  * \brief Code le comportement chemin court
  *
@@ -71,43 +66,5 @@ coord_t chemin_anticipe(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coor
  * \retval coord_t La coordonnée suivante à l'instant t+1
  */
 coord_t chemin_fuir(char labyrinthe[N_LAB][M_LAB], coord_t * coord_dep, coord_t * coord_arr);
-
-/*!
- * @}
- * \name Fonctions de gestion labyrinthe/IA
- * @{
- */
-
-/*!
- * \fn int fantome(char labyrinthe[N_LAB][M_LAB], fantome_t * fantome, joueur_t * joueur, int vitesse)
- * \brief Code le déplacement du fantôme
- *
- * Fait déplacer le fantôme d'une case du labyrinthe et renvoie 0 si tout s'est
- * bien passé
- *
- * \param[in] labyrinthe Labyrinthe de \c N_LAB lignes et \c M_LAB colonnes
- * \param[in] fantome Objet fantôme que l'on souhaite déplacer
- * \param[in] joueur Objet joueur que le fantôme doit suivre
- * \param[in] vitesse La vitesse du fantôme à déplacer
- * \retval int 0 si tout s'est bien passé, 1 sinon
- */
-int fantome(char labyrinthe[N_LAB][M_LAB],fantome_t * fantome,joueur_t * joueur, int vitesse );
-
-/*!
- * \fn int ramasse_pacgum(char labyrinthe[N_LAB][M_LAB], joueur_t * joueur)
- * \brief Code pour ramasser un pacgum
- *
- * Permet au joueur de ramasser un pacgum à la coordonnée où il se trouve s'il
- * y en a un
- *
- * \param[in] labyrinthe Labyrinthe de \c N_LAB lignes et \c M_LAB colonnes
- * \param[in] joueur Objet joueur que l'on souhaite déplacer
- * \retval int 0 si tout s'est bien passé, 1 sinon
- */
-int ramasse_pacgum(char labyrinthe[N_LAB][M_LAB], joueur_t * joueur);
-
-/*!
- * @}
- */
 
 #endif

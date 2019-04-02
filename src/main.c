@@ -17,6 +17,7 @@
 #include <time.h>
 
 #include "../include/taille_lab.h"
+#include "../gui/dessin.h"
 #include "../gui/gui_lab.h"
 #include "../include/labyrinthe.h"
 #include "../include/objets.h"
@@ -26,6 +27,7 @@
 
 int main() {
 	srand(time(NULL));
+	
 	if(SDL_Init(SDL_INIT_VIDEO)) {
 		fprintf(stderr, "Échec d'ouverture de la SDL (%s).\n", SDL_GetError());
 		return EXIT_FAILURE;
@@ -42,14 +44,6 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	joueur_t * pacman = cree_joueur(3, 0, X_DEP, Y_DEP);
-
-	SDL_Surface * image = SDL_LoadBMP("../img/autre.bmp");
-	if(!image) {
-		fprintf(stderr, "Erreur de chargement de l'image : %s", SDL_GetError());
-		exit(EXIT_FAILURE);
-	}
-
 	SDL_Renderer * rend = SDL_CreateRenderer(fenetre, -1,
 											 SDL_RENDERER_ACCELERATED);
 	if(rend == NULL) {
@@ -58,12 +52,8 @@ int main() {
 		SDL_DestroyWindow(fenetre);
 		return EXIT_FAILURE;
 	}
-
-	SDL_Texture * image_tex = SDL_CreateTextureFromSurface(rend, image);
-	SDL_FreeSurface(image);
-
-	SDL_SetRenderDrawColor(rend, 0, 0, 0, 255);
-	SDL_RenderClear(rend);
+	
+	init_sprites(rend);
 
 	char labyrinthe[N_LAB][M_LAB];
 	int nb_pacgums;
@@ -75,8 +65,8 @@ int main() {
 		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n",
 				SDL_GetError());
 	}
-
-	printf("Nombre pacgums : %d\n", nb_pacgums);
+	
+	joueur_t * pacman = cree_joueur(rend, 3, 0, X_DEP, Y_DEP);
 
 	SDL_RenderPresent(rend);
 	
@@ -85,7 +75,6 @@ int main() {
 	uint32_t delta = 0;
 	short fps = 30;
 	short mspf = 1000/30;
-								SDL_Rect position;
 
 	if(fenetre) {
 		int continuer = 1;
@@ -104,10 +93,6 @@ int main() {
 							case SDL_WINDOWEVENT_SIZE_CHANGED:
 							case SDL_WINDOWEVENT_RESIZED:
 							case SDL_WINDOWEVENT_SHOWN:
-								position.x = X_DEP * TAILLE_CASE;
-								position.y = Y_DEP * TAILLE_CASE;
-								SDL_QueryTexture(image_tex, NULL, NULL, &(position.w), &(position.h));
-								SDL_RenderCopy(rend, image_tex, NULL, &position);
 								SDL_RenderPresent(rend);
 								break;
 						}
@@ -131,7 +116,6 @@ int main() {
 						break;
 				}
 			}
-			deplace_joueur(pacman, labyrinthe, &position);
 						
 			SDL_RenderClear(rend);
 			
@@ -139,18 +123,19 @@ int main() {
 				fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
 						SDL_GetError());
 			}
+			deplace_joueur(pacman, labyrinthe, rend);
+			SDL_RenderPresent(rend);
 			if(delta < mspf)
 				SDL_Delay(mspf - delta);
 			start_time = end_time;
 			end_time = SDL_GetTicks();
 			
-			SDL_RenderCopy(rend, image_tex, NULL, &position);
-			SDL_RenderPresent(rend);
-			
 			
 		}
 	}
 
+	detruit_sprites();
+	SDL_DestroyRenderer(rend);
 	SDL_DestroyWindow(fenetre);
 	SDL_Quit();
 	return 0;

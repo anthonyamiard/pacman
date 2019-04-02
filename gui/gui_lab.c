@@ -17,19 +17,18 @@
 int case_img(char case_lab, SDL_Renderer * renderer, int x, int y) {
 	SDL_Texture * img = NULL;
 	switch(case_lab) {
-		case 'm': img = charge_img("../img/mur.bmp", renderer); break;
-		case 'c': img = charge_img("../img/chemin.bmp", renderer); break;
-		case 'p': img = charge_img("../img/pacgum.bmp", renderer); break;
-		case 's': img = charge_img("../img/super_pg.bmp", renderer); break;
-		case 'b': img = charge_img("../img/boite.bmp", renderer); break;
-		case 'e': img = charge_img("../img/entree.bmp", renderer); break;
-		default: img = charge_img("../img/autre.bmp", renderer); break;
+		case 'm': img = sprites.mur; break;
+		case 'c': img = sprites.chemin; break;
+		case 'p': img = sprites.pacgum; break;
+		case 's': img = sprites.super_pg; break;
+		case 'b': img = sprites.boite; break;
+		case 'e': img = sprites.entree; break;
+		default: img = sprites.autre; break;
 	}
 	if(img == NULL) {
 		return EXIT_FAILURE;
 	}
 	rend_texture(img, renderer, x, y);
-	SDL_DestroyTexture(img);
 	return 0;
 }
 

@@ -13,6 +13,7 @@
 #ifndef _OBJETS_H_
 #define _OBJETS_H_
 
+#include <SDL2/SDL.h>
 #include "taille_lab.h"
 
 /*! Taille maximale des chaînes de caractères noms */
@@ -46,7 +47,7 @@ typedef enum etat_e {
  */
 typedef struct fruit_s {
 	int points;				/*!< Nombre de points qu'il procure */
-	coord_t * coord;		/*!< Coordonnées du fruit */
+	coord_t coord;		/*!< Coordonnées du fruit */
 } fruit_t;
 
 /*!
@@ -55,8 +56,8 @@ typedef struct fruit_s {
 typedef struct joueur_s {
 	int vies;				/*!< Nombre de vies */
 	int score;				/*!< Score du joueur */
-	coord_t * coord;		/*!< Coordonnée du joueur à l'instant t */
-	coord_t * coord_fines;
+	coord_t coord;		/*!< Coordonnée du joueur à l'instant t */
+	SDL_Rect position;
 	char nextdir;
 } joueur_t;
 
@@ -71,11 +72,12 @@ typedef struct fantome_s {
 	 * \li \c 'o' : orange
 	 */
 	char couleur;
+	SDL_Texture * texture;
 	/*! Recherche de chemin du fantôme */
 	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
 	etat_t etat;			/*!< État du fantôme */
-	coord_t * coord;		/*!< Coordonnées du fantôme à l'instant présent */
-	coord_t * coord_fines;
+	coord_t coord;		/*!< Coordonnées du fantôme à l'instant présent */
+	SDL_Rect position;
 	char dir;
 	char nextdir;
 } fantome_t;
@@ -110,7 +112,7 @@ fruit_t * cree_fruit(int points, int x, int y);
  * \param[in]	score	Score de départ
  * \param[in]	x, y	Coordonnées de départ du joueur
  */
-joueur_t * cree_joueur(int vies, int score, int x, int y);
+joueur_t * cree_joueur(SDL_Renderer * rend, int vies, int score, int x, int y);
 
 /*!
  * \brief		Création de fantôme
@@ -120,7 +122,8 @@ joueur_t * cree_joueur(int vies, int score, int x, int y);
  * 						du fantôme
  * \param[in]	x, y	Coordonnées d’apparition du fantôme
  */
-fantome_t * cree_fantome(char couleur,
+fantome_t * cree_fantome(SDL_Renderer * rend, 
+						 char couleur,
 						 coord_t (*chemin)(char [N_LAB][M_LAB],
 										   coord_t *,
 										   coord_t *),
