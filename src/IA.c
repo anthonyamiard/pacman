@@ -92,7 +92,8 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
   retour.y = i;
 
   nb_courant = lab_numero[coord_arr->y][coord_arr->x];
-  while(!((j == coord_dep->x && (i >= coord_dep->y-1 && i <= coord_dep->y+1)) || (i == coord_dep->y && (j >= coord_dep->x-1 && j <= coord_dep->x+1)))){
+  int abandon = 0;
+  while(!((j == coord_dep->x && i >= coord_dep->y-1 && i <= coord_dep->y+1) || (i == coord_dep->y && j >= coord_dep->x-1 && j <= coord_dep->x+1) || abandon)){
     if(i - 1 >= 0 && lab_numero [i-1][j] > 0){
       retour.y = i - 1;
       retour.x = j;
@@ -115,6 +116,10 @@ coord_t chemin_court(char labyrinthe[N_LAB][M_LAB], coord_t* coord_dep, coord_t*
       retour.x = j + 1;
       nb_courant = lab_numero[i][j+1];
     }
+    if(nb_courant == INT_MAX) {
+		retour = chemin_aleatoire(labyrinthe, coord_dep, coord_arr);
+		abandon = 1;
+	}
     i = retour.y;
     j = retour.x;
   }

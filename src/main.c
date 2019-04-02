@@ -68,6 +68,7 @@ int main() {
 	}
 	
 	joueur_t * pacman = cree_joueur(rend, 3, 0, X_DEP, Y_DEP);
+	
 	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_court, 1, 1);
 	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_anticipe, 1, 1);
 	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_aleatoire, 1, 1);
@@ -121,17 +122,18 @@ int main() {
 						break;
 				}
 			}
-						
-			//SDL_RenderClear(rend);
+			
+			SDL_RenderClear(rend);
 			
 			if(dessine_lab(labyrinthe, rend));
 			deplace_joueur(pacman, labyrinthe, rend);
+			
 			deplace_fantome(fant_b, labyrinthe, rend, pacman);
 			deplace_fantome(fant_r, labyrinthe, rend, pacman);
 			deplace_fantome(fant_o, labyrinthe, rend, pacman);
 			deplace_fantome(fant_p, labyrinthe, rend, pacman);
-			SDL_RenderPresent(rend);
 			
+			SDL_RenderPresent(rend);
 			if(delta < mspf)
 				SDL_Delay(mspf - delta);
 			start_time = end_time;
@@ -142,6 +144,11 @@ int main() {
 	}
 
 	detruit_sprites();
+	detruit_joueur(&pacman);
+	detruit_fantome(&fant_b);
+	detruit_fantome(&fant_r);
+	detruit_fantome(&fant_o);
+	detruit_fantome(&fant_p);
 	SDL_DestroyRenderer(rend);
 	SDL_DestroyWindow(fenetre);
 	SDL_Quit();

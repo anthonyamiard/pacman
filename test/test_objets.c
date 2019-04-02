@@ -38,7 +38,6 @@ void aff_fruit(const fruit_t * fruit) {
 		printf("{\n");
 		printf("\tpoints : %d,\n", fruit->points);
 		printf("\tcoord  : ");
-		aff_coord(fruit->coord);
 		printf("\n}\n");
 	}
 }
@@ -55,7 +54,6 @@ void aff_joueur(const joueur_t * joueur) {
 		printf("\tvies  : %d,\n", joueur->vies);
 		printf("\tscore : %d,\n", joueur->score);
 		printf("\tcoord : ");
-		aff_coord(joueur->coord);
 		printf("\n}\n");
 	}
 }
@@ -73,7 +71,6 @@ void aff_fantome(const fantome_t * fantome) {
 		printf("\tchemin  : %p,\n", fantome->chemin);
 		printf("\tetat    : %d,\n", fantome->etat);
 		printf("\tcoord   : ");
-		aff_coord(fantome->coord);
 		printf("\n}\n");
 	}
 }
@@ -90,20 +87,20 @@ int main() {
 	aff_fruit(fruit);
 	
 	printf("\n** Création du joueur **\n\n");
-	joueur_t * joueur = cree_joueur(3, 0, 25, 35);
+	joueur_t * joueur = cree_joueur(NULL, 3, 0, 25, 35);
 	aff_joueur(joueur);
 	
 	printf("\n** Création des fantômes **\n\n");
-	fantome_t * f1 = cree_fantome('r', chemin_court, 21, 8);
+	fantome_t * f1 = cree_fantome(NULL, 'r', chemin_court, 21, 8);
 	printf("f1 : ");
 	aff_fantome(f1);
-	fantome_t * f2 = cree_fantome('o', chemin_aleatoire, 5, 9);
+	fantome_t * f2 = cree_fantome(NULL, 'o', chemin_aleatoire, 5, 9);
 	printf("f2 : ");
 	aff_fantome(f2);
-	fantome_t * f3 = cree_fantome('p', chemin_anticipe, 7, 15);
+	fantome_t * f3 = cree_fantome(NULL, 'p', chemin_anticipe, 7, 15);
 	printf("f3 : ");
 	aff_fantome(f3);
-	fantome_t * f4 = cree_fantome('b', chemin_fuir, 6, 4);
+	fantome_t * f4 = cree_fantome(NULL, 'b', chemin_fuir, 6, 4);
 	printf("f4 : ");
 	aff_fantome(f4);
 	

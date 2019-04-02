@@ -3,6 +3,7 @@ OBJDIR	= ../obj
 BINDIR	= ../bin
 SRCDIR	= ../src
 INCDIR	= ../include
+GUIDIR	= ../gui
 TESTDIR	= .
 DIRS	= $(OBJDIR) $(BINDIR)
 
@@ -10,8 +11,10 @@ TARGETS= $(BINDIR)/test_lab $(BINDIR)/test_IA $(BINDIR)/test_objets $(BINDIR)/te
 
 # Fichiers
 SOURCES	:= $(wildcard $(SRCDIR)/*[^main].c)
+SRCGUI		:= $(wildcard $(GUIDIR)/*.c)
 # INCLUDES:= $(wildcard $(INCDIR)/*.h)
 OBJECTS	:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+OBJGUI	:= $(SRCGUI:$(GUIDIR)/%.c=$(OBJDIR)/%.o)
 
 .PHONY: DIRS
 all: $(DIRS) $(TARGETS)
@@ -23,7 +26,7 @@ $(BINDIR):
 	mkdir -p $(BINDIR)
 
 # Edition de liens
-$(BINDIR)/%: $(OBJDIR)/%.o $(OBJECTS)
+$(BINDIR)/%: $(OBJDIR)/%.o $(OBJECTS) $(OBJGUI)
 	@$(LINKER) $^ -o $@ $(LIBS) $(LFLAGS)
 	@echo "Edition de liens de "$@" terminée !"
 
@@ -60,6 +63,10 @@ $(OBJDIR)/dessin.o: dessin_h
 
 # Compilation des .c en .o
 $(OBJECTS): $(OBJDIR)/%.o : $(SRCDIR)/%.c
+	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
+	@echo "Compilation de "$<" terminee !"
+	
+$(OBJGUI): $(OBJDIR)/%.o: $(GUIDIR)/%.c
 	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
 
