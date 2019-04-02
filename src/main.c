@@ -20,6 +20,7 @@
 #include "../gui/gui_lab.h"
 #include "../include/labyrinthe.h"
 #include "../include/objets.h"
+#include "../gui/mouv.h"
 
 #define TAILLE_CASE 24
 
@@ -78,6 +79,8 @@ int main() {
 	printf("Nombre pacgums : %d\n", nb_pacgums);
 
 	SDL_RenderPresent(rend);
+	
+	int x, y;
 
 	if(fenetre) {
 		int continuer = 1;
@@ -102,26 +105,32 @@ int main() {
 
 						break;
 					case SDL_KEYDOWN:
+						x = position.x / TAILLE_CASE;
+						y = position.y / TAILLE_CASE;
+						coord_t coord_fines = {position.x, position.y};
 						switch(e.key.keysym.sym) {
 							case SDLK_UP:
-								position.y -= TAILLE_CASE;
+								deplace_coord(&coord_fines, labyrinthe, 'h');
 								break;
 							case SDLK_DOWN:
-								position.y += TAILLE_CASE;
+								deplace_coord(&coord_fines, labyrinthe, 'b');
 								break;
 							case SDLK_RIGHT:
-								position.x += TAILLE_CASE;
+								deplace_coord(&coord_fines, labyrinthe, 'd');
 								break;
 							case SDLK_LEFT:
-								position.x -= TAILLE_CASE;
+								deplace_coord(&coord_fines, labyrinthe, 'g');
 								break;
 						}
+						position.x = coord_fines.x;
+						position.y = coord_fines.y;
 						
-						SDL_RenderClear(rend);
+						/*SDL_RenderClear(rend);*/
+						/*
 						if(dessine_lab(labyrinthe, rend)) {
 							fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
 									SDL_GetError());
-						}
+						}*/
 						SDL_RenderCopy(rend, image_tex, NULL, &position);
 						SDL_RenderPresent(rend);
 						break;
