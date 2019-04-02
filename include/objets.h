@@ -45,7 +45,6 @@ typedef enum etat_e {
  * \brief	Fruit bonus
  */
 typedef struct fruit_s {
-	char nom[TAILLE_NOM];	/*!< Nom du fruit */
 	int points;				/*!< Nombre de points qu'il procure */
 	coord_t * coord;		/*!< Coordonnées du fruit */
 } fruit_t;
@@ -54,18 +53,17 @@ typedef struct fruit_s {
  * \brief	Joueur
  */
 typedef struct joueur_s {
-	char nom[TAILLE_NOM];	/*!< Nom du joueur */
 	int vies;				/*!< Nombre de vies */
 	int score;				/*!< Score du joueur */
 	coord_t * coord;		/*!< Coordonnée du joueur à l'instant t */
 	coord_t * coord_fines;
+	char nextdir;
 } joueur_t;
 
 /*!
  * \brief	Fantôme
  */
 typedef struct fantome_s {
-	char nom[TAILLE_NOM];	/*!< Nom du fantôme */
 	/*! Couleur du fantôme 
 	 * \li \c 'b' : bleu
 	 * \li \c 'r' : rouge
@@ -78,6 +76,8 @@ typedef struct fantome_s {
 	etat_t etat;			/*!< État du fantôme */
 	coord_t * coord;		/*!< Coordonnées du fantôme à l'instant présent */
 	coord_t * coord_fines;
+	char dir;
+	char nextdir;
 } fantome_t;
 
 
