@@ -43,6 +43,8 @@ int main() {
 	}
 
 	SDL_Rect position;
+	coord_t coord_fines = {X_DEP * TAILLE_CASE, Y_DEP * TAILLE_CASE};
+	coord_t coord = {X_DEP, Y_DEP};
 
 	SDL_Surface * image = SDL_LoadBMP("../img/autre.bmp");
 	if(!image) {
@@ -80,11 +82,24 @@ int main() {
 
 	SDL_RenderPresent(rend);
 	
-	int x, y;
+	uint32_t start_time = 0;
+	uint32_t end_time = 0;
+	uint32_t delta = 0;
+	short fps = 30;
+	short mspf = 1000/30;
 
 	if(fenetre) {
 		int continuer = 1;
 		while(continuer) {
+			if(!start_time)
+				start_time = SDL_GetTicks();
+			else
+				delta = end_time - start_time;
+			if(coord_fines.x % TAILLE_CASE == 0 && coord_fines.y % TAILLE_CASE == 0) {
+				coord.x = coord_fines.x / TAILLE_CASE;
+				coord.y = coord_fines.y / TAILLE_CASE;
+				dir = nextdir;
+			}
 			SDL_Event e;
 			while(SDL_PollEvent(&e)) {
 				switch(e.type) {
@@ -105,37 +120,44 @@ int main() {
 
 						break;
 					case SDL_KEYDOWN:
-						x = position.x / TAILLE_CASE;
-						y = position.y / TAILLE_CASE;
-						coord_t coord_fines = {position.x, position.y};
 						switch(e.key.keysym.sym) {
 							case SDLK_UP:
-								deplace_coord(&coord_fines, labyrinthe, 'h');
+								nextdir = 'h';
 								break;
 							case SDLK_DOWN:
-								deplace_coord(&coord_fines, labyrinthe, 'b');
+								nextdir = 'b';
 								break;
 							case SDLK_RIGHT:
-								deplace_coord(&coord_fines, labyrinthe, 'd');
+								nextdir = 'd';
 								break;
 							case SDLK_LEFT:
-								deplace_coord(&coord_fines, labyrinthe, 'g');
+								nextdir = 'g';
 								break;
 						}
-						position.x = coord_fines.x;
-						position.y = coord_fines.y;
-						
-						/*SDL_RenderClear(rend);*/
-						/*
-						if(dessine_lab(labyrinthe, rend)) {
-							fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
-									SDL_GetError());
-						}*/
-						SDL_RenderCopy(rend, image_tex, NULL, &position);
-						SDL_RenderPresent(rend);
 						break;
 				}
 			}
+			coord_fines.x = position.x;
+			coord_fines.y = position.y;
+			deplace_coord(&coord, &coord_fines, labyrinthe, dir);
+			position.x = coord_fines.x;
+			position.y = coord_fines.y;
+						
+			//SDL_RenderClear(rend);
+			/*
+			if(dessine_lab(labyrinthe, rend)) {
+				fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
+						SDL_GetError());
+			}*/
+			if(delta < mspf)
+				SDL_Delay(mspf - delta);
+			start_time = end_time;
+			end_time = SDL_GetTicks();
+			
+			SDL_RenderCopy(rend, image_tex, NULL, &position);
+			SDL_RenderPresent(rend);
+			
+			
 		}
 	}
 

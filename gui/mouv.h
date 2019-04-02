@@ -14,7 +14,7 @@
 
 
 
-int deplace_coord(coord_t * coord, const char labyrinthe[N_LAB][M_LAB], char dir);
+int deplace_coord(const coord_t * coord, coord_t * coord_fines, const char labyrinthe[N_LAB][M_LAB], char dir);
 
 
 
