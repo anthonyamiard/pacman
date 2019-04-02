@@ -116,8 +116,12 @@ int main() {
 								position.x -= TAILLE_CASE;
 								break;
 						}
-
+						
 						SDL_RenderClear(rend);
+						if(dessine_lab(labyrinthe, rend)) {
+							fprintf(stderr, "Échec d'affichage du labyrinthe (%s).\n",
+									SDL_GetError());
+						}
 						SDL_RenderCopy(rend, image_tex, NULL, &position);
 						SDL_RenderPresent(rend);
 						break;
