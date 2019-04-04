@@ -29,11 +29,13 @@
 
 int main() {
 	srand(time(NULL));
-	
+
 	if(SDL_Init(SDL_INIT_VIDEO)) {
 		fprintf(stderr, "Échec d'ouverture de la SDL (%s).\n", SDL_GetError());
 		return EXIT_FAILURE;
 	}
+
+	menu_SDL();
 
 	SDL_Window * fenetre = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
 													  SDL_WINDOWPOS_UNDEFINED,
@@ -45,7 +47,7 @@ int main() {
 				SDL_GetError());
 		return EXIT_FAILURE;
 	}
-	
+
 	SDL_Renderer * rend = SDL_CreateRenderer(fenetre, -1,
 											 SDL_RENDERER_ACCELERATED);
 	if(rend == NULL) {
@@ -54,7 +56,7 @@ int main() {
 		SDL_DestroyWindow(fenetre);
 		return EXIT_FAILURE;
 	}
-	
+
 	init_sprites(rend);
 
 	char labyrinthe[N_LAB][M_LAB];
@@ -67,16 +69,16 @@ int main() {
 		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n",
 				SDL_GetError());
 	}
-	
+
 	joueur_t * pacman = cree_joueur(rend, 3, 0, X_DEP, Y_DEP);
-	
+
 	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_fuir, 1, 1);
 	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_aleatoire, 1, 1);
 	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_court, 1, 1);
 	fantome_t * fant_p = cree_fantome(rend, 'p', chemin_anticipe, 1, 1);
 
 	SDL_RenderPresent(rend);
-	
+
 	uint32_t start_time = 0;
 	uint32_t end_time = 0;
 	uint32_t delta = 0;
@@ -90,7 +92,6 @@ int main() {
 				start_time = SDL_GetTicks();
 			else
 				delta = end_time - start_time;
-			menu_SDL();
 			SDL_Event e;
 			while(SDL_PollEvent(&e)) {
 				switch(e.type) {
@@ -124,24 +125,24 @@ int main() {
 						break;
 				}
 			}
-			
+
 			SDL_RenderClear(rend);
-			
+
 			if(dessine_lab(labyrinthe, rend));
 			deplace_joueur(pacman, labyrinthe, rend);
-			
+
 			deplace_fantome(fant_b, labyrinthe, rend, pacman);
 			deplace_fantome(fant_r, labyrinthe, rend, pacman);
 			deplace_fantome(fant_o, labyrinthe, rend, pacman);
 			deplace_fantome(fant_p, labyrinthe, rend, pacman);
-			
+
 			SDL_RenderPresent(rend);
 			if(delta < mspf)
 				SDL_Delay(mspf - delta);
 			start_time = end_time;
 			end_time = SDL_GetTicks();
-			
-			
+
+
 		}
 	}
 

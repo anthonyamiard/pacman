@@ -1,9 +1,9 @@
 /*!
  * \file	surface.h
  * \author	Anthony Amiard
- * 
+ *
  * Menu
- * 
+ *
  */
 
 #include <stdlib.h>
@@ -30,17 +30,17 @@ int menu_SDL(void){
     //Le pointeur vers la surface incluse dans la fenetre
     SDL_Renderer *renderer=NULL;
     SDL_Rect txtDestRect, txtBvnRect, txtMenuRect[4], imgBtnRect, imgBGRect;
-    
+
     // Une variable de couleur noire
     SDL_Color couleurNoire = {0, 0, 0, 0};
-    
+
     /* Création de la fenêtre */
     pWindow = SDL_CreateWindow("Pacman",SDL_WINDOWPOS_UNDEFINED,
                                SDL_WINDOWPOS_UNDEFINED,
                                M_LAB * TAILLE_CASE,
                                N_LAB * TAILLE_CASE,
                                SDL_WINDOW_SHOWN);
-    
+
     if(!pWindow){
         fprintf(stderr, "Erreur à la création de la fenetre : %s\n", SDL_GetError());
         exit(EXIT_FAILURE);
@@ -55,16 +55,16 @@ int menu_SDL(void){
     SDL_Texture *texteMenu_tex[2];
     texteMenu_tex[0] = tex_text("PoliceMenu.ttf",40,"Jouer",couleurNoire,renderer);
     texteMenu_tex[1] = tex_text("PoliceMenu.ttf",40,"Quitter",couleurNoire,renderer);
-    
+
     //Position ou sera mis le texte dans la fenêtre
     //TITRE
     txtDestRect.x = 300;
     txtDestRect.y = 10;
     SDL_QueryTexture(texte_tex, NULL, NULL, &(txtDestRect.w), &(txtDestRect.h));
-    
+
     //MENU
     for(int j=0;j<4;j++){
-        
+
         if(j==2 || j==3){
             txtMenuRect[j].x = 480;
         }else{
@@ -73,8 +73,8 @@ int menu_SDL(void){
         txtMenuRect[j].y = 165+90*j;
         SDL_QueryTexture(texteMenu_tex[j], NULL, NULL, &(txtMenuRect[j].w), &(txtMenuRect[j].h));
     }
-    
-    
+
+
     //Chargement de l'image de fond
     SDL_Texture *image_BG_tex = tex_img_png("./img/Pacman.png",renderer);
     //Chargement de l'image bouton
@@ -88,7 +88,7 @@ int menu_SDL(void){
 
     SDL_Texture *temp;
     int i=0;
-    
+
     if( pWindow )
     {
         int running = 1;
@@ -97,34 +97,30 @@ int menu_SDL(void){
             SDL_GetMouseState(&x,&y);
             //if(x<700 && 385<x && y<526 && 130<y) goto affichage;
             //printf("x:%i y:%i\n",x,y);
-            
+
             while(SDL_PollEvent(&e)) {
                 switch(e.type) {
                     case SDL_QUIT: running = 0;break;
                     case SDL_MOUSEBUTTONDOWN:
-                        if(x>1000 && x<1000+82 && y>570 && y<570+82){
-                            song = !(song);
-                        }
                     case SDL_WINDOWEVENT:
                     //affichage:
                         /* Le fond de la fenêtre sera blanc */
                         //SDL_SetRenderDrawColor(renderer, 24, 124, 58, 255);
                         SDL_RenderClear(renderer);
-                        
+
                         //BACKGROUND
                         imgBGRect.x = 0;
                         imgBGRect.y = 0;
                         SDL_QueryTexture(image_BG_tex, NULL, NULL, &(imgBGRect.w), &(imgBGRect.h));
                         SDL_RenderCopy(renderer, image_BG_tex, NULL, &imgBGRect);
-                        
+
                         /* Ajout du texte en noir */
                         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-                        
+
                         SDL_RenderCopy(renderer, texte_tex, NULL, &txtDestRect);
-                        SDL_RenderCopy(renderer, user_tex, NULL, &txtBvnRect);
-                        
+
                         SDL_RenderDrawLine(renderer,0,130,1080,130);
-                        
+
                         //Positionnement du premier bouton
                         imgBtnRect.x = 440;
                         imgBtnRect.y = 150;
@@ -134,7 +130,7 @@ int menu_SDL(void){
                                 temp = image_btnHover_tex;
                                 if(e.type == SDL_MOUSEBUTTONDOWN){
                                     SDL_DestroyWindow(pWindow);
-                                    lancement_jeu(i);
+                                    //lancement_jeu(i);
                                     return 0;
                                 }
                             }else{
@@ -157,10 +153,9 @@ int menu_SDL(void){
     } else {
         fprintf(stderr,"Erreur de création de la fenêtre: %s\n",SDL_GetError());
     }
-    
+
     //Destruction de la fenetre
     if(pWindow != NULL) SDL_DestroyWindow(pWindow);
     return 0;
 
 }
-
