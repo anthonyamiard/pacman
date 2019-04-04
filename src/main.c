@@ -23,8 +23,9 @@
 #include "../include/objets.h"
 #include "../include/IA.h"
 #include "../gui/mouv.h"
+#include "../gui/surface.h"
 
-#define TAILLE_CASE 24
+
 
 int main() {
 	srand(time(NULL));
@@ -69,10 +70,10 @@ int main() {
 	
 	joueur_t * pacman = cree_joueur(rend, 3, 0, X_DEP, Y_DEP);
 	
-	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_court, 1, 1);
-	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_anticipe, 1, 1);
-	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_aleatoire, 1, 1);
-	fantome_t * fant_p = cree_fantome(rend, 'p', chemin_fuir, 1, 1);
+	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_fuir, 1, 1);
+	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_aleatoire, 1, 1);
+	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_court, 1, 1);
+	fantome_t * fant_p = cree_fantome(rend, 'p', chemin_anticipe, 1, 1);
 
 	SDL_RenderPresent(rend);
 	
@@ -89,6 +90,7 @@ int main() {
 				start_time = SDL_GetTicks();
 			else
 				delta = end_time - start_time;
+			menu_SDL();
 			SDL_Event e;
 			while(SDL_PollEvent(&e)) {
 				switch(e.type) {

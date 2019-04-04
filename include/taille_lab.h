@@ -19,4 +19,6 @@
 #define X_BOITE 13
 #define Y_BOITE 12
 
+#define TAILLE_CASE 24
+
 #endif
