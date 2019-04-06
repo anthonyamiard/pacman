@@ -321,6 +321,10 @@ int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x, int y)
 	return nb;
 }
 
+int est_dans_boite(int x, int y) {
+	return x >= 10 && x <= 17 && y >= 12 && y <= 16;
+}
+
 int place_permise(const char demi_lab[N_LAB][M_LAB / 2], int x, int y) {
 
 	/* Chemin en dehors du labyrinthe */

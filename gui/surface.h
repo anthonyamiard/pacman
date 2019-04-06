@@ -6,6 +6,9 @@
  * 
  */
 
+#ifndef _SURFACE_H_
+#define _SURFACE_H_
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <SDL2/SDL.h>
@@ -14,3 +17,5 @@
 
 
 int menu_SDL(void);
+
+#endif

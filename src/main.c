@@ -35,7 +35,7 @@ int main() {
 		return EXIT_FAILURE;
 	}
 
-	menu_SDL();
+//	menu_SDL();
 
 	SDL_Window * fenetre = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
 													  SDL_WINDOWPOS_UNDEFINED,
@@ -72,10 +72,12 @@ int main() {
 
 	joueur_t * pacman = cree_joueur(rend, 3, 0, X_DEP, Y_DEP);
 
-	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_fuir, 1, 1);
-	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_aleatoire, 1, 1);
-	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_court, 1, 1);
-	fantome_t * fant_p = cree_fantome(rend, 'p', chemin_anticipe, 1, 1);
+	fantome_t * fant_b = cree_fantome(rend, 'b', chemin_fuir, X_BLEU, Y_BLEU);
+	fantome_t * fant_o = cree_fantome(rend, 'o', chemin_aleatoire, X_ORANGE,
+									  Y_ORANGE);
+	fantome_t * fant_r = cree_fantome(rend, 'r', chemin_court, X_ROUGE, Y_ROUGE);
+	fantome_t * fant_p = cree_fantome(rend, 'p', chemin_anticipe, X_ROSE,
+										Y_ROSE);
 
 	SDL_RenderPresent(rend);
 
@@ -128,13 +130,42 @@ int main() {
 
 			SDL_RenderClear(rend);
 
-			if(dessine_lab(labyrinthe, rend));
+			dessine_lab(labyrinthe, rend);
 			deplace_joueur(pacman, labyrinthe, rend);
 
 			deplace_fantome(fant_b, labyrinthe, rend, pacman);
 			deplace_fantome(fant_r, labyrinthe, rend, pacman);
 			deplace_fantome(fant_o, labyrinthe, rend, pacman);
 			deplace_fantome(fant_p, labyrinthe, rend, pacman);
+			
+			if(collision(pacman, fant_b) ||
+				collision(pacman, fant_r) ||
+				collision(pacman, fant_o) ||
+				collision(pacman, fant_p)) {
+				pacman->vies -= 1;
+				if(pacman->vies == 0)
+					continuer = 0;
+				pacman->position.x = X_DEP * TAILLE_CASE;
+				pacman->position.y = Y_DEP * TAILLE_CASE;
+				pacman->coord.x = X_DEP;
+				pacman->coord.y = Y_DEP;
+				fant_b->position.x = X_BLEU * TAILLE_CASE;
+				fant_b->position.y = Y_BLEU * TAILLE_CASE;
+				fant_b->coord.x = X_BLEU;
+				fant_b->coord.y = Y_BLEU;
+				fant_r->position.x = X_ROUGE * TAILLE_CASE;
+				fant_r->position.y = Y_ROUGE * TAILLE_CASE;
+				fant_r->coord.x = X_ROUGE;
+				fant_r->coord.y = Y_ROUGE;
+				fant_o->position.x = X_ORANGE * TAILLE_CASE;
+				fant_o->position.y = Y_ORANGE * TAILLE_CASE;
+				fant_o->coord.x = X_ORANGE;
+				fant_o->coord.y = Y_ORANGE;
+				fant_p->position.x = X_ROSE * TAILLE_CASE;
+				fant_p->position.y = Y_ROSE * TAILLE_CASE;
+				fant_p->coord.x = X_ROSE;
+				fant_p->coord.y = Y_ROSE;
+			}
 
 			SDL_RenderPresent(rend);
 			if(delta < mspf)

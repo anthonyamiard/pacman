@@ -10,6 +10,7 @@
 #include <SDL2/SDL_ttf.h>
 
 #include "surface.h"
+#include "toSurface.h"
 
 /**
  * \fn SDL_Texture* tex_img_png(char * s, SDL_Renderer* renderer)

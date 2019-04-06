@@ -148,6 +148,14 @@ int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x,
 							int y);
 
 /*!
+ * \brief		Teste si des coordonnées sont dans la boîte aux fantômes
+ * \param[in]	x,y	Coordonnées à tester
+ * \retval		1	Les coordonnées sont dans la boîte
+ * \retval		0	Les coordonnées ne sont pas dans la boîte
+ */
+int est_dans_boite(int x, int y);
+
+/*!
  * \brief	Teste si on peut générer un chemin aux coordonnées (x,y)
  *
  * Teste si un chemin peut être générer à la case <tt>demi_lab[y][x]</tt>

@@ -13,6 +13,7 @@
 
 #include "surface.h"
 #include "../include/taille_lab.h"
+#include "toSurface.h"
 
 #define PLAY 1
 #define PAUSE 0
@@ -51,10 +52,10 @@ int menu_SDL(void){
         fprintf(stderr, "Erreur à la création du renderer\n");
         exit(EXIT_FAILURE);
     }
-    SDL_Texture *texte_tex = tex_text("PoliceTitre.ttf",100,"Pacman",couleurNoire,renderer);
+    SDL_Texture *texte_tex = tex_text("../gui/PoliceTitre.ttf",100,"Pacman",couleurNoire,renderer);
     SDL_Texture *texteMenu_tex[2];
-    texteMenu_tex[0] = tex_text("PoliceMenu.ttf",40,"Jouer",couleurNoire,renderer);
-    texteMenu_tex[1] = tex_text("PoliceMenu.ttf",40,"Quitter",couleurNoire,renderer);
+    texteMenu_tex[0] = tex_text("../gui/PoliceMenu.ttf",40,"Jouer",couleurNoire,renderer);
+    texteMenu_tex[1] = tex_text("../gui/PoliceMenu.ttf",40,"Quitter",couleurNoire,renderer);
 
     //Position ou sera mis le texte dans la fenêtre
     //TITRE
@@ -76,15 +77,15 @@ int menu_SDL(void){
 
 
     //Chargement de l'image de fond
-    SDL_Texture *image_BG_tex = tex_img_png("./img/Pacman.png",renderer);
+    SDL_Texture *image_BG_tex = tex_img_png("../img/Pacman.png",renderer);
     //Chargement de l'image bouton
-    SDL_Texture *image_btn_tex = tex_img_png("./img/btn.png",renderer);
+    SDL_Texture *image_btn_tex = tex_img_png("../img/btn.png",renderer);
     //Chargement de l'image bouton (utilisé quand la souris passe sur l'image)
-    SDL_Texture *image_btnHover_tex = tex_img_png("./img/btn.png",renderer);
+    SDL_Texture *image_btnHover_tex = tex_img_png("../img/btn.png",renderer);
     //IMAGE PLAY
-    SDL_Texture *image_play_tex = tex_img_png("./img/play.png",renderer);
+    SDL_Texture *image_play_tex = tex_img_png("../img/play.png",renderer);
     //IMAGE PAUSE
-    SDL_Texture *image_pause_tex = tex_img_png("./img/pause.png",renderer);
+    SDL_Texture *image_pause_tex = tex_img_png("../img/pause.png",renderer);
 
     SDL_Texture *temp;
     int i=0;

@@ -19,6 +19,18 @@
 #define X_BOITE 13
 #define Y_BOITE 12
 
+#define X_BLEU 12
+#define Y_BLEU 14
+
+#define X_ROUGE 13
+#define Y_ROUGE 14
+
+#define X_ROSE 14
+#define Y_ROSE 14
+
+#define X_ORANGE 15
+#define Y_ORANGE 14
+
 #define TAILLE_CASE 24
 
 #endif
