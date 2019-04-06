@@ -69,7 +69,11 @@ void deplace_joueur(joueur_t * joueur,
 	SDL_RenderCopy(rend, sprites.pac, NULL, &(joueur->position));
 }
 
-void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend, joueur_t * joueur) {
+void deplace_fantome(fantome_t * fantome,
+					 char labyrinthe[N_LAB][M_LAB],
+					 SDL_Renderer * rend,
+					 joueur_t * joueur,
+					 int fps) {
 	coord_t dest;
 	fantome->duree -= 1;
 	if(fantome->etat == FUITE && fantome->duree == 0)
@@ -153,7 +157,8 @@ void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Ren
 		}
 	}
 	SDL_Texture * texture;
-	if(fantome->etat == FUITE)
+	if(fantome->etat == FUITE &&
+		(fantome->duree > 10 * fps || (fantome->duree / (fps / 2)) % 2))
 		texture = sprites.fant_peur;
 	else if(fantome->etat == RETOUR)
 		texture = sprites.fant_retour;

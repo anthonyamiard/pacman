@@ -40,7 +40,7 @@ int main() {
 	SDL_Window * fenetre = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
 													  SDL_WINDOWPOS_UNDEFINED,
 													  M_LAB * TAILLE_CASE,
-													  N_LAB * TAILLE_CASE,
+													  N_LAB * TAILLE_CASE + 48,
 													  SDL_WINDOW_SHOWN);
 	if(fenetre == NULL) {
 		fprintf(stderr, "Échec de création de la fenêtre (%s).\n",
@@ -142,15 +142,12 @@ int main() {
 			deplace_joueur(pacman, labyrinthe, rend, fant_b, fant_r, fant_o,
 						   fant_p, fps);
 
-			deplace_fantome(fant_b, labyrinthe, rend, pacman);
-			deplace_fantome(fant_r, labyrinthe, rend, pacman);
-			deplace_fantome(fant_o, labyrinthe, rend, pacman);
-			deplace_fantome(fant_p, labyrinthe, rend, pacman);
+			deplace_fantome(fant_b, labyrinthe, rend, pacman, fps);
+			deplace_fantome(fant_r, labyrinthe, rend, pacman, fps);
+			deplace_fantome(fant_o, labyrinthe, rend, pacman, fps);
+			deplace_fantome(fant_p, labyrinthe, rend, pacman, fps);
 			
 			gere_collisions(pacman, fant_b, fant_r, fant_o, fant_p);
-			
-			if(pacman->vies == 0)
-				continuer = 0;
 
 			SDL_RenderPresent(rend);
 			if(delta < mspf)
