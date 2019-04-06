@@ -110,6 +110,14 @@ int main() {
 */
 						break;
 					case SDL_KEYDOWN:
+						if(fant_b->etat == ATTENTE)
+							fant_b->etat = POURSUITE;
+						if(fant_r->etat == ATTENTE)
+							fant_r->etat = POURSUITE;
+						if(fant_o->etat == ATTENTE)
+							fant_o->etat = POURSUITE;
+						if(fant_p->etat == ATTENTE)
+							fant_p->etat = POURSUITE;
 						switch(e.key.keysym.sym) {
 							case SDLK_UP:
 								pacman->nextdir = 'h';
@@ -131,41 +139,18 @@ int main() {
 			SDL_RenderClear(rend);
 
 			dessine_lab(labyrinthe, rend);
-			deplace_joueur(pacman, labyrinthe, rend);
+			deplace_joueur(pacman, labyrinthe, rend, fant_b, fant_r, fant_o,
+						   fant_p);
 
 			deplace_fantome(fant_b, labyrinthe, rend, pacman);
 			deplace_fantome(fant_r, labyrinthe, rend, pacman);
 			deplace_fantome(fant_o, labyrinthe, rend, pacman);
 			deplace_fantome(fant_p, labyrinthe, rend, pacman);
 			
-			if(collision(pacman, fant_b) ||
-				collision(pacman, fant_r) ||
-				collision(pacman, fant_o) ||
-				collision(pacman, fant_p)) {
-				pacman->vies -= 1;
-				if(pacman->vies == 0)
-					continuer = 0;
-				pacman->position.x = X_DEP * TAILLE_CASE;
-				pacman->position.y = Y_DEP * TAILLE_CASE;
-				pacman->coord.x = X_DEP;
-				pacman->coord.y = Y_DEP;
-				fant_b->position.x = X_BLEU * TAILLE_CASE;
-				fant_b->position.y = Y_BLEU * TAILLE_CASE;
-				fant_b->coord.x = X_BLEU;
-				fant_b->coord.y = Y_BLEU;
-				fant_r->position.x = X_ROUGE * TAILLE_CASE;
-				fant_r->position.y = Y_ROUGE * TAILLE_CASE;
-				fant_r->coord.x = X_ROUGE;
-				fant_r->coord.y = Y_ROUGE;
-				fant_o->position.x = X_ORANGE * TAILLE_CASE;
-				fant_o->position.y = Y_ORANGE * TAILLE_CASE;
-				fant_o->coord.x = X_ORANGE;
-				fant_o->coord.y = Y_ORANGE;
-				fant_p->position.x = X_ROSE * TAILLE_CASE;
-				fant_p->position.y = Y_ROSE * TAILLE_CASE;
-				fant_p->coord.x = X_ROSE;
-				fant_p->coord.y = Y_ROSE;
-			}
+			gere_collisions(pacman, fant_b, fant_r, fant_o, fant_p);
+			
+			if(pacman->vies == 0)
+				continuer = 0;
 
 			SDL_RenderPresent(rend);
 			if(delta < mspf)

@@ -74,10 +74,12 @@ fantome_t * cree_fantome(SDL_Renderer * rend,
 	if(fantome != NULL) {
 		fantome->couleur = couleur;
 		fantome->chemin = chemin;
-		fantome->etat = POURSUITE;
+		fantome->etat = ATTENTE;
 		fantome->dir = 'd';
 		fantome->coord.x = x;
 		fantome->coord.y = y;
+		fantome->coord_dep.x = x;
+		fantome->coord_dep.y = y;
 		fantome->position.x = x * TAILLE_CASE;
 		fantome->position.y = y * TAILLE_CASE;
 		fantome->texture = sprite;

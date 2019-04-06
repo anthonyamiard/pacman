@@ -40,12 +40,18 @@ int deplace_coord(const coord_t * coord, SDL_Rect * position,
  * 
  * Déplace le joueur dans le labyrinthe d'après la variable globale \c pacdir.
  * 
- * \param[in,out]	joueur		Joueur à déplacer
- * \param[in]		labyrinthe	Labyrinthe dans lequel déplacer le joueur
- * \param[in,out]	rend		Renderer à mettre à jour
+ * \param[in,out]	joueur			Joueur à déplacer
+ * \param[in]		labyrinthe		Labyrinthe dans lequel déplacer le joueur
+ * \param[in,out]	rend			Renderer à mettre à jour
+ * \param[in,out]	f1, f2, f3, f4	Fantômes
  */
-void deplace_joueur(joueur_t * joueur, char labyrinthe[N_LAB][M_LAB],
-					SDL_Renderer * rend);
+void deplace_joueur(joueur_t * joueur,
+					char labyrinthe[N_LAB][M_LAB],
+					SDL_Renderer * rend,
+					fantome_t * f1,
+					fantome_t * f2,
+					fantome_t * f3,
+					fantome_t * f4);
 
 /*!
  * \brief	Déplace le fantôme dans le labyrinthe
@@ -67,6 +73,19 @@ void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Ren
  * \retval		0		Il n'y a pas collision entre le joueur et le fantôme
  */
 int collision(const joueur_t * joueur, const fantome_t * fantome);
+
+/*!
+ * \brief	Teste s'il y a collision entre le joueur et un fantôme et effectue
+ * 			les opérations nécessaires
+ * \param[in,out]	joueur							Joueur
+ * \param[in,out]	fant_b, fant_r, fant_o, fant_p	Fantômes bleu, rouge, orange
+ * 													et rose
+ */
+void gere_collisions(joueur_t * joueur,
+					 fantome_t * fant_b,
+					 fantome_t * fant_r,
+					 fantome_t * fant_o,
+					 fantome_t * fant_p);
 
 
 

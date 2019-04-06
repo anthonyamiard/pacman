@@ -41,6 +41,9 @@ int init_sprites(SDL_Renderer * rend) {
 		err = 1;
 	if((sprites.fant_p = charge_img("../img/fant_rose.bmp", rend)) == NULL)
 		err = 1;
+	if((sprites.fant_retour = charge_img("../img/fant_retour.bmp", rend))
+		== NULL)
+		err = 1;
 	if((sprites.pac = charge_img("../img/pac.bmp", rend)) == NULL)
 		err = 1;
 	return err;
@@ -60,6 +63,7 @@ void detruit_sprites() {
 	SDL_DestroyTexture(sprites.fant_r);
 	SDL_DestroyTexture(sprites.fant_p);
 	SDL_DestroyTexture(sprites.pac);
+	SDL_DestroyTexture(sprites.fant_retour);
 }
 
 

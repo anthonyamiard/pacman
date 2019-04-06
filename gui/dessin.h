@@ -27,6 +27,7 @@ struct sprites_s {
 	SDL_Texture * fant_peur;
 	SDL_Texture * fant_r;
 	SDL_Texture * fant_p;
+	SDL_Texture * fant_retour;
 	SDL_Texture * pac;
 };
 

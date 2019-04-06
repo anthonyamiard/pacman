@@ -37,6 +37,7 @@ typedef struct coord_s {
  * \brief	État des fantomes
  */
 typedef enum etat_e {
+	ATTENTE,	/*!< Le fantôme attent dans la boîte */
 	POURSUITE,	/*!< Le fantôme suit son comportement */
 	FUITE,		/*!< Le fantôme fuit Pacman (prise de super-pacgum) */
 	RETOUR		/*!< Le fantôme, mangé, retourne au point de départ */
@@ -77,6 +78,7 @@ typedef struct fantome_s {
 	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
 	etat_t etat;			/*!< État du fantôme */
 	coord_t coord;		/*!< Coordonnées du fantôme à l'instant présent */
+	coord_t coord_dep;
 	SDL_Rect position;
 	char dir;
 } fantome_t;
