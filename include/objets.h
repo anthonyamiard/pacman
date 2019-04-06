@@ -76,11 +76,12 @@ typedef struct fantome_s {
 	SDL_Texture * texture;
 	/*! Recherche de chemin du fantôme */
 	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
-	etat_t etat;			/*!< État du fantôme */
+	etat_t etat;		/*!< État du fantôme */
 	coord_t coord;		/*!< Coordonnées du fantôme à l'instant présent */
 	coord_t coord_dep;
 	SDL_Rect position;
 	char dir;
+	int duree;
 } fantome_t;
 
 

@@ -85,7 +85,7 @@ int main() {
 	uint32_t end_time = 0;
 	uint32_t delta = 0;
 	short fps = 30;
-	short mspf = 1000/30;
+	short mspf = 1000/fps;
 
 	if(fenetre) {
 		int continuer = 1;
@@ -140,7 +140,7 @@ int main() {
 
 			dessine_lab(labyrinthe, rend);
 			deplace_joueur(pacman, labyrinthe, rend, fant_b, fant_r, fant_o,
-						   fant_p);
+						   fant_p, fps);
 
 			deplace_fantome(fant_b, labyrinthe, rend, pacman);
 			deplace_fantome(fant_r, labyrinthe, rend, pacman);

@@ -44,6 +44,7 @@ int deplace_coord(const coord_t * coord, SDL_Rect * position,
  * \param[in]		labyrinthe		Labyrinthe dans lequel déplacer le joueur
  * \param[in,out]	rend			Renderer à mettre à jour
  * \param[in,out]	f1, f2, f3, f4	Fantômes
+ * \param[in]		fps				Nombre d'images par seconde
  */
 void deplace_joueur(joueur_t * joueur,
 					char labyrinthe[N_LAB][M_LAB],
@@ -51,7 +52,8 @@ void deplace_joueur(joueur_t * joueur,
 					fantome_t * f1,
 					fantome_t * f2,
 					fantome_t * f3,
-					fantome_t * f4);
+					fantome_t * f4,
+					int fps);
 
 /*!
  * \brief	Déplace le fantôme dans le labyrinthe
@@ -66,7 +68,7 @@ void deplace_joueur(joueur_t * joueur,
 void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend, joueur_t * joueur);
 
 /*!
- * \brief	Teste s'il y a collision entre le joueur et un fantôme
+ * \brief		Teste s'il y a collision entre le joueur et un fantôme
  * \param[in]	joueur	Joueur
  * \param[in]	fantome	Fantome à tester
  * \retval		1		Il y a collision entre le joueur et le fantôme
@@ -75,17 +77,16 @@ void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Ren
 int collision(const joueur_t * joueur, const fantome_t * fantome);
 
 /*!
- * \brief	Teste s'il y a collision entre le joueur et un fantôme et effectue
- * 			les opérations nécessaires
- * \param[in,out]	joueur							Joueur
- * \param[in,out]	fant_b, fant_r, fant_o, fant_p	Fantômes bleu, rouge, orange
- * 													et rose
+ * \brief			Teste s'il y a collision entre le joueur et un fantôme et
+ *					effectue les opérations nécessaires
+ * \param[in,out]	joueur			Joueur
+ * \param[in,out]	f1, f2, f3, f4	Fantômes
  */
 void gere_collisions(joueur_t * joueur,
-					 fantome_t * fant_b,
-					 fantome_t * fant_r,
-					 fantome_t * fant_o,
-					 fantome_t * fant_p);
+					 fantome_t * f1,
+					 fantome_t * f2,
+					 fantome_t * f3,
+					 fantome_t * f4);
 
 
 
