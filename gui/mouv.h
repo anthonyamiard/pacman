@@ -66,7 +66,11 @@ void deplace_joueur(joueur_t * joueur,
  * \param[in]		joueur		Joueur à pourchasser
  * \param[in]		fps			Nombre d'images par seconde
  */
-void deplace_fantome(fantome_t * fantome, char labyrinthe[N_LAB][M_LAB], SDL_Renderer * rend, joueur_t * joueur, int fps);
+void deplace_fantome(fantome_t * fantome,
+					 char labyrinthe[N_LAB][M_LAB],
+					 SDL_Renderer * rend,
+					 joueur_t * joueur,
+					 int fps);
 
 /*!
  * \brief		Teste s'il y a collision entre le joueur et un fantôme

@@ -14,25 +14,52 @@
 
 
 
+/*
+ * TYPES
+ */
+
+
+
+/*!
+ * \brief	Ensemble des sprites utilisés
+ * 
+ * Ensemble des sprites utilisés dans le jeu.
+ * 
+ */
 struct sprites_s {
-	SDL_Texture * mur;
-	SDL_Texture * chemin;
-	SDL_Texture * pacgum;
-	SDL_Texture * super_pg;
-	SDL_Texture * boite;
-	SDL_Texture * entree;
-	SDL_Texture * autre;
-	SDL_Texture * fant_b;
-	SDL_Texture * fant_o;
-	SDL_Texture * fant_peur;
-	SDL_Texture * fant_r;
-	SDL_Texture * fant_p;
-	SDL_Texture * fant_retour;
-	SDL_Texture * pac;
+	SDL_Texture * mur;			/*!< Mur */
+	SDL_Texture * chemin;		/*!< Chemin vide */
+	SDL_Texture * pacgum;		/*!< Pacgum */
+	SDL_Texture * super_pg;		/*!< Super pacgum */
+	SDL_Texture * boite;		/*!< Boîte des fantômes */
+	SDL_Texture * entree;		/*!< Entrée de la boîte */
+	SDL_Texture * autre;		/*!< Élément inconnu (points d'interrogation) */
+	SDL_Texture * fant_b;		/*!< Fantôme bleu */
+	SDL_Texture * fant_o;		/*!< Fantôme orange */
+	SDL_Texture * fant_peur;	/*!< Fantôme apeuré */
+	SDL_Texture * fant_r;		/*!< Fantôme rouge */
+	SDL_Texture * fant_p;		/*!< Fantôme rose */
+	SDL_Texture * fant_retour;	/*!< Yeux du fantôme seuls */
+	SDL_Texture * pac;			/*!< Pacman */
 };
 
+
+
+/*
+ * FONCTIONS
+ */
+
+
+/*!
+ * \brief	Initialisation de la liste des sprites
+ * \retval	0	Initialisation de tous les sprites
+ * \retval	1	Certains sprites n'ont pas pu être chargés
+ */
 int init_sprites();
 
+/*!
+ * \brief	Destruction de la liste des sprites
+ */
 void detruit_sprites();
 
 SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend);
