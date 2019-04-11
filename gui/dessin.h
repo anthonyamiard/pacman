@@ -62,8 +62,25 @@ int init_sprites();
  */
 void detruit_sprites();
 
+/*!
+ * \brief		Crée une texture à partir d'une image
+ * \param[in]	chemin	Chemin de l'image sur le disque
+ * \param[in]	rend	Renderer
+ * \returns		Texture de l'image
+ * \retval		NULL	L'image n'a pas pu être chargée
+ */
 SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend);
 
+/*!
+ * \brief		Dessine une texture sur le renderer
+ * 
+ * Dessine la texture \c tex sur le renderer \c rend aux coordonnées \c x et
+ * \c y.
+ * 
+ * \param[in]		tex		Texture à dessiner
+ * \param[in,out]	rend	Renderer sur lequel dessiner la texture
+ * \param[in]		x, y	Coordonnées
+ */
 void rend_texture(SDL_Texture * tex, SDL_Renderer * rend, int x, int y);
 
 #ifdef _DESSIN_C_
