@@ -67,10 +67,12 @@ void detruit_sprites() {
 }
 
 
-SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend) {
+SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend)
+{
 	SDL_Texture * texture = NULL;
 	SDL_Surface * img = SDL_LoadBMP(chemin);
 	if(img != NULL) {
+		SDL_SetColorKey(img, SDL_TRUE, SDL_MapRGB(img->format, 255, 0, 255));
 		texture = SDL_CreateTextureFromSurface(rend, img);
 		SDL_FreeSurface(img);
 	}
