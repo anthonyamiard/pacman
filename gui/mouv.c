@@ -66,7 +66,15 @@ void deplace_joueur(joueur_t * joueur,
 			}
 		}
 	}
-	SDL_RenderCopy(rend, sprites.pac, NULL, &(joueur->position));
+	double angle;
+	switch(pacdir) {
+		case 'g': angle = 180; break;
+		case 'd': angle = 0; break;
+		case 'h': angle = 270; break;
+		case 'b': angle = 90; break;
+		default: angle = 0;
+	}
+	SDL_RenderCopyEx(rend, sprites.pac, NULL, &(joueur->position), angle, NULL, SDL_FLIP_NONE);
 }
 
 void deplace_fantome(fantome_t * fantome,
