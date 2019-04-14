@@ -139,15 +139,31 @@ int main() {
 			SDL_RenderClear(rend);
 
 			dessine_lab(labyrinthe, rend);
-			deplace_joueur(pacman, labyrinthe, rend, fant_b, fant_r, fant_o,
-						   fant_p, fps);
 
 			deplace_fantome(fant_b, labyrinthe, rend, pacman, fps);
 			deplace_fantome(fant_r, labyrinthe, rend, pacman, fps);
 			deplace_fantome(fant_o, labyrinthe, rend, pacman, fps);
 			deplace_fantome(fant_p, labyrinthe, rend, pacman, fps);
+			deplace_joueur(pacman, labyrinthe, &nb_pacgums, rend, fant_b,
+						   fant_r, fant_o, fant_p, fps);
 			
 			gere_collisions(pacman, fant_b, fant_r, fant_o, fant_p);
+			
+			if(pacman->vies == 0) {
+				do {
+					genere_lab(labyrinthe, &nb_pacgums);
+				} while(nb_pacgums < 280 || nb_pacgums > 350);
+				pacman->vies = 3,
+				pacman->score = 0;
+				init_place(pacman, fant_b, fant_r, fant_o, fant_p);
+			}
+			
+			if(nb_pacgums == 0) {
+				do {
+					genere_lab(labyrinthe, &nb_pacgums);
+				} while(nb_pacgums < 280 || nb_pacgums > 350);
+				init_place(pacman, fant_b, fant_r, fant_o, fant_p);
+			}
 
 			SDL_RenderPresent(rend);
 			if(delta < mspf)

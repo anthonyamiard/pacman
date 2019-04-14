@@ -42,12 +42,14 @@ int deplace_coord(const coord_t * coord, SDL_Rect * position,
  * 
  * \param[in,out]	joueur			Joueur à déplacer
  * \param[in]		labyrinthe		Labyrinthe dans lequel déplacer le joueur
+ * \param[in,out]	nb_pacgums		Nombre de pacgums dans le labyrinthe
  * \param[in,out]	rend			Renderer à mettre à jour
  * \param[in,out]	f1, f2, f3, f4	Fantômes
  * \param[in]		fps				Nombre d'images par seconde
  */
 void deplace_joueur(joueur_t * joueur,
 					char labyrinthe[N_LAB][M_LAB],
+					int * nb_pacgums,
 					SDL_Renderer * rend,
 					fantome_t * f1,
 					fantome_t * f2,
@@ -71,6 +73,18 @@ void deplace_fantome(fantome_t * fantome,
 					 SDL_Renderer * rend,
 					 joueur_t * joueur,
 					 int fps);
+
+/*!
+ * \brief			Remet le joueur et les fantômes à leur place et leur état de
+ * départ
+ * \param[in,out]	joueur			Joueur
+ * \param[in,out]	f1, f2, f3, f4	Fantômes
+ */
+void init_place(joueur_t * joueur,
+				fantome_t * f1,
+				fantome_t * f2,
+				fantome_t * f3,
+				fantome_t * f4);
 
 /*!
  * \brief		Teste s'il y a collision entre le joueur et un fantôme

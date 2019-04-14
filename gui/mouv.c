@@ -39,6 +39,7 @@ int deplace_coord(const coord_t * coord, SDL_Rect * position,
 
 void deplace_joueur(joueur_t * joueur,
 					char labyrinthe[N_LAB][M_LAB],
+					int * nb_pacgums,
 					SDL_Renderer * rend,
 					fantome_t * f1,
 					fantome_t * f2,
@@ -56,6 +57,7 @@ void deplace_joueur(joueur_t * joueur,
 	deplace_coord(&(joueur->coord), &(joueur->position), labyrinthe, pacdir, 3);
 	if(labyrinthe[joueur->coord.y][joueur->coord.x] == 'p') {
 		joueur->score += 1;
+		*nb_pacgums -= 1;
 		labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
 	} else if(labyrinthe[joueur->coord.y][joueur->coord.x] == 's') {
 		labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
@@ -177,11 +179,34 @@ void deplace_fantome(fantome_t * fantome,
 	SDL_RenderCopy(rend, texture, NULL, &(fantome->position));
 }
 
+void init_place(joueur_t * joueur,
+				fantome_t * f1,
+				fantome_t * f2,
+				fantome_t * f3,
+				fantome_t * f4) {
+	fantome_t * f[] = {f1, f2, f3, f4};
+	int i;
+	joueur->nextdir = 0;
+	pacdir = 0;
+	joueur->position.x = X_DEP * TAILLE_CASE;
+	joueur->position.y = Y_DEP * TAILLE_CASE;
+	joueur->coord.x = X_DEP;
+	joueur->coord.y = Y_DEP;
+	for(i = 0; i < 4; i++) {
+		f[i]->position.x = f[i]->coord_dep.x * TAILLE_CASE;
+		f[i]->position.y = f[i]->coord_dep.y * TAILLE_CASE;
+		f[i]->coord.x = f[i]->coord_dep.x;
+		f[i]->coord.y = f[i]->coord_dep.y;
+		f[i]->etat = ATTENTE;
+		f[i]->dir = 0;
+	}
+}
+
 int collision(const joueur_t * joueur, const fantome_t * fantome) {
-	return joueur->position.x > fantome->position.x - TAILLE_CASE &&
-		joueur->position.x < fantome->position.x + TAILLE_CASE &&
-		joueur->position.y > fantome->position.y - TAILLE_CASE &&
-		joueur->position.y < fantome->position.y + TAILLE_CASE;
+	return joueur->position.x > fantome->position.x - TAILLE_CASE / 2 &&
+		joueur->position.x < fantome->position.x + TAILLE_CASE / 2 &&
+		joueur->position.y > fantome->position.y - TAILLE_CASE / 2 &&
+		joueur->position.y < fantome->position.y + TAILLE_CASE / 2;
 }
 
 void gere_collisions(joueur_t * joueur,
@@ -196,20 +221,7 @@ void gere_collisions(joueur_t * joueur,
 			if(f[i]->etat == POURSUITE) {
 				arret = 1;
 				joueur->vies -= 1;
-				joueur->nextdir = 0;
-				pacdir = 0;
-				joueur->position.x = X_DEP * TAILLE_CASE;
-				joueur->position.y = Y_DEP * TAILLE_CASE;
-				joueur->coord.x = X_DEP;
-				joueur->coord.y = Y_DEP;
-				for(i = 0; i < 4; i++) {
-					f[i]->position.x = f[i]->coord_dep.x * TAILLE_CASE;
-					f[i]->position.y = f[i]->coord_dep.y * TAILLE_CASE;
-					f[i]->coord.x = f[i]->coord_dep.x;
-					f[i]->coord.y = f[i]->coord_dep.y;
-					f[i]->etat = ATTENTE;
-					f[i]->dir = 0;
-				}
+				init_place(joueur, f1, f2, f3, f4);
 			} else if(f[i]->etat == FUITE) {
 				joueur->score += 100;
 				f[i]->etat = RETOUR;
