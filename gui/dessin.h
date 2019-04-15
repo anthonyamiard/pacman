@@ -73,7 +73,7 @@ void detruit_sprites();
 SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend);
 
 /*!
- * \brief		Dessine une texture sur le renderer
+ * \brief			Dessine une texture sur le renderer
  * 
  * Dessine la texture \c tex sur le renderer \c rend aux coordonnées \c x et
  * \c y.
@@ -86,18 +86,21 @@ void rend_texture(SDL_Texture * tex, SDL_Renderer * rend, int x, int y);
 
 /*!
  * \brief		Crée une texture à partir de texte
- * \param[in]	police	Police d'écriture
- * \param[in]	texte	Texte à écrire
- * \param[in]	couleur	Couleur du texte
- * \param[in]	fond	Couleur de fond
- * \param[in]	rend	Renderer
+ * \param[in]	police			Police d'écriture
+ * \param[in]	texte			Texte à écrire
+ * \param[in]	couleur			Couleur du texte
+ * \param[in]	fond			Couleur de fond
+ * \param[in]	transparence	Vrai si le fond est transparent, faux s'il est
+ * 								de la couleur indiquée
+ * \param[in]	rend			Renderer
  * \returns		Texture du texte
- * \retval		NULL	Erreur à la création du texte
+ * \retval		NULL			Erreur à la création du texte
  */
 SDL_Texture * cree_texte(TTF_Font * police,
 						 const char * texte,
 						 SDL_Color couleur,
 						 SDL_Color fond,
+						 int transparence,
 						 SDL_Renderer * rend);
 
 #ifdef _DESSIN_C_

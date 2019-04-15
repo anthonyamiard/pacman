@@ -9,6 +9,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "osd.h"
 #include "dessin.h"
@@ -25,7 +26,7 @@ void score_osd(SDL_Renderer * rend,
 	char str_niveau[15];
 	int w, h;
 	sprintf(str_niveau, "Niveau : %03d", niveau);
-	SDL_Texture * txt_niveau = cree_texte(police, str_niveau, blanc, noir,
+	SDL_Texture * txt_niveau = cree_texte(police, str_niveau, blanc, noir, 0,
 										  rend);
 	if(txt_niveau != NULL) {
 		SDL_QueryTexture(txt_niveau, NULL, NULL, &w, &h);
@@ -37,9 +38,9 @@ void score_osd(SDL_Renderer * rend,
 	} else {
 		sprintf(str_score, "Score : %04d", joueur->score);
 		sprintf(str_vies, "Vies : %02d", joueur->vies);
-		SDL_Texture * txt_score = cree_texte(police, str_score, blanc, noir,
+		SDL_Texture * txt_score = cree_texte(police, str_score, blanc, noir, 0,
 											 rend);
-		SDL_Texture * txt_vies = cree_texte(police, str_vies, blanc, noir,
+		SDL_Texture * txt_vies = cree_texte(police, str_vies, blanc, noir, 0,
 											rend);
 		if(txt_score != NULL) {
 			SDL_QueryTexture(txt_score, NULL, NULL, &w, &h);
@@ -51,5 +52,18 @@ void score_osd(SDL_Renderer * rend,
 		}
 		SDL_DestroyTexture(txt_score);
 		SDL_DestroyTexture(txt_vies);
+	}
+}
+
+void message_osd(SDL_Renderer * rend, TTF_Font * police, const char * message) {
+	SDL_Color noir = {0, 0, 0};
+	SDL_Color jaune = {255, 255, 0};
+	int w;
+	SDL_Texture * texture = cree_texte(police, message, jaune, noir, 1, rend);
+	if(texture != NULL) {
+		SDL_QueryTexture(texture, NULL, NULL, &w, NULL);
+		rend_texture(texture, rend, W_FEN / 2 - w / 2,
+					 (Y_BOITE + 5) * TAILLE_CASE);
+		SDL_DestroyTexture(texture);
 	}
 }

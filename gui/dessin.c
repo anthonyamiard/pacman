@@ -96,9 +96,14 @@ SDL_Texture * cree_texte(TTF_Font * police,
 						 const char * texte,
 						 SDL_Color couleur,
 						 SDL_Color fond,
+						 int transparence,
 						 SDL_Renderer * rend) {
 	SDL_Texture * texture = NULL;
-	SDL_Surface * surface = TTF_RenderText_Shaded(police, texte, couleur, fond);
+	SDL_Surface * surface;
+	if(transparence)
+		surface = TTF_RenderText_Blended(police, texte, couleur);
+	else
+		surface = TTF_RenderText_Shaded(police, texte, couleur, fond);
 	if(surface == NULL) {
 		fprintf(stderr, "Erreur de création du texte (%s).\n", TTF_GetError());
 	} else {

@@ -45,26 +45,30 @@ void deplace_joueur(joueur_t * joueur,
 					fantome_t * f2,
 					fantome_t * f3,
 					fantome_t * f4,
-					int fps) {
+					int fps,
+					int pause) {
 	fantome_t * f[] = {f1, f2, f3, f4};
 	int i;
-	if(joueur->position.x % TAILLE_CASE == 0 &&
-		joueur->position.y % TAILLE_CASE == 0) {
-		joueur->coord.x = joueur->position.x / TAILLE_CASE;
-		joueur->coord.y = joueur->position.y / TAILLE_CASE;
-		pacdir = joueur->nextdir;
-	}
-	deplace_coord(&(joueur->coord), &(joueur->position), labyrinthe, pacdir, 3);
-	if(labyrinthe[joueur->coord.y][joueur->coord.x] == 'p') {
-		joueur->score += 1;
-		*nb_pacgums -= 1;
-		labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
-	} else if(labyrinthe[joueur->coord.y][joueur->coord.x] == 's') {
-		labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
-		for(i = 0; i < 4; i++) {
-			if(f[i]->etat == POURSUITE || f[i]->etat == FUITE) {
-				f[i]->etat = FUITE;
-				f[i]->duree = 30 * fps;
+	if(!pause) {
+		if(joueur->position.x % TAILLE_CASE == 0 &&
+			joueur->position.y % TAILLE_CASE == 0) {
+			joueur->coord.x = joueur->position.x / TAILLE_CASE;
+			joueur->coord.y = joueur->position.y / TAILLE_CASE;
+			pacdir = joueur->nextdir;
+		}
+		deplace_coord(&(joueur->coord), &(joueur->position), labyrinthe, pacdir,
+					  3);
+		if(labyrinthe[joueur->coord.y][joueur->coord.x] == 'p') {
+			joueur->score += 1;
+			*nb_pacgums -= 1;
+			labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
+		} else if(labyrinthe[joueur->coord.y][joueur->coord.x] == 's') {
+			labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
+			for(i = 0; i < 4; i++) {
+				if(f[i]->etat == POURSUITE || f[i]->etat == FUITE) {
+					f[i]->etat = FUITE;
+					f[i]->duree = 30 * fps;
+				}
 			}
 		}
 	}
@@ -83,86 +87,103 @@ void deplace_fantome(fantome_t * fantome,
 					 char labyrinthe[N_LAB][M_LAB],
 					 SDL_Renderer * rend,
 					 joueur_t * joueur,
-					 int fps) {
+					 int fps,
+					 int pause) {
 	coord_t dest;
-	fantome->duree -= 1;
-	if(fantome->etat == FUITE && fantome->duree == 0)
-		fantome->etat = POURSUITE;
-	if(fantome->position.x % TAILLE_CASE == 0 &&
-		fantome->position.y % TAILLE_CASE == 0) {
-		fantome->coord.x = fantome->position.x / TAILLE_CASE;
-		fantome->coord.y = fantome->position.y / TAILLE_CASE;
-		coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
-		if(fantome->etat == FUITE)
-			chemin = chemin_fuir;
-		else if(fantome->etat == RETOUR)
-			chemin = chemin_court;
-		else
-			chemin = fantome->chemin;
-		coord_t cible;
-		if(fantome->etat == RETOUR) {
-			cible.x = X_BOITE;
-			cible.y = Y_BOITE - 1;	
-		} else {
-			cible.x = joueur->coord.x;
-			cible.y = joueur->coord.y;
-		}
-		if(fantome->etat == RETOUR && fantome->coord.x == X_BOITE &&
-			fantome->coord.y == Y_BOITE - 1) {
-			fantome->coord.y = Y_BOITE;
-			fantome->dir = 'b';
-		} else if(fantome->etat) {
-			if((!est_dans_boite(fantome->coord.x, fantome->coord.y)) && (
-				nb_chemins_voisins(labyrinthe, fantome->coord.x,
-				fantome->coord.y) > 2 || ((fantome->dir == 'g' &&
-				!est_chemin(labyrinthe[fantome->coord.y][fantome->coord.x-1]))
-				|| (fantome->dir == 'd' &&
-				!est_chemin(labyrinthe[fantome->coord.y][fantome->coord.x+1]))
-				|| (fantome->dir == 'h' &&
-				!est_chemin(labyrinthe[fantome->coord.y-1][fantome->coord.x]))
-				|| (fantome->dir == 'b' &&
-				!est_chemin(labyrinthe[fantome->coord.y+1][fantome->coord.x])
-				)))) {
-				dest = chemin(labyrinthe, &(fantome->coord), &cible);
-				if(dest.x - fantome->coord.x < 0)
-					fantome->dir = 'g';
-				else if(dest.x - fantome->coord.x > 0)
-					fantome->dir = 'd';
-				else if(dest.y - fantome->coord.y < 0)
-					fantome->dir = 'h';
-				else
-					fantome->dir = 'b';
-			} else if(est_dans_boite(fantome->coord.x, fantome->coord.y)) {
-				if(fantome->etat == POURSUITE) {
-					if(fantome->coord.x < X_BOITE)
-						fantome->dir = 'd';
-					else if(fantome->coord.x > X_BOITE + 1)
+	if(!pause) {
+		fantome->duree -= 1;
+		if(fantome->etat == FUITE && fantome->duree == 0)
+			fantome->etat = POURSUITE;
+		if(fantome->position.x % TAILLE_CASE == 0 &&
+			fantome->position.y % TAILLE_CASE == 0) {
+			fantome->coord.x = fantome->position.x / TAILLE_CASE;
+			fantome->coord.y = fantome->position.y / TAILLE_CASE;
+			coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
+			if(fantome->etat == FUITE)
+				chemin = chemin_fuir;
+			else if(fantome->etat == RETOUR)
+				chemin = chemin_court;
+			else
+				chemin = fantome->chemin;
+			coord_t cible;
+			if(fantome->etat == RETOUR) {
+				cible.x = X_BOITE;
+				cible.y = Y_BOITE - 1;	
+			} else {
+				cible.x = joueur->coord.x;
+				cible.y = joueur->coord.y;
+			}
+			if(fantome->etat == RETOUR && fantome->coord.x == X_BOITE &&
+				fantome->coord.y == Y_BOITE - 1) {
+				fantome->coord.y = Y_BOITE;
+				fantome->dir = 'b';
+			} else if(fantome->etat) {
+				if((!est_dans_boite(fantome->coord.x, fantome->coord.y)) && (
+					nb_chemins_voisins(labyrinthe, fantome->coord.x,
+					fantome->coord.y) > 2 || (
+						(
+							fantome->dir == 'g' &&
+							!est_chemin(
+								labyrinthe[fantome->coord.y][fantome->coord.x-1]
+							)
+						) || (
+							fantome->dir == 'd' &&
+							!est_chemin(
+								labyrinthe[fantome->coord.y][fantome->coord.x+1]
+							)
+						) || (
+							fantome->dir == 'h' &&
+							!est_chemin(
+								labyrinthe[fantome->coord.y-1][fantome->coord.x]
+							)
+						) || (
+							fantome->dir == 'b' &&
+							!est_chemin(
+								labyrinthe[fantome->coord.y+1][fantome->coord.x]
+							)
+						)
+					))) {
+					dest = chemin(labyrinthe, &(fantome->coord), &cible);
+					if(dest.x - fantome->coord.x < 0)
 						fantome->dir = 'g';
-					else
+					else if(dest.x - fantome->coord.x > 0)
+						fantome->dir = 'd';
+					else if(dest.y - fantome->coord.y < 0)
 						fantome->dir = 'h';
-				} else if(fantome->etat == RETOUR) {
-					if(fantome->coord.y < fantome->coord_dep.y)
+					else
 						fantome->dir = 'b';
-					else if(fantome->coord.x < fantome->coord_dep.x)
-						fantome->dir = 'd';
-					else if(fantome->coord.x > fantome->coord_dep.x)
-						fantome->dir = 'g';
-					else {
-						fantome->dir = 0;
-						fantome->etat = POURSUITE;
+				} else if(est_dans_boite(fantome->coord.x, fantome->coord.y)) {
+					if(fantome->etat == POURSUITE) {
+						if(fantome->coord.x < X_BOITE)
+							fantome->dir = 'd';
+						else if(fantome->coord.x > X_BOITE + 1)
+							fantome->dir = 'g';
+						else
+							fantome->dir = 'h';
+					} else if(fantome->etat == RETOUR) {
+						if(fantome->coord.y < fantome->coord_dep.y)
+							fantome->dir = 'b';
+						else if(fantome->coord.x < fantome->coord_dep.x)
+							fantome->dir = 'd';
+						else if(fantome->coord.x > fantome->coord_dep.x)
+							fantome->dir = 'g';
+						else {
+							fantome->dir = 0;
+							fantome->etat = POURSUITE;
+						}
 					}
 				}
-			}
-		} else if(fantome->etat == ATTENTE) {
-			if(fantome->coord.y == Y_BLEU - 1)
-				fantome->dir = 'b';
-			else if(fantome->coord.y == Y_BLEU + 1)
-				fantome->dir = 'h';
-			if(fantome->dir != 'h' && fantome->dir != 'b') {
-				if(fantome->coord_dep.x % 2)
+			} else if(fantome->etat == ATTENTE) {
+				if(fantome->coord.y == Y_BLEU - 1)
 					fantome->dir = 'b';
-				else
+				else if(fantome->coord.y == Y_BLEU + 1)
 					fantome->dir = 'h';
+				if(fantome->dir != 'h' && fantome->dir != 'b') {
+					if(fantome->coord_dep.x % 2)
+						fantome->dir = 'b';
+					else
+						fantome->dir = 'h';
+				}
 			}
 		}
 	}
@@ -174,8 +195,9 @@ void deplace_fantome(fantome_t * fantome,
 		texture = sprites.fant_retour;
 	else
 		texture = fantome->texture;
-	deplace_coord(&(fantome->coord), &(fantome->position), labyrinthe,
-				  fantome->dir, 3);
+	if(!pause)
+		deplace_coord(&(fantome->coord), &(fantome->position), labyrinthe,
+					fantome->dir, 3);
 	SDL_RenderCopy(rend, texture, NULL, &(fantome->position));
 }
 
@@ -213,15 +235,21 @@ void gere_collisions(joueur_t * joueur,
 					 fantome_t * f1,
 					 fantome_t * f2,
 					 fantome_t * f3,
-					 fantome_t * f4) {
+					 fantome_t * f4,
+					 long * timer,
+					 int fps) {
 	fantome_t * f[] = {f1, f2, f3, f4};
 	int i, arret = 0;
 	for(i = 0; i < 4 && !arret; i++) {
 		if(collision(joueur, f[i])) {
 			if(f[i]->etat == POURSUITE) {
 				arret = 1;
-				joueur->vies -= 1;
-				init_place(joueur, f1, f2, f3, f4);
+				if(*timer < 0) {
+					joueur->vies -= 1;
+					*timer = 2 * fps;
+				} else if(*timer == 0) {
+					init_place(joueur, f1, f2, f3, f4);
+				}
 			} else if(f[i]->etat == FUITE) {
 				joueur->score += 100;
 				f[i]->etat = RETOUR;

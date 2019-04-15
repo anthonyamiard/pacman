@@ -46,6 +46,7 @@ int deplace_coord(const coord_t * coord, SDL_Rect * position,
  * \param[in,out]	rend			Renderer à mettre à jour
  * \param[in,out]	f1, f2, f3, f4	Fantômes
  * \param[in]		fps				Nombre d'images par seconde
+ * \param[in]		pause			1 si l'affichage est en pause, 0 sinon
  */
 void deplace_joueur(joueur_t * joueur,
 					char labyrinthe[N_LAB][M_LAB],
@@ -55,7 +56,8 @@ void deplace_joueur(joueur_t * joueur,
 					fantome_t * f2,
 					fantome_t * f3,
 					fantome_t * f4,
-					int fps);
+					int fps,
+					int pause);
 
 /*!
  * \brief	Déplace le fantôme dans le labyrinthe
@@ -67,12 +69,14 @@ void deplace_joueur(joueur_t * joueur,
  * \param[in,out]	rend		Renderer à mettre à jour
  * \param[in]		joueur		Joueur à pourchasser
  * \param[in]		fps			Nombre d'images par seconde
+ * \param[in]		pause		1 si l'affichage est en pause, 0 sinon
  */
 void deplace_fantome(fantome_t * fantome,
 					 char labyrinthe[N_LAB][M_LAB],
 					 SDL_Renderer * rend,
 					 joueur_t * joueur,
-					 int fps);
+					 int fps,
+					 int pause);
 
 /*!
  * \brief			Remet le joueur et les fantômes à leur place et leur état de
@@ -100,12 +104,16 @@ int collision(const joueur_t * joueur, const fantome_t * fantome);
  *					effectue les opérations nécessaires
  * \param[in,out]	joueur			Joueur
  * \param[in,out]	f1, f2, f3, f4	Fantômes
+ * \param[out]		timer			Timer d'affichage de message à l'écran
+ * \param[in]		fps				Nombre d'images par seconde
  */
 void gere_collisions(joueur_t * joueur,
 					 fantome_t * f1,
 					 fantome_t * f2,
 					 fantome_t * f3,
-					 fantome_t * f4);
+					 fantome_t * f4,
+					 long * timer,
+					 int fps);
 
 
 

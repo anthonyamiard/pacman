@@ -28,5 +28,13 @@ void score_osd(SDL_Renderer * rend,
 			   const joueur_t * joueur,
 			   int niveau);
 
+/*!
+ * \brief		Affiche un message au milieu du labyrinthe
+ * \param[in]	rend	Renderer
+ * \param[in]	police	Police d'écriture
+ * \param[in]	message	Message à afficher
+ */
+void message_osd(SDL_Renderer * rend, TTF_Font * police, const char * message);
+
 
 #endif
