@@ -34,6 +34,17 @@ int main() {
 		fprintf(stderr, "Échec d'ouverture de la SDL (%s).\n", SDL_GetError());
 		return EXIT_FAILURE;
 	}
+	
+	if(TTF_Init()) {
+		fprintf(stderr, "Échec d'ouverture de TTF (%s).\n", TTF_GetError());
+		SDL_Quit();
+		return EXIT_FAILURE;
+	}
+	
+	TTF_Font * police_titre = TTF_OpenFont("PoliceMenu", 32);
+	if(police_titre == NULL)
+		fprintf(stderr, "Échec d'ouverture de la police (%s).\n",
+				TTF_GetError());
 
 //	menu_SDL();
 
@@ -45,6 +56,9 @@ int main() {
 	if(fenetre == NULL) {
 		fprintf(stderr, "Échec de création de la fenêtre (%s).\n",
 				SDL_GetError());
+		TTF_CloseFont(police_titre);
+		TTF_Quit();
+		SDL_Quit();
 		return EXIT_FAILURE;
 	}
 
@@ -54,6 +68,9 @@ int main() {
 		fprintf(stderr, "Échec de création du renderer (%s).\n",
 				SDL_GetError());
 		SDL_DestroyWindow(fenetre);
+		TTF_CloseFont(police_titre);
+		TTF_Quit();
+		SDL_Quit();
 		return EXIT_FAILURE;
 	}
 
@@ -66,7 +83,7 @@ int main() {
 	} while(nb_pacgums < 280 || nb_pacgums > 350);
 
 	if(dessine_lab(labyrinthe, rend)) {
-		fprintf(stderr, "Échec de génération du labyrinthe (%s).\n",
+		fprintf(stderr, "Échec de l'affichage du labyrinthe (%s).\n",
 				SDL_GetError());
 	}
 
@@ -183,6 +200,8 @@ int main() {
 	detruit_fantome(&fant_p);
 	SDL_DestroyRenderer(rend);
 	SDL_DestroyWindow(fenetre);
+	TTF_CloseFont(police_titre);
+	TTF_Quit();
 	SDL_Quit();
 	return 0;
 }

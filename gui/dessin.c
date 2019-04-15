@@ -71,7 +71,10 @@ SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend)
 {
 	SDL_Texture * texture = NULL;
 	SDL_Surface * img = SDL_LoadBMP(chemin);
-	if(img != NULL) {
+	if(img == NULL) {
+		fprintf(stderr, "Erreur de chargement de l'image (%s).\n",
+				SDL_GetError());
+	} else {
 		SDL_SetColorKey(img, SDL_TRUE, SDL_MapRGB(img->format, 255, 0, 255));
 		texture = SDL_CreateTextureFromSurface(rend, img);
 		SDL_FreeSurface(img);
@@ -85,4 +88,20 @@ void rend_texture(SDL_Texture * tex, SDL_Renderer * rend, int x, int y) {
 	dest.y = y;
 	SDL_QueryTexture(tex, NULL, NULL, &(dest.w), &(dest.h));
 	SDL_RenderCopy(rend, tex, NULL, &dest);
+}
+
+SDL_Texture * cree_texte(TTF_Font * police,
+						 const char * texte,
+						 SDL_Color couleur,
+						 SDL_Color fond,
+						 SDL_Renderer * rend) {
+	SDL_Texture * texture = NULL;
+	SDL_Surface * surface = TTF_RenderText_Shaded(police, texte, couleur, fond);
+	if(surface == NULL) {
+		fprintf(stderr, "Erreur de création du texte (%s).\n", TTF_GetError());
+	} else {
+		texture = SDL_CreateTextureFromSurface(rend, surface);
+		SDL_FreeSurface(surface);
+	}
+	return texture;
 }

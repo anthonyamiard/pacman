@@ -11,6 +11,7 @@
 #define _DESSIN_H_
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_ttf.h>
 
 
 
@@ -82,6 +83,22 @@ SDL_Texture * charge_img(const char * chemin, SDL_Renderer * rend);
  * \param[in]		x, y	Coordonnées
  */
 void rend_texture(SDL_Texture * tex, SDL_Renderer * rend, int x, int y);
+
+/*!
+ * \brief		Crée une texture à partir de texte
+ * \param[in]	police	Police d'écriture
+ * \param[in]	texte	Texte à écrire
+ * \param[in]	couleur	Couleur du texte
+ * \param[in]	fond	Couleur de fond
+ * \param[in]	rend	Renderer
+ * \returns		Texture du texte
+ * \retval		NULL	Erreur à la création du texte
+ */
+SDL_Texture * cree_texte(TTF_Font * police,
+						 const char * texte,
+						 SDL_Color couleur,
+						 SDL_Color fond,
+						 SDL_Renderer * rend);
 
 #ifdef _DESSIN_C_
 struct sprites_s sprites;
