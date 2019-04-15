@@ -33,4 +33,7 @@
 
 #define TAILLE_CASE 24
 
+#define W_FEN (M_LAB * TAILLE_CASE)
+#define H_FEN (N_LAB * TAILLE_CASE + 48)
+
 #endif

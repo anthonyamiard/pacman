@@ -87,7 +87,9 @@ void rend_texture(SDL_Texture * tex, SDL_Renderer * rend, int x, int y) {
 	dest.x = x;
 	dest.y = y;
 	SDL_QueryTexture(tex, NULL, NULL, &(dest.w), &(dest.h));
-	SDL_RenderCopy(rend, tex, NULL, &dest);
+	if(SDL_RenderCopy(rend, tex, NULL, &dest))
+		fprintf(stderr, "Erreur à la copie de la texture (%s).\n",
+				SDL_GetError());
 }
 
 SDL_Texture * cree_texte(TTF_Font * police,

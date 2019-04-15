@@ -24,6 +24,7 @@
 #include "../include/IA.h"
 #include "../gui/mouv.h"
 #include "../gui/surface.h"
+#include "../gui/osd.h"
 
 
 
@@ -41,8 +42,8 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	TTF_Font * police_titre = TTF_OpenFont("PoliceMenu", 32);
-	if(police_titre == NULL)
+	TTF_Font * police_menu = TTF_OpenFont("../gui/PoliceMenu.ttf", 32);
+	if(police_menu == NULL)
 		fprintf(stderr, "Échec d'ouverture de la police (%s).\n",
 				TTF_GetError());
 
@@ -50,13 +51,13 @@ int main() {
 
 	SDL_Window * fenetre = SDL_CreateWindow("Pacman", SDL_WINDOWPOS_UNDEFINED,
 													  SDL_WINDOWPOS_UNDEFINED,
-													  M_LAB * TAILLE_CASE,
-													  N_LAB * TAILLE_CASE + 48,
+													  W_FEN,
+													  H_FEN,
 													  SDL_WINDOW_SHOWN);
 	if(fenetre == NULL) {
 		fprintf(stderr, "Échec de création de la fenêtre (%s).\n",
 				SDL_GetError());
-		TTF_CloseFont(police_titre);
+		TTF_CloseFont(police_menu);
 		TTF_Quit();
 		SDL_Quit();
 		return EXIT_FAILURE;
@@ -68,7 +69,7 @@ int main() {
 		fprintf(stderr, "Échec de création du renderer (%s).\n",
 				SDL_GetError());
 		SDL_DestroyWindow(fenetre);
-		TTF_CloseFont(police_titre);
+		TTF_CloseFont(police_menu);
 		TTF_Quit();
 		SDL_Quit();
 		return EXIT_FAILURE;
@@ -181,6 +182,8 @@ int main() {
 				} while(nb_pacgums < 280 || nb_pacgums > 350);
 				init_place(pacman, fant_b, fant_r, fant_o, fant_p);
 			}
+			
+			score_osd(rend, police_menu, pacman, 1);
 
 			SDL_RenderPresent(rend);
 			if(delta < mspf)
@@ -200,7 +203,7 @@ int main() {
 	detruit_fantome(&fant_p);
 	SDL_DestroyRenderer(rend);
 	SDL_DestroyWindow(fenetre);
-	TTF_CloseFont(police_titre);
+	TTF_CloseFont(police_menu);
 	TTF_Quit();
 	SDL_Quit();
 	return 0;
