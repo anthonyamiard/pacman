@@ -79,6 +79,7 @@ int main() {
 
 	char labyrinthe[N_LAB][M_LAB];
 	int nb_pacgums;
+	int niveau = 1;
 	do {
 		genere_lab(labyrinthe, &nb_pacgums);
 	} while(nb_pacgums < 280 || nb_pacgums > 350);
@@ -173,6 +174,7 @@ int main() {
 				} while(nb_pacgums < 280 || nb_pacgums > 350);
 				pacman->vies = 3,
 				pacman->score = 0;
+				niveau = 1;
 				init_place(pacman, fant_b, fant_r, fant_o, fant_p);
 			}
 			
@@ -180,10 +182,11 @@ int main() {
 				do {
 					genere_lab(labyrinthe, &nb_pacgums);
 				} while(nb_pacgums < 280 || nb_pacgums > 350);
+				niveau++;
 				init_place(pacman, fant_b, fant_r, fant_o, fant_p);
 			}
 			
-			score_osd(rend, police_menu, pacman, 1);
+			score_osd(rend, police_menu, pacman, niveau);
 
 			SDL_RenderPresent(rend);
 			if(delta < mspf)
