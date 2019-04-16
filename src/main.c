@@ -43,8 +43,8 @@ int main() {
 		return EXIT_FAILURE;
 	}
 	
-	TTF_Font * police_menu = TTF_OpenFont("../gui/PoliceMenu.ttf", 32);
-	TTF_Font * police_message = TTF_OpenFont("../gui/PoliceMenu.ttf", 24);
+	TTF_Font * police_menu = TTF_OpenFont("../fonts/PoliceMenu.ttf", 32);
+	TTF_Font * police_message = TTF_OpenFont("../fonts/PoliceMenu.ttf", 24);
 	if(police_message == NULL || police_menu == NULL)
 		fprintf(stderr, "Échec d'ouverture de la police (%s).\n",
 				TTF_GetError());
