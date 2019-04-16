@@ -57,7 +57,9 @@ typedef struct fruit_s {
 typedef struct joueur_s {
 	int vies;				/*!< Nombre de vies */
 	int score;				/*!< Score du joueur */
-	coord_t coord;		/*!< Coordonnée du joueur à l'instant t */
+	/*! Nombre de fantômes consommés depuis la prise d'une super pacgum */
+	int f_cons;
+	coord_t coord;			/*!< Coordonnée du joueur à l'instant t */
 	SDL_Rect position;
 	char nextdir;
 } joueur_t;

@@ -45,6 +45,7 @@ joueur_t * cree_joueur(SDL_Renderer * rend, int vies, int score, int x, int y) {
 		joueur->vies = vies;
 		joueur->score = score;
 		pacdir = 0;
+		joueur->f_cons = 0;
 		joueur->nextdir = 0;
 		joueur->coord.x = x;
 		joueur->coord.y = y;

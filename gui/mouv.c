@@ -3,6 +3,7 @@
 #include "../include/objets.h"
 #include "../include/labyrinthe.h"
 #include "../include/IA.h"
+#include "../include/score.h"
 #include "gui_lab.h"
 #include "mouv.h"
 #include "dessin.h"
@@ -59,10 +60,12 @@ void deplace_joueur(joueur_t * joueur,
 		deplace_coord(&(joueur->coord), &(joueur->position), labyrinthe, pacdir,
 					  3);
 		if(labyrinthe[joueur->coord.y][joueur->coord.x] == 'p') {
-			joueur->score += 1;
+			ajout_points(joueur, PTS_PACGUM);
 			*nb_pacgums -= 1;
 			labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
 		} else if(labyrinthe[joueur->coord.y][joueur->coord.x] == 's') {
+			ajout_points(joueur, PTS_SPG);
+			joueur->f_cons = 0;
 			labyrinthe[joueur->coord.y][joueur->coord.x] = 'c';
 			for(i = 0; i < 4; i++) {
 				if(f[i]->etat == POURSUITE || f[i]->etat == FUITE) {
@@ -254,7 +257,16 @@ void gere_collisions(joueur_t * joueur,
 					init_place(joueur, f1, f2, f3, f4);
 				}
 			} else if(f[i]->etat == FUITE) {
-				joueur->score += 100;
+				switch(joueur->f_cons) {
+					case 0: ajout_points(joueur, PTS_FANTOME_1); break;
+					case 1: ajout_points(joueur, PTS_FANTOME_2); break;
+					case 2: ajout_points(joueur, PTS_FANTOME_3); break;
+					case 3: ajout_points(joueur, PTS_FANTOME_4); break;
+					default:
+						ajout_points(joueur, PTS_FANTOME_1);
+						joueur->f_cons = 0;
+				}
+				joueur->f_cons += 1;
 				f[i]->etat = RETOUR;
 			}
 		}
