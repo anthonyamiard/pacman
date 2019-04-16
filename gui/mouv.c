@@ -144,6 +144,9 @@ void deplace_fantome(fantome_t * fantome,
 						)
 					))) {
 					dest = chemin(labyrinthe, &(fantome->coord), &cible);
+					if(dest.x == fantome->coord.x && dest.y == fantome->coord.y)
+						dest = chemin_aleatoire(labyrinthe, &(fantome->coord),
+												&cible);
 					if(dest.x - fantome->coord.x < 0)
 						fantome->dir = 'g';
 					else if(dest.x - fantome->coord.x > 0)
