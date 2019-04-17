@@ -1,8 +1,8 @@
 /*!
- * \file		labyrinthe.h
- * \author		Anthony Amiard
- * \brief		Constantes et fonctions permettant de générer un labyrinthe
- * \date		2019
+ * \file        labyrinthe.h
+ * \author      Anthony Amiard
+ * \brief       Constantes et fonctions permettant de générer un labyrinthe
+ * \date        2019
  *
  * Définition des constantes et des fonctions permettant de générer un
  * labyrinthe
@@ -40,14 +40,14 @@
  * nombre de pacgums présents dans le labyrinthe dans \c nb_pacgums.
  *
  * \param[out]	labyrinthe	Matrice de \c N_LAB lignes et \c M_LAB colonnes de
- *							caractères représentant le labyrinthe. Les valeurs
- *							des caractères peuvent être :
- *								\li \c 'm' : mur
- *								\li \c 'c' : chemin vide
- *								\li \c 'p' : chemin avec pacgum
- *								\li \c 's' : chemin avec super pacgum
- *								\li \c 'b' : boite des fantômes
- *								\li \c 'e' : entrée de la boite
+ *                          caractères représentant le labyrinthe. Les valeurs
+ *                          des caractères peuvent être :
+ *                              \li \c 'm' : mur
+ *                              \li \c 'c' : chemin vide
+ *                              \li \c 'p' : chemin avec pacgum
+ *                              \li \c 's' : chemin avec super pacgum
+ *                              \li \c 'b' : boite des fantômes
+ *                              \li \c 'e' : entrée de la boite
  * \param[out]	nb_pacgums	Nombre de pacgums présents dans le labyrinthe généré
  * \retval		0	 aucune erreur
  */
@@ -145,7 +145,7 @@ int nb_chemins_voisins(const char labyrinthe[N_LAB][M_LAB], int x, int y);
  * \return		Nombre de chemins voisins de cette case
  */
 int nb_chemins_voisins_demi(const char demi_lab[N_LAB][M_LAB / 2], int x,
-							int y);
+                            int y);
 
 /*!
  * \brief		Teste si des coordonnées sont dans la boîte aux fantômes

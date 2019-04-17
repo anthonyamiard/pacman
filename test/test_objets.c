@@ -1,11 +1,11 @@
 /*!
- * \file	test_objets.c
- * \author	Anthony Amiard
- * \date	2019
- * 
- * Tests sur la création et la destruction des objets.
- * 
- */
+* \file	test_objets.c
+* \author	Anthony Amiard
+* \date	2019
+* 
+* Tests sur la création et la destruction des objets.
+* 
+*/
 
 #define _MAIN_C_
 
@@ -16,118 +16,118 @@
 #include "../include/IA.h"
 
 /*!
- * \brief		Affiche les attributs d'un objet coord_t
- * \param[in]	coord	Coordonnées à afficher
- */
+* \brief		Affiche les attributs d'un objet coord_t
+* \param[in]	coord	Coordonnées à afficher
+*/
 void aff_coord(const coord_t * coord) {
-	if(coord == NULL) {
-		printf("NULL");
-	} else {
-		printf("{ x : %d, y : %d }", coord->x, coord->y);
-	}
+    if(coord == NULL) {
+        printf("NULL");
+    } else {
+        printf("{ x : %d, y : %d }", coord->x, coord->y);
+    }
 }
 
 /*!
- * \brief		Affiche les attributs d'un objet fruit_t
- * \param[in]	fruit	Fruit duquel afficher les coordonnées
- */
+* \brief		Affiche les attributs d'un objet fruit_t
+* \param[in]	fruit	Fruit duquel afficher les coordonnées
+*/
 void aff_fruit(const fruit_t * fruit) {
-	if(fruit == NULL) {
-		printf("NULL\n");
-	} else {
-		printf("{\n");
-		printf("\tpoints : %d,\n", fruit->points);
-		printf("\tcoord  : ");
-		printf("\n}\n");
-	}
+    if(fruit == NULL) {
+        printf("NULL\n");
+    } else {
+        printf("{\n");
+        printf("\tpoints : %d,\n", fruit->points);
+        printf("\tcoord  : ");
+        printf("\n}\n");
+    }
 }
 
 /*!
- * \brief		Affiche les attributs d'un objet joueur_t
- * \param[in]	joueur	Fruit duquel afficher les attributs
- */
+* \brief		Affiche les attributs d'un objet joueur_t
+* \param[in]	joueur	Fruit duquel afficher les attributs
+*/
 void aff_joueur(const joueur_t * joueur) {
-	if(joueur == NULL) {
-		printf("NULL\n");
-	} else {
-		printf("{\n");
-		printf("\tvies  : %d,\n", joueur->vies);
-		printf("\tscore : %d,\n", joueur->score);
-		printf("\tcoord : ");
-		printf("\n}\n");
-	}
+    if(joueur == NULL) {
+        printf("NULL\n");
+    } else {
+        printf("{\n");
+        printf("\tvies  : %d,\n", joueur->vies);
+        printf("\tscore : %d,\n", joueur->score);
+        printf("\tcoord : ");
+        printf("\n}\n");
+    }
 }
 
 /*!
- * \brief		Affiche les attributs d'un objet fantome_t
- * \param[in]	fantome	Fantôme duquel afficher les attributs
- */
+* \brief		Affiche les attributs d'un objet fantome_t
+* \param[in]	fantome	Fantôme duquel afficher les attributs
+*/
 void aff_fantome(const fantome_t * fantome) {
-	if(fantome == NULL) {
-		printf("NULL\n");
-	} else {
-		printf("{\n");
-		printf("\tcouleur : %c,\n", fantome->couleur);
-		printf("\tchemin  : %p,\n", fantome->chemin);
-		printf("\tetat    : %d,\n", fantome->etat);
-		printf("\tcoord   : ");
-		printf("\n}\n");
-	}
+    if(fantome == NULL) {
+        printf("NULL\n");
+    } else {
+        printf("{\n");
+        printf("\tcouleur : %c,\n", fantome->couleur);
+        printf("\tchemin  : %p,\n", fantome->chemin);
+        printf("\tetat    : %d,\n", fantome->etat);
+        printf("\tcoord   : ");
+        printf("\n}\n");
+    }
 }
 
 int main() {
-	
-	printf("\n** Création de coordonnées **\n\n");
-	coord_t * coord = cree_coord(18, 36);
-	aff_coord(coord);
-	printf("\n");
-	
-	printf("\n** Création d'un fruit **\n\n");
-	fruit_t * fruit = cree_fruit(50, 12, 15);
-	aff_fruit(fruit);
-	
-	printf("\n** Création du joueur **\n\n");
-	joueur_t * joueur = cree_joueur(NULL, 3, 0, 25, 35);
-	aff_joueur(joueur);
-	
-	printf("\n** Création des fantômes **\n\n");
-	fantome_t * f1 = cree_fantome(NULL, 'r', chemin_court, 21, 8);
-	printf("f1 : ");
-	aff_fantome(f1);
-	fantome_t * f2 = cree_fantome(NULL, 'o', chemin_aleatoire, 5, 9);
-	printf("f2 : ");
-	aff_fantome(f2);
-	fantome_t * f3 = cree_fantome(NULL, 'p', chemin_anticipe, 7, 15);
-	printf("f3 : ");
-	aff_fantome(f3);
-	fantome_t * f4 = cree_fantome(NULL, 'b', chemin_fuir, 6, 4);
-	printf("f4 : ");
-	aff_fantome(f4);
-	
-	printf("\n** Suppression des objets **\n\n");
-	detruit_coord(&coord);
-	printf("Coordonnées : ");
-	aff_coord(coord);
-	printf("\n");
-	detruit_fruit(&fruit);
-	printf("Fruit : ");
-	aff_fruit(fruit);
-	detruit_joueur(&joueur);
-	printf("Joueur : ");
-	aff_joueur(joueur);
-	detruit_fantome(&f1);
-	printf("f1 : ");
-	aff_fantome(f1);
-	detruit_fantome(&f2);
-	printf("f2 : ");
-	aff_fantome(f2);
-	detruit_fantome(&f3);
-	printf("f3 : ");
-	aff_fantome(f3);
-	detruit_fantome(&f4);
-	printf("f4 : ");
-	aff_fantome(f4);
-	printf("\n");
-	
-	return 0;
+    
+    printf("\n** Création de coordonnées **\n\n");
+    coord_t * coord = cree_coord(18, 36);
+    aff_coord(coord);
+    printf("\n");
+    
+    printf("\n** Création d'un fruit **\n\n");
+    fruit_t * fruit = cree_fruit(50, 12, 15);
+    aff_fruit(fruit);
+    
+    printf("\n** Création du joueur **\n\n");
+    joueur_t * joueur = cree_joueur(NULL, 3, 0, 25, 35);
+    aff_joueur(joueur);
+    
+    printf("\n** Création des fantômes **\n\n");
+    fantome_t * f1 = cree_fantome(NULL, 'r', chemin_court, 21, 8);
+    printf("f1 : ");
+    aff_fantome(f1);
+    fantome_t * f2 = cree_fantome(NULL, 'o', chemin_aleatoire, 5, 9);
+    printf("f2 : ");
+    aff_fantome(f2);
+    fantome_t * f3 = cree_fantome(NULL, 'p', chemin_anticipe, 7, 15);
+    printf("f3 : ");
+    aff_fantome(f3);
+    fantome_t * f4 = cree_fantome(NULL, 'b', chemin_fuir, 6, 4);
+    printf("f4 : ");
+    aff_fantome(f4);
+    
+    printf("\n** Suppression des objets **\n\n");
+    detruit_coord(&coord);
+    printf("Coordonnées : ");
+    aff_coord(coord);
+    printf("\n");
+    detruit_fruit(&fruit);
+    printf("Fruit : ");
+    aff_fruit(fruit);
+    detruit_joueur(&joueur);
+    printf("Joueur : ");
+    aff_joueur(joueur);
+    detruit_fantome(&f1);
+    printf("f1 : ");
+    aff_fantome(f1);
+    detruit_fantome(&f2);
+    printf("f2 : ");
+    aff_fantome(f2);
+    detruit_fantome(&f3);
+    printf("f3 : ");
+    aff_fantome(f3);
+    detruit_fantome(&f4);
+    printf("f4 : ");
+    aff_fantome(f4);
+    printf("\n");
+    
+    return 0;
 }

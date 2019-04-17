@@ -47,7 +47,7 @@ typedef enum etat_e {
  * \brief	Fruit bonus
  */
 typedef struct fruit_s {
-	int points;				/*!< Nombre de points qu'il procure */
+	int points;			/*!< Nombre de points qu'il procure */
 	coord_t coord;		/*!< Coordonnées du fruit */
 } fruit_t;
 
@@ -60,7 +60,9 @@ typedef struct joueur_s {
 	/*! Nombre de fantômes consommés depuis la prise d'une super pacgum */
 	int f_cons;
 	coord_t coord;			/*!< Coordonnée du joueur à l'instant t */
-	SDL_Rect position;
+	SDL_Rect position;		/*!< Position du joueur en pixels à l'instant t */
+	/*! Prochaine direction prise par le joueur. Voir \ref pacdir pour les
+     *  valeurs prises. */
 	char nextdir;
 } joueur_t;
 
@@ -75,15 +77,16 @@ typedef struct fantome_s {
 	 * \li \c 'o' : orange
 	 */
 	char couleur;
-	SDL_Texture * texture;
+	SDL_Texture * texture;	/*!< Texture du fantôme */
 	/*! Recherche de chemin du fantôme */
 	coord_t (*chemin)(char [N_LAB][M_LAB], coord_t *, coord_t *);
-	etat_t etat;		/*!< État du fantôme */
-	coord_t coord;		/*!< Coordonnées du fantôme à l'instant présent */
-	coord_t coord_dep;
-	SDL_Rect position;
+	etat_t etat;			/*!< État du fantôme */
+	coord_t coord;			/*!< Coordonnées du fantôme à l'instant présent */
+	coord_t coord_dep;		/*!< Coordonnées de départ du fantôme */
+	SDL_Rect position;		/*!< Position du fantôme en pixels à l'instant t */
+	/*! Direction du fantôme. Voir \ref pacdir pour les valeurs prises. */
 	char dir;
-	int duree;
+	int duree;				/*!< Durée de l'état de fuite du fantôme */
 } fantome_t;
 
 
@@ -166,6 +169,14 @@ int detruit_fantome(fantome_t ** adr);
 #ifdef _MAIN_C_
 char pacdir;
 #else
+/*!
+ * Direction du pacman à l'instant présent. \n
+ * Les valeurs prises sont :
+ *      - \c 'g' : gauche
+ *      - \c 'd' : droite
+ *      - \c 'h' : haut
+ *      - \c 'b' : bas
+ */
 extern char pacdir;
 #endif
 

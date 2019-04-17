@@ -13,6 +13,8 @@
 void ajout_points(joueur_t * joueur, int nb_points) {
 	if(joueur != NULL) {
 		joueur->score += nb_points;
+		
+		/*! Cas où le joueur dépasse le palier \ref PTS_GAIN_VIE */
 		if((joueur->score - nb_points) % PTS_GAIN_VIE >
 			joueur->score % PTS_GAIN_VIE)
 			joueur->vies += 1;

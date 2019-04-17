@@ -37,7 +37,15 @@
  * FONCTIONS
  */
 
-
+/*!
+ * \brief           Ajoute des points au joueur
+ * 
+ * Ajoute \c nb_points au joueur \c joueur et gère le gain de vie au palier
+ * \c PTS_GAIN_VIE.
+ * 
+ * \param[in,out]   joueur      Joueur
+ * \param[in]       nb_points   Nombre de points à ajouter
+ */
 void ajout_points(joueur_t * joueur, int nb_points);
 
 
