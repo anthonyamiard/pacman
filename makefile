@@ -1,36 +1,47 @@
 # Variables generales
-TARGET			= pacman
-export CC		= gcc
-export CFLAGS	= -Wall -g
-export LINKER	= gcc
-export LFLAGS	=
+EXEC		= pacman
+TARGETS		= pacman test_lab test_IA test_objets test_evenement
+CC		= gcc
+CFLAGS		= -Wall -g
+LINKER		= gcc
+LFLAGS		= -Wall
 
 # Repertoires
-OBJDIR				= obj
-BINDIR				= bin
-SRCDIR				= src
-INCDIR				= include
-GUIDIR				= gui
-TESTDIR				= test
-export SDL_DIR		= $(HOME)/SDL2
-export SDLLIB_DIR	= $(SDL_DIR)/lib
-export SDLINC_DIR	= $(SDL_DIR)/include
-DIRS				= $(OBJDIR) $(BINDIR)
+OBJDIR		= obj
+BINDIR		= bin
+SRCDIR		= src
+INCDIR		= include
+GUIDIR		= gui
+TESTDIR		= test
+
+# SDL
+SDL_DIR		= $(HOME)/SDL2
+SDLLIB_DIR	= $(SDL_DIR)/lib
+SDLINC_DIR	= $(SDL_DIR)/include
+DIRS		= $(OBJDIR) $(BINDIR)
 
 # Bibliotheques
-export LIBS		= -L$(SDLLIB_DIR) -lSDL2 -lSDL2_ttf -lSDL2_image
-export INCLUDES	= -I$(SDLINC_DIR)
+LIBS		= -L$(SDLLIB_DIR) -lSDL2 -lSDL2_ttf -lSDL2_image
+INCLUDES	= -I$(SDLINC_DIR)
 
 # Fichiers
 SOURCES		:= $(wildcard $(SRCDIR)/*.c)
+SRCTESTS	:= $(wildcard $(TESTDIR)/*.c)
 SRCGUI		:= $(wildcard $(GUIDIR)/*.c)
-# INCLUDES	:= $(wildcard $(INCDIR)/*.h)
 OBJECTS		:= $(SOURCES:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
+MAINS		:= $(TARGETS:%=$(OBJDIR)/%.o)
+# Fichiers .o sans main
+OBJS		:= $(filter-out $(MAINS),$(OBJECTS))
 OBJGUI		:= $(SRCGUI:$(GUIDIR)/%.c=$(OBJDIR)/%.o)
-export rm	= rm -f
+OBJTESTS	:= $(SRCTESTS:$(TESTDIR)/%.c=$(OBJDIR)/%.o)
+TRGS		:= $(TARGETS:%=$(BINDIR)/%)
+rm		= rm -f
 
 .PHONY: DIRS
-all: $(DIRS) $(BINDIR)/$(TARGET)
+
+default: $(DIRS) $(BINDIR)/$(EXEC)
+
+all: $(DIRS) $(TRGS)
 
 # Creation des repertoires de compilation
 $(OBJDIR):
@@ -39,36 +50,11 @@ $(BINDIR):
 	@mkdir -p $(BINDIR)
 
 # Edition de liens
-$(BINDIR)/$(TARGET): $(OBJECTS) $(OBJGUI)
-	@$(LINKER) $^ -o $@ $(LIBS) $(LFLAGS)
-	@echo "Edition de liens terminee !"
+$(TRGS): $(OBJECTS) $(OBJGUI) $(OBJTESTS)
+	@$(LINKER) $(subst $(BINDIR),$(OBJDIR),$@).o $(OBJS) $(OBJGUI) $(LFLAGS) -o $@ $(LIBS) $(LFLAGS)
+	@echo "Edition de liens pour "$@" terminee !"
 
-# Dependances de chaque fichier
-# fichier_h: $(INCDIR)/fichier.h dependance_h
-# $(OBJDIR)/fichier.o: dependance_h
-taille_lab_h: $(INCDIR)/taille_lab.h
-
-objets_h: $(INCDIR)/objets.h taille_lab_h
-
-labyrinthe_h: $(INCDIR)/labyrinthe.h taille_lab_h
-
-IA_h: $(INCDIR)/IA.h taille_lab_h objets_h
-
-dessin_h: $(GUIDIR)/dessin.h
-
-gui_lab_h: $(GUIDIR)/gui_lab.h taille_lab_h
-
-$(OBJDIR)/labyrinthe.o: labyrinthe_h
-
-$(OBJDIR)/IA.o: IA_h labyrinthe_h objets_h
-
-$(OBJDIR)/objets.o: objets_h
-
-$(OBJDIR)/gui_lab.o: gui_lab_h dessin_h
-
-$(OBJDIR)/dessin.o: dessin_h
-
-# Compilation des .c en .o
+# Compilation
 $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
@@ -76,21 +62,18 @@ $(OBJECTS): $(OBJDIR)/%.o: $(SRCDIR)/%.c
 $(OBJGUI): $(OBJDIR)/%.o: $(GUIDIR)/%.c
 	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
 	@echo "Compilation de "$<" terminee !"
-
-# Test
-.PHONY: test
-test:
-	@(cd $(TESTDIR) && $(MAKE))
+	
+$(OBJTESTS): $(OBJDIR)/%.o: $(TESTDIR)/%.c
+	@$(CC) -c $< -o $@ $(INCLUDES) $(CFLAGS)
+	@echo "Compilation de "$<" terminee !"
 
 # Nettoyage et suppression des executables
 .PHONY: clean
 clean:
-	@(cd $(TESTDIR) && $(MAKE) $@)
 	@$(rm) $(OBJDIR)/*.o
 	@echo "Nettoyage termine !"
 
 .PHONY: remove
 remove: clean
-	@(cd $(TESTDIR) && $(MAKE) $@)
-	@$(rm) $(BINDIR)/$(TARGET)
+	@$(rm) $(BINDIR)/$(TARGETS)
 	@echo "Executables supprimes !"
