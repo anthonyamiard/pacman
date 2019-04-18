@@ -106,7 +106,7 @@ SDL_Texture * cree_texte(TTF_Font * police,
 #ifdef _DESSIN_C_
 struct sprites_s sprites;
 #else
-/*! Voir \ref spriet_s */
+/*! Voir \ref sprite_s */
 extern struct sprites_s sprites;
 #endif
 

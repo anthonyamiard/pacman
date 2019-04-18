@@ -32,8 +32,11 @@
  * \param[in]		vitesse		Nombre de pixels sur lequel se déplacer
  * \retval			0			Aucune erreur
  */
-int deplace_coord(const coord_t * coord, SDL_Rect * position,
-				  const char labyrinthe[N_LAB][M_LAB], char dir, int vitesse);
+int deplace_coord(const coord_t * coord,
+				  SDL_Rect * position,
+				  const char labyrinthe[N_LAB][M_LAB],
+				  char dir,
+				  int vitesse);
 
 /*!
  * \brief	Déplace le joueur dans le labyrinthe

@@ -25,7 +25,7 @@ void score_osd(SDL_Renderer * rend,
 	char str_vies[15];
 	char str_niveau[15];
 	int w, h;
-	sprintf(str_niveau, "Niveau : %03d", niveau);
+	sprintf(str_niveau, "Niveau : %02d", niveau);
 	SDL_Texture * txt_niveau = cree_texte(police, str_niveau, blanc, noir, 0,
 										  rend);
 	if(txt_niveau != NULL) {
@@ -36,7 +36,7 @@ void score_osd(SDL_Renderer * rend,
 	if(joueur == NULL) {
 		fprintf(stderr, "Erreur : joueur nul.\n");
 	} else {
-		sprintf(str_score, "Score : %04d", joueur->score);
+		sprintf(str_score, "Score : %06d", joueur->score);
 		sprintf(str_vies, "Vies : %02d", joueur->vies);
 		SDL_Texture * txt_score = cree_texte(police, str_score, blanc, noir, 0,
 											 rend);
