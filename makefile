@@ -39,7 +39,7 @@ rm		= rm -f
 
 .PHONY: DIRS
 
-default: $(DIRS) $(BINDIR)/$(EXEC)
+# default: $(DIRS) $(BINDIR)/$(EXEC)
 
 all: $(DIRS) $(TRGS)
 
